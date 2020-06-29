@@ -6,6 +6,7 @@ import jwtDecode from 'jwt-decode';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import PrivateRoute from './components/PrivateRoute';
 import Register from './components/Register';
+import Navbar from './components/Navbar';
 
 function App () {
   const [token, setToken] = useState(localStorage.getItem('authToken'))
@@ -24,20 +25,21 @@ function App () {
     <AuthContext.Provider value={{token, setToken: setTokenInLocalStorage}}>
       <Router>
         <div className="App">
+        {!!token  && <Navbar />}
+          <Switch>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <PrivateRoute path="/register">
+              <Register />
+            </PrivateRoute>
+            <PrivateRoute path="/">
+              <div>
+                pagz d'accueil
+              </div>
+            </PrivateRoute>
+          </Switch>
         </div>
-        <Switch>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <PrivateRoute path="/register">
-            <Register />
-          </PrivateRoute>
-          <PrivateRoute path="/">
-            <div>
-              pag d'acceuil
-            </div>
-          </PrivateRoute>
-        </Switch>
       </Router>
     </AuthContext.Provider>
   );
