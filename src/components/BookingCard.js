@@ -5,6 +5,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import API from '../API';
 
 const useStyles = makeStyles({
   root: {
@@ -23,7 +24,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function BookingCard({ bookingDetails : { firstname, lastname, starting_date, ending_date, message }}) {
+export default function BookingCard({ bookingDetails : { id_booking, firstname, lastname, starting_date, ending_date, message }}) {
   const classes = useStyles();
 
   const getFullDate = (date) => {
@@ -33,6 +34,12 @@ export default function BookingCard({ bookingDetails : { firstname, lastname, st
     const fullDate = `${day}-${month}-${year}`;
     return fullDate;
   };
+
+  const handlePatch = (id) => {
+      console.log(id);
+      API.patch('/bookings', { id })
+        .then(response => response.data)
+  }
 
   return (
     <Card className={classes.root}>
@@ -56,7 +63,7 @@ export default function BookingCard({ bookingDetails : { firstname, lastname, st
         <br />
       </CardContent>
       <CardActions>
-        <Button size="small">Valider la réservation</Button>
+        <Button size="small" onClick={() => handlePatch(id_booking)}>Valider la réservation</Button>
       </CardActions>
     </Card>
   );

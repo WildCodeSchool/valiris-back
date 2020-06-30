@@ -11,11 +11,12 @@ const Home = () => {
           .then(res => res.data)
           .then(data => setBookings(data.map(b => {
               return { 
+                id_booking: b.id,
                 firstname: b.firstname,
                 lastname: b.lastname,
                 starting_date: b.starting_date,
                 ending_date: b.ending_date,
-                message: b.content
+                message: b.content,
             }
           })))
       }, []);
@@ -26,7 +27,7 @@ const Home = () => {
     return (
         <div>
             <h2>Vos dernières demandes de réservations</h2>
-            {bookings.map((b, i) => <BookingCard key={i} bookingDetails={b} />)}
+            {bookings.map(b => <BookingCard key={b.id_booking} bookingDetails={b} />)}
         </div>
     );
   }      
