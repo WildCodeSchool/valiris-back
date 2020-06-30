@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import PrivateRoute from './components/PrivateRoute';
 import Register from './components/Register';
 import Navbar from './components/Navbar';
+import Home from './components/Home';
 
 function App () {
   const [token, setToken] = useState(localStorage.getItem('authToken'))
@@ -34,9 +35,7 @@ function App () {
               <Register />
             </PrivateRoute>
             <PrivateRoute path="/">
-              <div>
-                pagz d'accueil
-              </div>
+              <Home />
             </PrivateRoute>
           </Switch>
         </div>
