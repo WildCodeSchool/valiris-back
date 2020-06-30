@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import BookingCard from './BookingCard';
 import API from '../API';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const Home = () => {
     const [bookings, setBookings] = useState();
@@ -20,11 +21,12 @@ const Home = () => {
       }, []);
 
     if (!bookings) {
-    return <p>loading...</p>;
+    return <div style={{ display: 'flex', justifyContent: 'center' }}><CircularProgress style={{ width: '50px', height: '50px', margin: '0 auto' }}/></div>;
     } else {
     return (
         <div>
-            {bookings.map(b => <BookingCard />)}
+            <h2>Vos dernières demandes de réservations</h2>
+            {bookings.map((b, i) => <BookingCard key={i} bookingDetails={b} />)}
         </div>
     );
   }      

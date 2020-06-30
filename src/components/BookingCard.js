@@ -23,30 +23,40 @@ const useStyles = makeStyles({
   },
 });
 
-export default function BookingCard() {
+export default function BookingCard({ bookingDetails : { firstname, lastname, starting_date, ending_date, message }}) {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
+
+  const getFullDate = (date) => {
+    let day = date.slice(0, 10).split('').splice(8, 9).join('')
+    let month = date.slice(0, 10).split('').slice(5, 7).join('');
+    let year = date.slice(0, 10).split('').slice(0, 4).join('');
+    const fullDate = `${day}-${month}-${year}`;
+    return fullDate;
+  };
 
   return (
     <Card className={classes.root}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Word of the Day
+          Demande de réservation
         </Typography>
-        <Typography variant="h5" component="h2">
-          be{bull}nev{bull}o{bull}lent
+        <Typography variant="h5" component="h4">
+          {`${firstname} ${lastname}`}
         </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          adjective
-        </Typography>
+        <br />
         <Typography variant="body2" component="p">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
+          Du <strong>{getFullDate(starting_date)}</strong> au <strong>{getFullDate(ending_date)}</strong>.
         </Typography>
+        <br />
+        <Typography variant="body2" component="p">
+          <strong>Message:</strong> 
+          <br />
+          {message}
+        </Typography>
+        <br />
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button size="small">Valider la réservation</Button>
       </CardActions>
     </Card>
   );
