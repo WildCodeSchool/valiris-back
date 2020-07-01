@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -24,7 +24,14 @@ const useStyles = makeStyles({
   },
 });
 
-export default function BookingCard({ bookingDetails : { id_booking, firstname, lastname, starting_date, ending_date, message }}) {
+export default function BookingCard({ bookingDetails : { 
+  id_booking, 
+  firstname, 
+  lastname, 
+  starting_date, 
+  ending_date, 
+  message }, 
+  handlePatch}) {
   const classes = useStyles();
 
   const getFullDate = (date) => {
@@ -34,12 +41,6 @@ export default function BookingCard({ bookingDetails : { id_booking, firstname, 
     const fullDate = `${day}-${month}-${year}`;
     return fullDate;
   };
-
-  const handlePatch = (id) => {
-      console.log(id);
-      API.patch('/bookings', { id })
-        .then(response => response.data)
-  }
 
   return (
     <Card className={classes.root}>
