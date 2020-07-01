@@ -7,6 +7,9 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import PrivateRoute from './components/PrivateRoute';
 import Register from './components/Register';
 import Navbar from './components/Navbar';
+import Contacts from './components/Contacts';
+import Contact from './components/Contact.js';
+import NewContact from './components/NewContact';
 
 function App () {
   const [token, setToken] = useState(localStorage.getItem('authToken'))
@@ -33,10 +36,17 @@ function App () {
             <PrivateRoute path="/register">
               <Register />
             </PrivateRoute>
-            <PrivateRoute path="/">
+            <PrivateRoute exact path="/">
               <div>
                 pagz d'accueil
               </div>
+            </PrivateRoute>
+            <PrivateRoute exact path="/contacts">
+              <Contacts />
+            </PrivateRoute>
+            <PrivateRoute path="/contacts/:id" component={(props) => <Contact {...props}/>} />
+            <PrivateRoute exact path="/nouveau-contact">
+              <NewContact />
             </PrivateRoute>
           </Switch>
         </div>
