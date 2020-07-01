@@ -10,6 +10,7 @@ import Navbar from './components/Navbar';
 import Contacts from './components/Contacts';
 import Contact from './components/Contact.js';
 import NewContact from './components/NewContact';
+import Home from './components/Home';
 
 function App () {
   const [token, setToken] = useState(localStorage.getItem('authToken'))
@@ -36,10 +37,8 @@ function App () {
             <PrivateRoute path="/register">
               <Register />
             </PrivateRoute>
-            <PrivateRoute exact path="/">
-              <div>
-                pagz d'accueil
-              </div>
+            <PrivateRoute path="/">
+              <Home />
             </PrivateRoute>
             <PrivateRoute exact path="/contacts">
               <Contacts />
