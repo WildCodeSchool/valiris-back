@@ -45,12 +45,11 @@ function Apartments() {
 
   const [rows, setRows] = useState()
 
-  const [open, setOpen] = React.useState(false);
-
+  // Alert Dialog Box Before Delete
+  const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -62,7 +61,7 @@ function Apartments() {
   }, [])
 
   const handleClickDelete = (id) => {
-    console.log(id)
+    console.log('Ready to delete')
     // API.delete(`/apartments/${id}`)
     // .then(res => {
     //   setRows(
@@ -73,8 +72,8 @@ function Apartments() {
 
 
   const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -97,7 +96,7 @@ function Apartments() {
                 <TableRow>
                   {columns.map(column => (
                     <TableCell
-                      key={column.id}
+                      key={column.label}
                       align={column.align}
                       style={{ minWidth: column.minWidth }}
                     >
@@ -113,7 +112,7 @@ function Apartments() {
                       {columns.map(column => {
                         const value = row[column.id];
                         return (
-                          <TableCell key={column.id} align={column.align}>
+                          <TableCell key={column.label} align={column.align}>
                             {column.label === 'Modifier' ? <Link to={`/appartement/${value}`}><EditIcon color='primary' /></Link> : column.label === 'Supprimer' ? <DeleteForeverIcon className='contacts-icons' style={{ color: "red" }} /*onClick={() => handleClickDelete(value)}*/ onClick={handleClickOpen} /> : value}
                           </TableCell>
                         );
