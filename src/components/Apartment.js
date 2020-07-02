@@ -5,6 +5,7 @@ import '../styles/Contact.css';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { Link } from 'react-router-dom';
 
 const Apartment = (props) => {
   const id = props.match.params.id;
@@ -126,6 +127,7 @@ const Apartment = (props) => {
             name='details_en'
           />
           {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <input className='contact-valid-button' type='submit' value='valider' />}
+          <Link to={`/appartements`}>Retour</Link>
           <Snackbar open={messageForm} autoHideDuration={6000} onClose={handleCloseMui}>
             <Alert onClose={handleCloseMui} severity={!errorForm ? 'success' : 'error'}>
               {msgAlert}
