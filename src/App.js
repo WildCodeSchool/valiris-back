@@ -14,6 +14,7 @@ import Home from './components/Home';
 import Apartments from './components/Apartments';
 import Apartment from './components/Apartment';
 import NewApartment from './components/NewApartment';
+import Calendar from './components/Calendar';
 
 function App () {
   const [token, setToken] = useState(localStorage.getItem('authToken'))
@@ -56,6 +57,9 @@ function App () {
             <PrivateRoute exact path="/appartement/:id" component={(props) => <Apartment {...props}/>} />
             <PrivateRoute exact path="/nouvel-appartement">
               <NewApartment />
+            </PrivateRoute>
+            <PrivateRoute exact path="/calendrier">
+              <Calendar />
             </PrivateRoute>
           </Switch>
         </div>
