@@ -13,6 +13,13 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { Link } from 'react-router-dom';
 // import '../styles/Apartments.css';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
 
 const useStyles = makeStyles({
   root: {
@@ -24,6 +31,10 @@ const useStyles = makeStyles({
   },
 });
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 function Apartments() {
   const columns = [
     { id: 'name', label: 'Nom', minWidth: 170 },
@@ -31,9 +42,19 @@ function Apartments() {
     { id: 'id', label: 'Modifier', minWidth: 15 },
     { id: 'id', label: 'Supprimer', minWidth: 15 }
   ];
-  
+
   const [rows, setRows] = useState()
-  
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   useEffect(() => {
     API.get('/apartments')
       .then(res => res.data)
@@ -41,7 +62,7 @@ function Apartments() {
   }, [])
 
   const handleClickDelete = (id) => {
-    // console.log(id)
+    console.log(id)
     // API.delete(`/apartments/${id}`)
     // .then(res => {
     //   setRows(
@@ -64,7 +85,7 @@ function Apartments() {
     setPage(0);
   };
 
-  if(!rows){
+  if (!rows) {
     return <p>loading...</p>
   } else {
     return (
@@ -93,7 +114,7 @@ function Apartments() {
                         const value = row[column.id];
                         return (
                           <TableCell key={column.id} align={column.align}>
-                            {column.label === 'Modifier' ? <Link to={`/appartement/${value}`}><EditIcon color='primary'/></Link> : column.label === 'Supprimer' ? <DeleteForeverIcon className='contacts-icons' style={{ color:"red" }} onClick={() => handleClickDelete(value)}/> : value}
+                            {column.label === 'Modifier' ? <Link to={`/appartement/${value}`}><EditIcon color='primary' /></Link> : column.label === 'Supprimer' ? <DeleteForeverIcon className='contacts-icons' style={{ color: "red" }} /*onClick={() => handleClickDelete(value)}*/ onClick={handleClickOpen} /> : value}
                           </TableCell>
                         );
                       })}
@@ -104,7 +125,7 @@ function Apartments() {
             </Table>
           </div>
           <TablePagination
-            rowsPerPageOptions={[5, 10, 15, 20, 30, 50 ]}
+            rowsPerPageOptions={[5, 10, 15, 20, 30, 50]}
             component="div"
             count={rows.length}
             rowsPerPage={rowsPerPage}
@@ -119,7 +140,30 @@ function Apartments() {
             onChangeRowsPerPage={handleChangeRowsPerPage}
           />
         </Paper>
-        <Link to={`/nouvel-appartement`}><AddCircleOutlineIcon className='contacts-icons contacts-icons-add' style={{ color:"green", fontSize: 50 }}/></Link>
+        <Dialog
+          open={open}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title">{"Êtes-vous sur de vouloir supprimer l'appartement ?"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+              Toute suppression sera irréversible.
+          </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Annuler
+          </Button>
+            <Button onClick={handleClose, handleClickDelete} color="primary">
+              Supprimer
+          </Button>
+          </DialogActions>
+        </Dialog>
+        <Link to={`/nouvel-appartement`}><AddCircleOutlineIcon className='contacts-icons contacts-icons-add' style={{ color: "green", fontSize: 50 }} /></Link>
       </div>
     );
   }
