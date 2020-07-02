@@ -31,10 +31,6 @@ const useStyles = makeStyles({
   },
 });
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
-
 function Apartments() {
   const columns = [
     { id: 'name', label: 'Nom', minWidth: 170 },
@@ -42,17 +38,9 @@ function Apartments() {
     { id: 'id', label: 'Modifier', minWidth: 15 },
     { id: 'id', label: 'Supprimer', minWidth: 15 }
   ];
-
   const [rows, setRows] = useState()
 
-  // Alert Dialog Box Before Delete
-  const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+
 
   useEffect(() => {
     API.get('/apartments')
@@ -61,6 +49,7 @@ function Apartments() {
   }, [])
 
   const handleClickDelete = (id) => {
+    handleClose();
     console.log('Ready to delete')
     // API.delete(`/apartments/${id}`)
     // .then(res => {
@@ -70,7 +59,7 @@ function Apartments() {
     // })
   }
 
-
+  // Style table and pagination
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -82,6 +71,20 @@ function Apartments() {
   const handleChangeRowsPerPage = event => {
     setRowsPerPage(+event.target.value);
     setPage(0);
+  };
+
+  // Alert Dialog Box Before Delete
+  const [open, setOpen] = useState(false);
+
+  const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
   };
 
   if (!rows) {
@@ -157,7 +160,7 @@ function Apartments() {
             <Button onClick={handleClose} color="primary">
               Annuler
           </Button>
-            <Button onClick={handleClose, handleClickDelete} color="primary">
+            <Button onClick={handleClickDelete} color="primary">
               Supprimer
           </Button>
           </DialogActions>

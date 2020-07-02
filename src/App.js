@@ -3,7 +3,7 @@ import './App.css';
 import Login from './components/Login';
 import AuthContext from './authContext';
 import jwtDecode from 'jwt-decode';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrivateRoute from './components/PrivateRoute';
 import Register from './components/Register';
 import Navbar from './components/Navbar';
@@ -21,7 +21,6 @@ function App () {
     localStorage.setItem('authToken', token)
     setToken(token)
   }
-
   let userNameFromToken = null
   if (token) {
     userNameFromToken = jwtDecode(token).name || null

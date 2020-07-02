@@ -30,7 +30,7 @@ const Apartment = (props) => {
         mainPictureUrl: data.mainPictureUrl,
         url: data.tabUrl
       }));
-  }, []);
+  }, [id]);
 
   function Alert (props) {
     return <MuiAlert elevation={6} variant='filled' {...props} />;
@@ -45,22 +45,22 @@ const Apartment = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // setLoading(true);
-    // setErrorForm(false);
-    // API.patch(`/apartments/${id}`, apartment)
-    // .then(res => res.data)
-    // .then(data => {
-    //   setMessageForm(true);
-    //   setLoading(false);
-    //   setMsgAlert(`L'appartement ${data.name} a bien été mis à jour.`);
-    // })
-    // .catch(err =>{
-    //   console.log(err);
-    //   setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau !');
-    //   setErrorForm(true);
-    //   setLoading(false);
-    //   setMessageForm(true);
-    // })
+    setLoading(true);
+    setErrorForm(false);
+    API.patch(`/apartments/${id}`, apartment)
+    .then(res => res.data)
+    .then(data => {
+      setMessageForm(true);
+      setLoading(false);
+      setMsgAlert(`L'appartement ${data.name} a bien été mis à jour.`);
+    })
+    .catch(err =>{
+      console.log(err);
+      setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau !');
+      setErrorForm(true);
+      setLoading(false);
+      setMessageForm(true);
+    })
   }
 
 
