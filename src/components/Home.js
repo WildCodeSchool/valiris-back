@@ -54,6 +54,7 @@ const Home = () => {
     return (
         <div>
             <h2>Vos dernières demandes de réservation</h2>
+            {console.log(bookings)}
             {bookings.map(b => <BookingCard 
             key={b.id_booking} 
             bookingDetails={b} 
