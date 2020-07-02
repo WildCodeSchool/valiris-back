@@ -11,6 +11,9 @@ import Contacts from './components/Contacts';
 import Contact from './components/Contact.js';
 import NewContact from './components/NewContact';
 import Home from './components/Home';
+import Apartments from './components/Apartments';
+import Apartment from './components/Apartment';
+import NewApartment from './components/NewApartment';
 
 function App () {
   const [token, setToken] = useState(localStorage.getItem('authToken'))
@@ -37,7 +40,7 @@ function App () {
             <PrivateRoute path="/register">
               <Register />
             </PrivateRoute>
-            <PrivateRoute path="/">
+            <PrivateRoute exact path="/">
               <Home />
             </PrivateRoute>
             <PrivateRoute exact path="/contacts">
@@ -46,6 +49,13 @@ function App () {
             <PrivateRoute path="/contacts/:id" component={(props) => <Contact {...props}/>} />
             <PrivateRoute exact path="/nouveau-contact">
               <NewContact />
+            </PrivateRoute>
+            <PrivateRoute exact path="/appartements">
+              <Apartments />
+            </PrivateRoute>
+            <PrivateRoute exact path="/appartement/:id" component={(props) => <Apartment {...props}/>} />
+            <PrivateRoute exact path="/nouvel-appartement">
+              <NewApartment />
             </PrivateRoute>
           </Switch>
         </div>
