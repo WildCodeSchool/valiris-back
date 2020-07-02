@@ -65,6 +65,8 @@ export default function BookingCard({ bookingDetails : {
       </CardContent>
       <CardActions>
         <Button size="small" onClick={() => handlePatch(id_booking)}>Valider la réservation</Button>
+        <Button size="small" onClick={() => handlePatch(id_booking)}>Modifier la réservation</Button>
+        <Button size="small" onClick={() => handlePatch(id_booking)}>Supprimer la réservation</Button>
       </CardActions>
     </Card>
   );
