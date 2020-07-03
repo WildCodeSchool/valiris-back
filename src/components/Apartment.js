@@ -5,6 +5,7 @@ import '../styles/Contact.css';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { Link } from 'react-router-dom';
 
 const Apartment = (props) => {
   const id = props.match.params.id;
@@ -29,7 +30,7 @@ const Apartment = (props) => {
         mainPictureUrl: data.mainPictureUrl,
         url: data.tabUrl
       }));
-  }, []);
+  }, [id]);
 
   function Alert (props) {
     return <MuiAlert elevation={6} variant='filled' {...props} />;
@@ -44,22 +45,22 @@ const Apartment = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // setLoading(true);
-    // setErrorForm(false);
-    // API.patch(`/apartments/${id}`, apartment)
-    // .then(res => res.data)
-    // .then(data => {
-    //   setMessageForm(true);
-    //   setLoading(false);
-    //   setMsgAlert(`L'appartement ${data.name} a bien été mis à jour.`);
-    // })
-    // .catch(err =>{
-    //   console.log(err);
-    //   setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau !');
-    //   setErrorForm(true);
-    //   setLoading(false);
-    //   setMessageForm(true);
-    // })
+    setLoading(true);
+    setErrorForm(false);
+    API.patch(`/apartments/${id}`, apartment)
+    .then(res => res.data)
+    .then(data => {
+      setMessageForm(true);
+      setLoading(false);
+      setMsgAlert(`L'appartement ${data.name} a bien été mis à jour.`);
+    })
+    .catch(err =>{
+      console.log(err);
+      setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau !');
+      setErrorForm(true);
+      setLoading(false);
+      setMessageForm(true);
+    })
   }
 
 
@@ -126,6 +127,7 @@ const Apartment = (props) => {
             name='details_en'
           />
           {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <input className='contact-valid-button' type='submit' value='valider' />}
+          <Link to={`/appartements`}>Retour</Link>
           <Snackbar open={messageForm} autoHideDuration={6000} onClose={handleCloseMui}>
             <Alert onClose={handleCloseMui} severity={!errorForm ? 'success' : 'error'}>
               {msgAlert}

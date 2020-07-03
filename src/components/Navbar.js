@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import '../styles/navbar.css';
 import AppBar from '@material-ui/core/AppBar';

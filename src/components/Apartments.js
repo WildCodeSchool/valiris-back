@@ -13,6 +13,13 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { Link } from 'react-router-dom';
 // import '../styles/Apartments.css';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
 
 const useStyles = makeStyles({
   root: {
@@ -31,9 +38,10 @@ function Apartments() {
     { id: 'id', label: 'Modifier', minWidth: 15 },
     { id: 'id', label: 'Supprimer', minWidth: 15 }
   ];
-  
   const [rows, setRows] = useState()
-  
+
+
+
   useEffect(() => {
     API.get('/apartments')
       .then(res => res.data)
@@ -41,7 +49,8 @@ function Apartments() {
   }, [])
 
   const handleClickDelete = (id) => {
-    // console.log(id)
+    handleClose();
+    console.log('Ready to delete')
     // API.delete(`/apartments/${id}`)
     // .then(res => {
     //   setRows(
@@ -50,10 +59,10 @@ function Apartments() {
     // })
   }
 
-
+  // Style table and pagination
   const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -64,7 +73,21 @@ function Apartments() {
     setPage(0);
   };
 
-  if(!rows){
+  // Alert Dialog Box Before Delete
+  const [open, setOpen] = useState(false);
+
+  const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  if (!rows) {
     return <p>loading...</p>
   } else {
     return (
@@ -76,7 +99,7 @@ function Apartments() {
                 <TableRow>
                   {columns.map(column => (
                     <TableCell
-                      key={column.id}
+                      key={column.label}
                       align={column.align}
                       style={{ minWidth: column.minWidth }}
                     >
@@ -92,8 +115,8 @@ function Apartments() {
                       {columns.map(column => {
                         const value = row[column.id];
                         return (
-                          <TableCell key={column.id} align={column.align}>
-                            {column.label === 'Modifier' ? <Link to={`/appartement/${value}`}><EditIcon color='primary'/></Link> : column.label === 'Supprimer' ? <DeleteForeverIcon className='contacts-icons' style={{ color:"red" }} onClick={() => handleClickDelete(value)}/> : value}
+                          <TableCell key={column.label} align={column.align}>
+                            {column.label === 'Modifier' ? <Link to={`/appartement/${value}`}><EditIcon color='primary' /></Link> : column.label === 'Supprimer' ? <DeleteForeverIcon className='contacts-icons' style={{ color: "red" }} /*onClick={() => handleClickDelete(value)}*/ onClick={handleClickOpen} /> : value}
                           </TableCell>
                         );
                       })}
@@ -104,7 +127,7 @@ function Apartments() {
             </Table>
           </div>
           <TablePagination
-            rowsPerPageOptions={[5, 10, 15, 20, 30, 50 ]}
+            rowsPerPageOptions={[5, 10, 15, 20, 30, 50]}
             component="div"
             count={rows.length}
             rowsPerPage={rowsPerPage}
@@ -119,7 +142,30 @@ function Apartments() {
             onChangeRowsPerPage={handleChangeRowsPerPage}
           />
         </Paper>
-        <Link to={`/nouvel-appartement`}><AddCircleOutlineIcon className='contacts-icons contacts-icons-add' style={{ color:"green", fontSize: 50 }}/></Link>
+        <Dialog
+          open={open}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title">{"Êtes-vous sur de vouloir supprimer l'appartement ?"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+              Toute suppression sera irréversible.
+          </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Annuler
+          </Button>
+            <Button onClick={handleClickDelete} color="primary">
+              Supprimer
+          </Button>
+          </DialogActions>
+        </Dialog>
+        <Link to={`/nouvel-appartement`}><AddCircleOutlineIcon className='contacts-icons contacts-icons-add' style={{ color: "green", fontSize: 50 }} /></Link>
       </div>
     );
   }
