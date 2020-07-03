@@ -26,7 +26,7 @@ const useStyles = makeStyles({
     width: '100%',
   },
   tableWrapper: {
-    maxHeight: 440,
+    maxHeight: '80%',
     overflow: 'auto',
   },
 });
@@ -116,7 +116,7 @@ function Apartments() {
                         const value = row[column.id];
                         return (
                           <TableCell key={column.label} align={column.align}>
-                            {column.label === 'Modifier' ? <Link to={`/appartement/${value}`}><EditIcon color='primary' /></Link> : column.label === 'Supprimer' ? <DeleteForeverIcon className='contacts-icons' style={{ color: "red" }} /*onClick={() => handleClickDelete(value)}*/ onClick={handleClickOpen} /> : value}
+                            {column.label === 'Modifier' ? <Link to={`/appartement/${value}`}><EditIcon color='primary' /></Link> : column.label === 'Supprimer' ? <DeleteForeverIcon className='contacts-icons' style={{ color: "red" }} onClick={handleClickOpen} /> : value}
                           </TableCell>
                         );
                       })}
