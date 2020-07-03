@@ -1,20 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import API from '../API';
+import '../styles/booking-card.css';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
 
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
   },
   title: {
     fontSize: 14,
@@ -31,7 +33,11 @@ export default function BookingCard({ bookingDetails : {
   starting_date, 
   ending_date, 
   message }, 
-  handlePatch}) {
+  handlePatch,
+  handleClickOpen,
+  handleClickDelete,
+  handleClose,
+  open}) {
   const classes = useStyles();
 
   const getFullDate = (date) => {
@@ -42,8 +48,12 @@ export default function BookingCard({ bookingDetails : {
     return fullDate;
   };
 
+  const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
+
   return (
-    <Card className={classes.root}>
+    <Card className={`${classes.root} card-container`}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
           Demande de réservation
@@ -63,9 +73,34 @@ export default function BookingCard({ bookingDetails : {
         </Typography>
         <br />
       </CardContent>
-      <CardActions>
-        <Button size="small" onClick={() => handlePatch(id_booking)}>Valider la réservation</Button>
+      <CardActions className='actions-booking'>
+        <Button size="small" className='validation-booking' onClick={() => handlePatch(id_booking)}>Valider la réservation</Button>
+        <Button size="small" className='update-booking'>Modifier la réservation</Button>
+        <Button size="small" className='delete-booking' onClick={handleClickOpen}>Supprimer la réservation</Button>
       </CardActions>
+      <Dialog
+          open={open}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title">{"Êtes-vous sur de vouloir supprimer l'appartement ?"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+              Toute suppression sera irréversible.
+          </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Annuler
+          </Button>
+            <Button onClick={() => handleClickDelete(id_booking)} color="primary">
+              Supprimer
+          </Button>
+          </DialogActions>
+        </Dialog>
     </Card>
   );
 }
