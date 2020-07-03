@@ -8,8 +8,10 @@ import MuiAlert from '@material-ui/lab/Alert';
 const Home = () => {
     const [bookings, setBookings] = useState();
     const [validation, setValidation] = useState(false);
-    const [isValidated, setIsValidated] = useState(false)
-    const [msgValidation, setMsgValidation] = useState('')
+    const [isValidated, setIsValidated] = useState(false);
+    const [msgValidation, setMsgValidation] = useState('');
+    // Alert Dialog Box Before Delete
+    const [open, setOpen] = useState(false);
 
     useEffect(() => {
         API.get('/bookings')
@@ -37,6 +39,26 @@ const Home = () => {
       setMsgValidation('Votre demande de réservation a bien été accepté et apparaîtra sur votre calendrier de réservation.');
     }
 
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
+    
+
+    const handleClickDelete = (id) => {
+      // handleClose();
+      // console.log('Ready to delete')
+      // API.delete(`/bookings/${id}`)
+      // .then(res => res.data)
+
+      // setBookings(
+      //   bookings.filter(booking => booking.id !== id)
+      // )
+    }
+
     const handleCloseMui = (event, reason) => {
       if (reason === 'clickaway') {
         return;
@@ -54,11 +76,14 @@ const Home = () => {
     return (
         <div>
             <h2>Vos dernières demandes de réservation</h2>
-            {console.log(bookings)}
             {bookings.map(b => <BookingCard 
             key={b.id_booking} 
             bookingDetails={b} 
-            handlePatch={handlePatch} />)}
+            handlePatch={handlePatch}
+            handleClickDelete={handleClickDelete}
+            handleClickOpen={handleClickOpen}
+            handleClose={handleClose}
+            open={open} />)}
             <Snackbar open={validation} autoHideDuration={6000} onClose={handleCloseMui}>
               <Alert onClose={handleCloseMui} severity={isValidated ? 'success' : 'error'}>
                 {msgValidation}
