@@ -153,7 +153,7 @@ const Apartment = (props) => {
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
-                  image={apartment.mainPictureUrl}
+                  image={'http://localhost:3000/' + apartment.mainPictureUrl}
                   title="Contemplative Reptile"
                 />
                 <CardContent>

@@ -51,12 +51,12 @@ function Apartments() {
   const handleClickDelete = (id) => {
     handleClose();
     console.log('Ready to delete')
-    // API.delete(`/apartments/${id}`)
-    // .then(res => {
-    //   setRows(
-    //     rows.filter(row => row.id !== id)
-    //   )
-    // })
+/*     API.delete(`/apartments/${id}`)
+    .then(res => {
+      setRows(
+        rows.filter(row => row.id !== id)
+      )
+    }) */
   }
 
   // Style table and pagination
