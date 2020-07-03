@@ -26,7 +26,6 @@ const useStyles = makeStyles({
     width: '100%',
   },
   tableWrapper: {
-    maxHeight: '80%',
     overflow: 'auto',
   },
 });
