@@ -6,15 +6,11 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import API from '../API';
+import '../styles/booking-card.css';
 
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
   },
   title: {
     fontSize: 14,
@@ -43,7 +39,7 @@ export default function BookingCard({ bookingDetails : {
   };
 
   return (
-    <Card className={classes.root}>
+    <Card className={`${classes.root} card-container`}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
           Demande de réservation
@@ -63,10 +59,10 @@ export default function BookingCard({ bookingDetails : {
         </Typography>
         <br />
       </CardContent>
-      <CardActions>
-        <Button size="small" onClick={() => handlePatch(id_booking)}>Valider la réservation</Button>
-        <Button size="small" onClick={() => handlePatch(id_booking)}>Modifier la réservation</Button>
-        <Button size="small" onClick={() => handlePatch(id_booking)}>Supprimer la réservation</Button>
+      <CardActions className='actions-booking'>
+        <Button size="small" className='validation-booking' onClick={() => handlePatch(id_booking)}>Valider la réservation</Button>
+        <Button size="small" className='update-booking' onClick={() => handlePatch(id_booking)}>Modifier la réservation</Button>
+        <Button size="small" className='delete-booking' onClick={() => handlePatch(id_booking)}>Supprimer la réservation</Button>
       </CardActions>
     </Card>
   );
