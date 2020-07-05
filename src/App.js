@@ -14,7 +14,7 @@ import Home from './components/Home';
 import Apartments from './components/Apartments';
 import Apartment from './components/Apartment';
 import NewApartment from './components/NewApartment';
-import Calendar from './components/Calendar';
+import Calendar from './components/CalendarPage';
 
 function App () {
   const [token, setToken] = useState(localStorage.getItem('authToken'))
@@ -27,7 +27,6 @@ function App () {
   if (token) {
     userNameFromToken = jwtDecode(token).name || null
   }
-
 
   return (
     <AuthContext.Provider value={{token, setToken: setTokenInLocalStorage}}>

@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { TextField } from '@material-ui/core';
-import API from '../API';
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
+import React, { useEffect, useState, useContext } from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-import '../styles/Calendar.css';
+import { TextField } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+import '../styles/Calendar.css';
+import API from '../API';
+import UserInfoContext from '../userInfoContext'
 
-const Calendar = () => {
+const NewBooking = () => {
+
   const [booking, setBooking] = useState({
     starting_date: '',
     ending_date: '',
@@ -19,10 +19,7 @@ const Calendar = () => {
   });
   const [apartments, setApartments] = useState()
   const [contacts, setContacts] = useState()
-  const [messageForm, setMessageForm] = useState(false);
-  const [msgAlert, setMsgAlert] = useState('');
-  const [errorForm, setErrorForm] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const { messageForm, setMessageForm, msgAlert, setMsgAlert, errorForm, setErrorForm, loading, setLoading } = useContext(UserInfoContext)
 
   useEffect(() => {
     API.get('/apartments')
@@ -37,17 +34,6 @@ const Calendar = () => {
       })));
   }, []);
 
-  function Alert(props) {
-    return <MuiAlert elevation={6} variant='filled' {...props} />;
-  }
-
-  const handleCloseMui = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setMessageForm(false);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
@@ -58,6 +44,12 @@ const Calendar = () => {
         setMessageForm(true);
         setLoading(false);
         setMsgAlert(`La résèrvation à bien été créer`);
+        setBooking({
+          starting_date: '',
+          ending_date: '',
+          id_apartment: '',
+          id_contact: ''
+        })
       })
       .catch(err => {
         console.log(err);
@@ -80,10 +72,10 @@ const Calendar = () => {
   };
 
   if(!apartments || !contacts){
-    return <p>loading...</p>
+    return <CircularProgress style={{ width: '50px', height: '50px' }} />
   }
   return (
-    <div>
+    <>
       <h2>Nouvelle réservation</h2>
       <form className='booking-container' noValidate autoComplete='off' onSubmit={(e) => handleSubmit(e)}>
         <TextField
@@ -140,7 +132,7 @@ const Calendar = () => {
           <InputLabel htmlFor='outlined-age-native-simple'>Contact</InputLabel>
           <Select
             native
-            value={booking.contact}
+            value={booking.id_contact}
             onChange={(e) => setBooking({ ...booking, id_contact: e.target.value })}
             name='contact'
             label='Contact'
@@ -156,13 +148,8 @@ const Calendar = () => {
         </FormControl>
         {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <Button variant="contained" color="primary" type='submit'>valider</Button>}
       </form>
-      <Snackbar open={messageForm} autoHideDuration={6000} onClose={handleCloseMui}>
-        <Alert onClose={handleCloseMui} severity={!errorForm ? 'success' : 'error'}>
-          {msgAlert}
-        </Alert>
-      </Snackbar>
-    </div>
+    </>
   )
 }
 
-export default Calendar
+export default NewBooking

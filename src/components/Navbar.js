@@ -17,7 +17,7 @@ return (
         <Button color="inherit"><NavLink className='navbar-item' to='/contacts'>Contacts</NavLink></Button>
         <Button color="inherit"><NavLink className='navbar-item' to='/calendrier'>Calendrier</NavLink></Button>
     </Typography>
-    <Button color="inherit">Deconnexion</Button>
+    <Button color="inherit" >Deconnexion</Button>
   </Toolbar>
 </AppBar>
 )
