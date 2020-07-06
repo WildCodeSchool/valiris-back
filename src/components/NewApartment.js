@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { TextField } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import API from '../API';
 import '../styles/Contact.css';
+import { makeStyles } from '@material-ui/core/styles';
+import { TextField } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,6 +34,7 @@ const NewApartment = (props) => {
     weekPrice: '',
     monthPrice: ''
   });
+  
   const [messageForm, setMessageForm] = useState(false);
   const [msgAlert, setMsgAlert] = useState('');
   const [errorForm, setErrorForm] = useState(false);
