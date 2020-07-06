@@ -174,15 +174,15 @@ const NewApartment = (props) => {
           </Button>
         </label> */}
         {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <Button variant="contained" className='contact-valid-button' type='submit'>Valider</Button>}
+        <Button variant="contained">
+          <Link to={`/appartements`}>Retour</Link>
+        </Button>
+        <Snackbar open={messageForm} autoHideDuration={6000} onClose={handleCloseMui}>
+          <Alert onClose={handleCloseMui} severity={!errorForm ? 'success' : 'error'}>
+            {msgAlert}
+          </Alert>
+        </Snackbar>
       </form>
-      <Button variant="contained">
-        <Link to={`/appartements`}>Retour</Link>
-      </Button>
-      <Snackbar open={messageForm} autoHideDuration={6000} onClose={handleCloseMui}>
-        <Alert onClose={handleCloseMui} severity={!errorForm ? 'success' : 'error'}>
-          {msgAlert}
-        </Alert>
-      </Snackbar>
     </div>
   )
 }
