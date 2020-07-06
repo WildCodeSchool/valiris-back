@@ -3,7 +3,7 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import API from '../API';
 
-const CalendarComponent = () => {
+const Calendar = () => {
   const [availabilities, setAvailabilities] = useState();
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const CalendarComponent = () => {
   }, [])
 
   return (
-    <div>
+    <div style={{ margin : '50px'}}>
       <FullCalendar
         plugins={[dayGridPlugin]}
         initialView='dayGridMonth'
@@ -63,4 +63,4 @@ const CalendarComponent = () => {
   )
 }
 
-export default CalendarComponent
+export default Calendar;

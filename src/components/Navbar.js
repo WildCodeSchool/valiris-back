@@ -19,6 +19,7 @@ const Navbar = () => {
           <Button color="inherit"><NavLink className='navbar-item' to='/appartements'>Appartements</NavLink></Button>
           <Button color="inherit"><NavLink className='navbar-item' to='/contacts'>Contacts</NavLink></Button>
           <Button color="inherit"><NavLink className='navbar-item' to='/calendrier'>Calendrier</NavLink></Button>
+          <Button color="inherit"><NavLink className='navbar-item' to='/reservations'>Réservations</NavLink></Button>
         </Typography>
         <Button color="inherit" onClick={() => setTokenInLocalStorage('')}>Deconnexion</Button>
       </Toolbar>
