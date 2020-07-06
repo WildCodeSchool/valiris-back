@@ -7,7 +7,6 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Link } from 'react-router-dom';
-// import for Cards photos
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -20,13 +19,10 @@ import Typography from '@material-ui/core/Typography';
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
-    margin: 40,
-    '& > *': {
-      margin: theme.spacing(1),
-    },
+    margin: 40
   },
   media: {
-    height: 145,
+    height: 100,
   },
   input: {
     display: 'none',
@@ -107,7 +103,6 @@ const Apartment = (props) => {
       })
   }
 
-
   if (!apartment) {
     return <p>loading...</p>
   } else {
@@ -173,20 +168,22 @@ const Apartment = (props) => {
           <div className='photo-container'>
             <Card className={classes.root}>
               <CardActionArea>
-                <CardMedia
-                  className={classes.media}
-                  image={'http://localhost:3000/' + apartment.mainPictureUrl}
-                  title="Contemplative Reptile"
-                />
+                {apartment.mainPictureUrl ?
+                  <CardMedia
+                    className={classes.media}
+                    image={'http://localhost:3000/' + apartment.mainPictureUrl}
+                    title="Contemplative Reptile"
+                  />
+                  :
+                  <p>Pas de photo principal</p>
+                }
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="h5">
                     Photo principal
                 </Typography>
                 </CardContent>
               </CardActionArea>
-              {/*               <input type="file" onChange={e => setApartment({ ...apartment, mainPictureUrl: e.target.files[0] })} /> */}
               <CardActions>
-                {console.log(mainPicture)}
                 <input
                   accept="image/*"
                   className={classes.input}
@@ -226,7 +223,7 @@ const Apartment = (props) => {
                       id="contained-button-file"
                       multiple
                       type="file"
-                      onChange={e => setApartment({ ...apartment, mainPictureUrl: e.target.files[0] })}
+                      onChange={e => setSecondaryPictures(...secondaryPictures, e.target.files[0])}
                     />
                     <label htmlFor="contained-button-file">
                       <Button variant="contained" color="primary" component="span">

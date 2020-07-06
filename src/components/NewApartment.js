@@ -7,8 +7,23 @@ import MuiAlert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    maxWidth: 345,
+    margin: 40
+  },
+  media: {
+    height: 100,
+  },
+  input: {
+    display: 'none',
+  }
+}));
 
 const NewApartment = (props) => {
+  const classes = useStyles();
 
   const [apartment, setApartment] = useState({
     name: '',
@@ -23,7 +38,7 @@ const NewApartment = (props) => {
   const [msgAlert, setMsgAlert] = useState('');
   const [errorForm, setErrorForm] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [mainPicture, setMainPicture] = useState(null)
+  const [mainPicture, setMainPicture] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -128,8 +143,37 @@ const NewApartment = (props) => {
           onChange={(e) => setApartment({ ...apartment, details_en: e.target.value })}
           name='details_en'
         />
-        <input type="file" onChange={e => setMainPicture(e.target.files[0])} />
-        {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <input className='contact-valid-button' type='submit' value='valider' />}
+        <input
+          accept="image/*"
+          className={classes.input}
+          id="main-picture-button"
+          type="file"
+          onChange={e => setMainPicture(e.target.files[0])}
+        />
+        <p>Photo principal :</p>
+        <label htmlFor="main-picture-button">
+          <Button variant="contained" color="primary" component="span">
+            Ajouter
+          </Button>
+        </label>
+        {/* <input
+          accept="image/*"
+          className={classes.input}
+          id="secondary-picture-button"
+          multiple
+          type="file"
+          onChange={e => {
+
+          }
+          }
+        />
+        <p>Photo secondaire :</p>
+        <label htmlFor="secondary-picture-button">
+          <Button variant="contained" color="primary" component="span">
+            Ajouter
+          </Button>
+        </label> */}
+        {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <Button variant="contained" className='contact-valid-button' type='submit'>Valider</Button>}
       </form>
       <Button variant="contained">
         <Link to={`/appartements`}>Retour</Link>
