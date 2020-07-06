@@ -17,15 +17,21 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
-    mawWidth: 345,
-    margin: 40
+    maxWidth: 345,
+    margin: 40,
+    '& > *': {
+      margin: theme.spacing(1),
+    },
   },
   media: {
     height: 145,
   },
-});
+  input: {
+    display: 'none',
+  }
+}));
 
 const Apartment = (props) => {
   const classes = useStyles();
@@ -36,6 +42,9 @@ const Apartment = (props) => {
   const [msgAlert, setMsgAlert] = useState('');
   const [errorForm, setErrorForm] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [mainPicture, setMainPicture] = useState(null);
+  const [secondaryPictures, setSecondaryPictures] = useState([]);
+
 
   useEffect(() => {
     API.get(`/apartments/${id}/back`)
@@ -69,7 +78,20 @@ const Apartment = (props) => {
     e.preventDefault();
     setLoading(true);
     setErrorForm(false);
-    API.patch(`/apartments/${id}`, apartment)
+    const formData = new FormData();
+    formData.append('name', apartment.name);
+    formData.append('details_fr', apartment.details_fr);
+    formData.append('details_en', apartment.details_en);
+    formData.append('title_fr', apartment.title_fr);
+    formData.append('title_en', apartment.title_en);
+    formData.append('week_price', apartment.weekPrice);
+    formData.append('month_price', apartment.monthPrice);
+    formData.append('main_picture_url', mainPicture);
+    API.patch(`/apartments/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
       .then(res => res.data)
       .then(data => {
         setMessageForm(true);
@@ -162,10 +184,21 @@ const Apartment = (props) => {
                 </Typography>
                 </CardContent>
               </CardActionArea>
+              {/*               <input type="file" onChange={e => setApartment({ ...apartment, mainPictureUrl: e.target.files[0] })} /> */}
               <CardActions>
-                <Button size="small" color="primary">
-                  Modifier
-              </Button>
+                {console.log(mainPicture)}
+                <input
+                  accept="image/*"
+                  className={classes.input}
+                  id="contained-button-file"
+                  type="file"
+                  onChange={e => setMainPicture(e.target.files[0])}
+                />
+                <label htmlFor="contained-button-file">
+                  <Button variant="contained" color="primary" component="span">
+                    Modifier
+                </Button>
+                </label>
                 <Button size="small" color="primary">
                   Supprimer
               </Button>
@@ -187,9 +220,19 @@ const Apartment = (props) => {
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
-                    <Button size="small" color="primary">
-                      Modifier
-                        </Button>
+                    <input
+                      accept="image/*"
+                      className={classes.input}
+                      id="contained-button-file"
+                      multiple
+                      type="file"
+                      onChange={e => setApartment({ ...apartment, mainPictureUrl: e.target.files[0] })}
+                    />
+                    <label htmlFor="contained-button-file">
+                      <Button variant="contained" color="primary" component="span">
+                        Modifier
+                </Button>
+                    </label>
                     <Button size="small" color="primary">
                       Supprimer
                         </Button>

@@ -5,6 +5,8 @@ import '../styles/Contact.css';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 
 const NewApartment = (props) => {
 
@@ -38,7 +40,7 @@ const NewApartment = (props) => {
     formData.append('main_picture_url', mainPicture);
     API.post('/apartments', formData, {
       headers: {
-        'Content-Type': 'multipart/form-data' 
+        'Content-Type': 'multipart/form-data'
       }
     })
       .then(res => res.data)
@@ -129,6 +131,9 @@ const NewApartment = (props) => {
         <input type="file" onChange={e => setMainPicture(e.target.files[0])} />
         {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <input className='contact-valid-button' type='submit' value='valider' />}
       </form>
+      <Button variant="contained">
+        <Link to={`/appartements`}>Retour</Link>
+      </Button>
       <Snackbar open={messageForm} autoHideDuration={6000} onClose={handleCloseMui}>
         <Alert onClose={handleCloseMui} severity={!errorForm ? 'success' : 'error'}>
           {msgAlert}
