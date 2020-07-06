@@ -24,7 +24,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 1600,
+    maxWidth: '100%',
   },
   tableWrapper: {
     overflow: 'auto',
