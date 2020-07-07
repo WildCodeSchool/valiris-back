@@ -38,7 +38,7 @@ const Booking = (props) => {
     API.get(`/bookings/${id}`)
       .then(res => res.data)
       .then(data => setBooking(data));
-  }, []);
+  }, [id]);
 
   function Alert(props) {
     return <MuiAlert elevation={6} variant='filled' {...props} />;

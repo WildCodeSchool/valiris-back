@@ -19,7 +19,7 @@ const NewBooking = () => {
   });
   const [apartments, setApartments] = useState()
   const [contacts, setContacts] = useState()
-  const { messageForm, setMessageForm, msgAlert, setMsgAlert, errorForm, setErrorForm, loading, setLoading, reload, setReload } = useContext(UserInfoContext)
+  const { setMessageForm, setMsgAlert, setErrorForm, loading, setLoading, setReload } = useContext(UserInfoContext)
 
   useEffect(() => {
     API.get('/apartments')

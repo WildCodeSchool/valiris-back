@@ -77,6 +77,7 @@ function BookingsTable() {
           color : color
         }
       })));
+      setReload(false);
   }, [reload])
 
   const handleClickDelete = () => {
