@@ -34,12 +34,13 @@ const NewApartment = (props) => {
     weekPrice: '',
     monthPrice: ''
   });
-  
+
   const [messageForm, setMessageForm] = useState(false);
   const [msgAlert, setMsgAlert] = useState('');
   const [errorForm, setErrorForm] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [mainPicture, setMainPicture] = useState(null);
+  const [pictures, setPictures] = useState([]);
+  // const [secondaryPictures, setSecondaryPictures] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -53,7 +54,7 @@ const NewApartment = (props) => {
     formData.append('title_en', apartment.title_en);
     formData.append('week_price', apartment.weekPrice);
     formData.append('month_price', apartment.monthPrice);
-    formData.append('main_picture_url', mainPicture);
+    formData.append('pictures', pictures.picturesArray);
     API.post('/apartments', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -73,6 +74,18 @@ const NewApartment = (props) => {
         setMessageForm(true);
       })
   }
+
+  // const handleSubmitSecondary = (e) => {
+  //   e.preventDefault();
+  //   const formDataSecondaryPictures = new FormData();
+  //   formDataSecondaryPictures.append('secondary_pictures', secondaryPictures);
+  //   formDataSecondaryPictures.append('id_apartment', )
+  //   API.post('/apartments/secondary-pictures', formDataSecondaryPictures, {
+  //     headers: {
+  //       'Content-Type': 'multipart/form-data'
+  //     }
+  //   })
+  // }
 
   function Alert(props) {
     return <MuiAlert elevation={6} variant='filled' {...props} />;
@@ -149,7 +162,11 @@ const NewApartment = (props) => {
           className={classes.input}
           id="main-picture-button"
           type="file"
-          onChange={e => setMainPicture(e.target.files[0])}
+          multiple
+          onChange={e => {
+            const picturesArray = Object.values(e.target.files)
+            setPictures({picturesArray})
+          }}
         />
         <p>Photo principal :</p>
         <label htmlFor="main-picture-button">
@@ -157,33 +174,21 @@ const NewApartment = (props) => {
             Ajouter
           </Button>
         </label>
-        {/* <input
-          accept="image/*"
-          className={classes.input}
-          id="secondary-picture-button"
-          multiple
-          type="file"
-          onChange={e => {
-
-          }
-          }
-        />
-        <p>Photo secondaire :</p>
-        <label htmlFor="secondary-picture-button">
-          <Button variant="contained" color="primary" component="span">
-            Ajouter
-          </Button>
-        </label> */}
         {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <Button variant="contained" className='contact-valid-button' type='submit'>Valider</Button>}
-        <Button variant="contained">
-          <Link to={`/appartements`}>Retour</Link>
-        </Button>
-        <Snackbar open={messageForm} autoHideDuration={6000} onClose={handleCloseMui}>
-          <Alert onClose={handleCloseMui} severity={!errorForm ? 'success' : 'error'}>
-            {msgAlert}
-          </Alert>
-        </Snackbar>
       </form>
+      {/* <form onSubmit={(e) => handleSubmitSecondary(e)} >
+        <input type="file" multiple onChange={e => setSecondaryPictures(e.target.files)}/>
+        {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <Button variant="contained" className='contact-valid-button' type='submit'>Valider photos secondaires</Button>}
+      </form> */}
+      <Button
+        variant="contained">
+        <Link to={`/appartements`}>Retour</Link>
+      </Button>
+      <Snackbar open={messageForm} autoHideDuration={6000} onClose={handleCloseMui}>
+        <Alert onClose={handleCloseMui} severity={!errorForm ? 'success' : 'error'}>
+          {msgAlert}
+        </Alert>
+      </Snackbar>
     </div>
   )
 }
