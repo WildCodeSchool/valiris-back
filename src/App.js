@@ -14,11 +14,8 @@ import Home from './components/Home';
 import Apartments from './components/Apartments';
 import Apartment from './components/Apartment';
 import NewApartment from './components/NewApartment';
-<<<<<<< HEAD
 import Calendar from './components/CalendarPage';
-=======
 import Booking from './components/Booking';
->>>>>>> feature/U12/accueil
 
 function App () {
   const [token, setToken] = useState(localStorage.getItem('authToken'))
