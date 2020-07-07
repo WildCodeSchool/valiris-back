@@ -19,7 +19,7 @@ const NewBooking = () => {
   });
   const [apartments, setApartments] = useState()
   const [contacts, setContacts] = useState()
-  const { messageForm, setMessageForm, msgAlert, setMsgAlert, errorForm, setErrorForm, loading, setLoading } = useContext(UserInfoContext)
+  const { messageForm, setMessageForm, msgAlert, setMsgAlert, errorForm, setErrorForm, loading, setLoading, reload, setReload } = useContext(UserInfoContext)
 
   useEffect(() => {
     API.get('/apartments')
@@ -58,6 +58,7 @@ const NewBooking = () => {
         setLoading(false);
         setMessageForm(true);
       })
+      setReload(true);
   }
 
   const getFullDate = () => {
@@ -72,7 +73,7 @@ const NewBooking = () => {
   };
 
   if(!apartments || !contacts){
-    return <CircularProgress style={{ width: '50px', height: '50px' }} />
+    return <div className='loader'><CircularProgress style={{ width: '70px', height: '70px' }} /></div>
   }
   return (
     <>

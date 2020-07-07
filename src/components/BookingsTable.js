@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import API from '../API';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -21,6 +21,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import Button from '@material-ui/core/Button';
+import UserInfoContext from '../userInfoContext';
 
 const useStyles = makeStyles({
   root: {
@@ -45,6 +46,7 @@ function BookingsTable() {
   const [rows, setRows] = useState()
   const [currentId, setCurrentId] = useState(null)
   const today = Date.now()
+  const { reload, setReload } = useContext(UserInfoContext)
 
   useEffect(() => {
     API.get('/apartments/availabilities/all')
@@ -77,7 +79,7 @@ function BookingsTable() {
           color : color
         }
       })));
-  }, [])
+  }, [reload])
 
   const handleClickDelete = () => {
     API.delete(`/bookings/${currentId}`)
@@ -116,7 +118,7 @@ function BookingsTable() {
     };
 
   if (!rows) {
-    return <p>loading...</p>
+    return <></>
   } else {
     return (
       <div className='contacts-container'>
@@ -145,7 +147,7 @@ function BookingsTable() {
                         const color = row.color
                         return (
                           <TableCell key={column.id} align={column.align} style={{ color:`${color}` }}>
-                            {column.label === 'Modifier' ? <Link to={`/bookings/${value}`}><EditIcon color='primary' /></Link> : column.label === 'Supprimer' ? <DeleteForeverIcon className='contacts-icons' style={{ color: "red" }} onClick={() => handleClickOpen(value)} /> : value}
+                            {column.label === 'Modifier' ? <Link to={`/reservation/${value}`}><EditIcon color='primary' /></Link> : column.label === 'Supprimer' ? <DeleteForeverIcon className='contacts-icons' style={{ color: "red" }} onClick={() => handleClickOpen(value)} /> : value}
                           </TableCell>
                         );
                       })}

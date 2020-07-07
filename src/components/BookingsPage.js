@@ -13,6 +13,7 @@ const Bookings = () => {
   const [msgAlert, setMsgAlert] = useState('');
   const [errorForm, setErrorForm] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [reload, setReload] = useState(false);
 
   function Alert(props) {
     return <MuiAlert elevation={6} variant='filled' {...props} />;
@@ -26,7 +27,7 @@ const Bookings = () => {
   };
 
   return (
-    <UserInfoContext.Provider value={{ messageForm, setMessageForm, msgAlert, setMsgAlert, errorForm, setErrorForm, loading, setLoading }}>
+    <UserInfoContext.Provider value={{ messageForm, setMessageForm, msgAlert, setMsgAlert, errorForm, setErrorForm, loading, setLoading, reload, setReload }}>
       <NewBooking />
       <BookingsTable />
       <Snackbar open={messageForm} autoHideDuration={6000} onClose={handleCloseMui}>
