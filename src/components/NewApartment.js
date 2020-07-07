@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { TextField } from '@material-ui/core';
 import API from '../API';
 import '../styles/Contact.css';
@@ -36,7 +36,6 @@ const NewApartment = (props) => {
     formData.append('week_price', apartment.weekPrice);
     formData.append('month_price', apartment.monthPrice);
     formData.append('main_picture_url', mainPicture);
-    console.log(formData)
     API.post('/apartments', formData, {
       headers: {
         'Content-Type': 'multipart/form-data' 
@@ -44,7 +43,6 @@ const NewApartment = (props) => {
     })
       .then(res => res.data)
       .then(data => {
-        console.log(data)
         setMessageForm(true);
         setLoading(false);
         setMsgAlert(`L'appartement ${data.name} a bien été créé`);
