@@ -10,7 +10,6 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { Link } from 'react-router-dom';
 import '../styles/Contact.css';
 import moment from 'moment';
@@ -19,9 +18,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Slide from '@material-ui/core/Slide';
 import Button from '@material-ui/core/Button';
-import UserInfoContext from '../userInfoContext';
+import UserInfoContext from '../userInfoContext'
 
 const useStyles = makeStyles({
   root: {
@@ -196,7 +194,6 @@ function BookingsTable() {
           </Button>
           </DialogActions>
         </Dialog>
-        {/* <Link to={`/nouveau-contact`}><AddCircleOutlineIcon className='contacts-icons contacts-icons-add' style={{ color:"green", fontSize: 50 }}/></Link> */}
       </div>
     );
   }

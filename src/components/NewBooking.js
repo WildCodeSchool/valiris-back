@@ -43,7 +43,7 @@ const NewBooking = () => {
       .then(() => {
         setMessageForm(true);
         setLoading(false);
-        setMsgAlert(`La résèrvation à bien été créer`);
+        setMsgAlert(`La réservation à bien été créée`);
         setBooking({
           starting_date: '',
           ending_date: '',

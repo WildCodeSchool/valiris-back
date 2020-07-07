@@ -41,7 +41,7 @@ const Contact = () => {
     .then(data => {
       setMessageForm(true);
       setLoading(false);
-      setMsgAlert(`Le contact ${data.firstname} ${data.lastname} à bien été créer`);
+      setMsgAlert(`Le contact ${data.firstname} ${data.lastname} a bien été créé`);
     })
     .catch(err => {
       console.log(err);
@@ -53,9 +53,6 @@ const Contact = () => {
   }
 
 
-  if(!contact){
-    return <p>loading...</p>
-  } else {
     return (
       <div >
         <form className='contact-container' noValidate autoComplete='off' onSubmit={(e) => handleSubmit(e)}>
@@ -100,7 +97,6 @@ const Contact = () => {
         </form>
       </div>
     )
-  }
 }
 
 export default Contact;
