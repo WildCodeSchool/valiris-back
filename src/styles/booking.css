@@ -1,0 +1,11 @@
+.Updatebooking-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-booking, .date-input{
+  margin: 20px !important;
+  width: 300px ;
+}

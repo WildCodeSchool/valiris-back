@@ -5,10 +5,9 @@ import MuiAlert from '@material-ui/lab/Alert';
 import '../styles/Calendar.css';
 import NewBooking from './NewBooking';
 import UserInfoContext from '../userInfoContext'
-import CalendarComponent from './CalendarComponent'
+import BookingsTable from './BookingsTable';
 
-
-const Calendar = () => {
+const Bookings = () => {
 
   const [messageForm, setMessageForm] = useState(false);
   const [msgAlert, setMsgAlert] = useState('');
@@ -29,7 +28,7 @@ const Calendar = () => {
   return (
     <UserInfoContext.Provider value={{ messageForm, setMessageForm, msgAlert, setMsgAlert, errorForm, setErrorForm, loading, setLoading }}>
       <NewBooking />
-      <CalendarComponent />
+      <BookingsTable />
       <Snackbar open={messageForm} autoHideDuration={6000} onClose={handleCloseMui}>
         <Alert onClose={handleCloseMui} severity={!errorForm ? 'success' : 'error'}>
           {msgAlert}
@@ -39,4 +38,4 @@ const Calendar = () => {
   )
 }
 
-export default Calendar
+export default Bookings
