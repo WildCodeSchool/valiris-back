@@ -9,6 +9,13 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
@@ -39,27 +46,14 @@ const NewApartment = (props) => {
   const [msgAlert, setMsgAlert] = useState('');
   const [errorForm, setErrorForm] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [pictures, setPictures] = useState([]);
-  // const [secondaryPictures, setSecondaryPictures] = useState(null);
+  const [mainPicture, setMainPicture] = useState();
+  const [secondaryPictures, setSecondaryPictures] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
     setErrorForm(false);
-    const formData = new FormData();
-    formData.append('name', apartment.name);
-    formData.append('details_fr', apartment.details_fr);
-    formData.append('details_en', apartment.details_en);
-    formData.append('title_fr', apartment.title_fr);
-    formData.append('title_en', apartment.title_en);
-    formData.append('week_price', apartment.weekPrice);
-    formData.append('month_price', apartment.monthPrice);
-    formData.append('pictures', pictures.picturesArray);
-    API.post('/apartments', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
+    API.post('/apartments', { ...apartment, mainPicture, secondaryPictures })
       .then(res => res.data)
       .then(data => {
         setMessageForm(true);
@@ -75,17 +69,53 @@ const NewApartment = (props) => {
       })
   }
 
-  // const handleSubmitSecondary = (e) => {
-  //   e.preventDefault();
-  //   const formDataSecondaryPictures = new FormData();
-  //   formDataSecondaryPictures.append('secondary_pictures', secondaryPictures);
-  //   formDataSecondaryPictures.append('id_apartment', )
-  //   API.post('/apartments/secondary-pictures', formDataSecondaryPictures, {
-  //     headers: {
-  //       'Content-Type': 'multipart/form-data'
-  //     }
-  //   })
-  // }
+  const uploadCurrentImage = (e) => {
+    e.preventDefault();
+    const image = e.target.files[0]
+    const id = e.target.id
+    setLoading(true);
+    setErrorForm(false);
+    const formData = new FormData();
+    formData.append('currentPicture', image);
+    if (e.target.name === 'main-picture') {
+      API.post('/apartments/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+        .then(res => res.data)
+        .then(data => {
+          setMainPicture(data);
+          setLoading(false);
+        })
+    } else if (e.target.name === 'secondary-picture') {
+      API.post('/apartments/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+        .then(res => res.data)
+        .then(data => {
+          setSecondaryPictures([...secondaryPictures, data]);
+          setLoading(false);
+        })
+    } else if (e.target.name === 'update-secondary-picture'){
+      API.post('/apartments/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+        .then(res => res.data)
+        .then(data => {
+          setSecondaryPictures(secondaryPictures.map((url,i) => {
+            if (i === id){
+              return data
+            }
+          }));
+          setLoading(false);
+        })
+    }
+  }
 
   function Alert(props) {
     return <MuiAlert elevation={6} variant='filled' {...props} />;
@@ -158,15 +188,12 @@ const NewApartment = (props) => {
           name='details_en'
         />
         <input
+          name='main-picture'
           accept="image/*"
           className={classes.input}
           id="main-picture-button"
           type="file"
-          multiple
-          onChange={e => {
-            const picturesArray = Object.values(e.target.files)
-            setPictures({picturesArray})
-          }}
+          onChange={e => uploadCurrentImage(e)}
         />
         <p>Photo principal :</p>
         <label htmlFor="main-picture-button">
@@ -174,12 +201,97 @@ const NewApartment = (props) => {
             Ajouter
           </Button>
         </label>
+        {mainPicture &&
+          <Card className={classes.root}>
+            <CardActionArea>
+              {mainPicture ?
+                <CardMedia
+                  className={classes.media}
+                  image={'http://localhost:3000/' + mainPicture}
+                />
+                :
+                <p>Pas de photo principal</p>
+              }
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="h5">
+                  Photo principal
+                      </Typography>
+              </CardContent>
+            </CardActionArea>
+            <CardActions>
+              <input
+                name='main-picture'
+                accept="image/*"
+                className={classes.input}
+                id="main-picture-button"
+                type="file"
+                onChange={e => uploadCurrentImage(e)}
+              />
+              <label htmlFor="main-picture-button">
+                <Button variant="contained" color="primary" component="span">
+                  Modifier
+                </Button>
+              </label>
+              <Button size="small" color="primary">
+                Supprimer
+              </Button>
+            </CardActions>
+          </Card>
+        }
+        <input
+          name='secondary-picture'
+          accept="image/*"
+          className={classes.input}
+          id="secondary-picture-button"
+          type="file"
+          onChange={e => {
+            uploadCurrentImage(e)
+          }}
+        />
+        <p>Photo secondaire :</p>
+        <label htmlFor="secondary-picture-button">
+          <Button variant="contained" color="primary" component="span">
+            Ajouter
+          </Button>
+        </label>
+        {secondaryPictures.map((picture, index) => {
+          console.log(index)
+          return (
+            <Card className={classes.root}>
+              <CardActionArea>
+                <CardMedia
+                  className={classes.media}
+                  image={'http://localhost:3000/' + picture}
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="h5">
+                    Photo secondaire
+                      </Typography>
+                </CardContent>
+              </CardActionArea>
+              <CardActions>
+                <input
+                  name='update-secondary-picture'
+                  accept="image/*"
+                  className={classes.input}
+                  id={index}
+                  type="file"
+                  onChange={(e) => uploadCurrentImage(e)}
+                />
+                <label htmlFor={index}>
+                  <Button variant="contained" color="primary" component="span">
+                    Modifier
+                      </Button>
+                </label>
+                <Button size="small" color="primary">
+                  Supprimer
+              </Button>
+              </CardActions>
+            </Card>
+          )
+        })}
         {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <Button variant="contained" className='contact-valid-button' type='submit'>Valider</Button>}
       </form>
-      {/* <form onSubmit={(e) => handleSubmitSecondary(e)} >
-        <input type="file" multiple onChange={e => setSecondaryPictures(e.target.files)}/>
-        {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <Button variant="contained" className='contact-valid-button' type='submit'>Valider photos secondaires</Button>}
-      </form> */}
       <Button
         variant="contained">
         <Link to={`/appartements`}>Retour</Link>

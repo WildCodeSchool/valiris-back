@@ -40,23 +40,26 @@ const Apartment = (props) => {
   const [loading, setLoading] = useState(false);
   const [mainPicture, setMainPicture] = useState(null);
   const [secondaryPictures, setSecondaryPictures] = useState([]);
+  const [state, setstate] = useState([])
 
 
   useEffect(() => {
     API.get(`/apartments/${id}/back`)
       .then(res => res.data)
-      .then(data => setApartment({
-        id: data.id,
-        name: data.name,
-        details_fr: data.details_fr,
-        details_en: data.details_en,
-        title_fr: data.title_fr,
-        title_en: data.title_en,
-        weekPrice: data.week_price,
-        monthPrice: data.month_price,
-        mainPictureUrl: data.main_picture_url,
-        url: data.url
-      }));
+      .then(data => {
+        setApartment({
+          id: data.id,
+          name: data.name,
+          details_fr: data.details_fr,
+          details_en: data.details_en,
+          title_fr: data.title_fr,
+          title_en: data.title_en,
+          weekPrice: data.week_price,
+          monthPrice: data.month_price,
+        })
+        setMainPicture(data.main_picture_url)
+        setSecondaryPictures(data.urlSecondaryPictures)
+      });
   }, [id]);
 
   function Alert(props) {
@@ -74,20 +77,7 @@ const Apartment = (props) => {
     e.preventDefault();
     setLoading(true);
     setErrorForm(false);
-    const formData = new FormData();
-    formData.append('name', apartment.name);
-    formData.append('details_fr', apartment.details_fr);
-    formData.append('details_en', apartment.details_en);
-    formData.append('title_fr', apartment.title_fr);
-    formData.append('title_en', apartment.title_en);
-    formData.append('week_price', apartment.weekPrice);
-    formData.append('month_price', apartment.monthPrice);
-    formData.append('main_picture_url', mainPicture);
-    API.patch(`/apartments/${id}`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
+    API.patch(`/apartments/${id}`, { ...apartment, mainPicture, secondaryPictures })
       .then(res => res.data)
       .then(data => {
         setMessageForm(true);
@@ -103,11 +93,44 @@ const Apartment = (props) => {
       })
   }
 
+  const uploadCurrentImage = (e) => {
+    e.preventDefault();
+    const image = e.target.files[0]
+    setLoading(true);
+    setErrorForm(false);
+    const formData = new FormData();
+    formData.append('currentPicture', image);
+    if (e.target.name === 'main-picture') {
+      API.post('/apartments/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+        .then(res => res.data)
+        .then(data => {
+          setMainPicture(data);
+          setLoading(false);
+        })
+    } else {
+      API.post('/apartments/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+        .then(res => res.data)
+        .then(data => {
+          setSecondaryPictures([...secondaryPictures, data]);
+          setLoading(false);
+        })
+    }
+  }
+
   if (!apartment) {
-    return <p>loading...</p>
+    return <CircularProgress className='loader' style={{ width: '70px', height: '70px' }} />
   } else {
     return (
       <div >
+        {console.log(secondaryPictures)}
         <form className='contact-container' noValidate autoComplete='off' onSubmit={(e) => handleSubmit(e)}>
           <TextField
             className='input-contact'
@@ -168,10 +191,10 @@ const Apartment = (props) => {
           <div className='photo-container'>
             <Card className={classes.root}>
               <CardActionArea>
-                {apartment.mainPictureUrl ?
+                {mainPicture ?
                   <CardMedia
                     className={classes.media}
-                    image={'http://localhost:3000/' + apartment.mainPictureUrl}
+                    image={'http://localhost:3000/' + mainPicture}
                     title="Contemplative Reptile"
                   />
                   :
@@ -189,25 +212,38 @@ const Apartment = (props) => {
                   className={classes.input}
                   id="contained-button-file"
                   type="file"
-                  onChange={e => setMainPicture(e.target.files[0])}
+                  onChange={e => uploadCurrentImage(e)}
                 />
                 <label htmlFor="contained-button-file">
                   <Button variant="contained" color="primary" component="span">
                     Modifier
                 </Button>
                 </label>
-                <Button size="small" color="primary">
-                  Supprimer
-              </Button>
               </CardActions>
             </Card>
-            {apartment.url.map(sp => {
+            <input
+              name='secondary-picture'
+              accept="image/*"
+              className={classes.input}
+              id="secondary-picture-button"
+              type="file"
+              onChange={e => {
+                uploadCurrentImage(e)
+              }}
+            />
+            <p>Photo secondaire :</p>
+            <label htmlFor="secondary-picture-button">
+              <Button variant="contained" color="primary" component="span">
+                Ajouter
+              </Button>
+            </label>
+            {secondaryPictures.map(sp => {
               return (
                 <Card className={classes.root}>
                   <CardActionArea>
                     <CardMedia
                       className={classes.media}
-                      image={sp}
+                      image={sp.url}
                       title="Contemplative Reptile"
                     />
                     <CardContent>
@@ -223,7 +259,7 @@ const Apartment = (props) => {
                       id="contained-button-file"
                       multiple
                       type="file"
-                      onChange={e => setSecondaryPictures(...secondaryPictures, e.target.files[0])}
+                      onChange={e => uploadCurrentImage(e)}
                     />
                     <label htmlFor="contained-button-file">
                       <Button variant="contained" color="primary" component="span">

@@ -24,7 +24,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 1600,
+    width: '100%',
   },
   tableWrapper: {
     maxHeight: '80%',
@@ -118,7 +118,7 @@ function Apartments() {
   };
 
   if (!rows) {
-    return <p>loading...</p>
+    return <CircularProgress className='loader' style={{ width: '70px', height: '70px' }} />
   } else {
     return (
       <div className='contacts-container'>
