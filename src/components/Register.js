@@ -54,6 +54,7 @@ export default function Register() {
   const submitValidation = (e) => {
     e.preventDefault()
     const { name, email, password } = user;
+    const emailValidator = /[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}/;
     let msgAlertCopy = msgAlert;
     if (!name || !email || !password) {
       setMessageForm(true)
@@ -63,6 +64,10 @@ export default function Register() {
       setMessageForm(true)
       setErrorForm(true)
       setMsgAlert('Les mots de passe ne correspondent pas');
+    } else if (!emailValidator.test(e.target.value)) {
+      setMessageForm(true)
+      setErrorForm(true)
+      setMsgAlert('Merci de renseigner une adresse e-mail valide.');
     } else {
       handleSubmit()
     }
