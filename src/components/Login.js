@@ -44,7 +44,7 @@ export default function Login() {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const {setToken} = useContext(AuthContext)
+  const {setToken, setId} = useContext(AuthContext)
 
   const [messageForm, setMessageForm] = useState(false);
   const [msgAlert, setMsgAlert] = useState('');
@@ -56,6 +56,7 @@ export default function Login() {
       .then(res => res.data)
       .then((data) => {
         setToken(data.token)
+        setId(data.data.id)
       })
       .catch(err => {
         console.log(err);

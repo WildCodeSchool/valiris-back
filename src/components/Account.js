@@ -17,7 +17,7 @@ const Account = (props) => {
   useEffect(() => {
     API.get(`/users/${id}`)
       .then(res => res.data)
-      .then(data => setContact({
+      .then(data => setUser({
         name : data.name,
         email : data.email,
         password : data.password,
@@ -44,7 +44,7 @@ const Account = (props) => {
     .then(data => {
       setMessageForm(true);
       setLoading(false);
-      setMsgAlert(`Le contact ${data.firstname} ${data.lastname} à bien été mise à jour`);
+      setMsgAlert(`L'utilisateur' ${data.name} a bien été mis à jour`);
     })
     .catch(err =>{
       console.log(err);
@@ -56,7 +56,7 @@ const Account = (props) => {
   }
 
 
-  if(!contact){
+  if(!user){
     return <div className='loader'><CircularProgress style={{ width: '70px', height: '70px' }} /></div>
   } else {
     return (
@@ -66,7 +66,7 @@ const Account = (props) => {
             className='input-contact'
             label='Nom'
             variant='outlined'
-            value={contact.name}
+            value={user.name}
             onChange={(e) => setUser({...user, name : e.target.value})}
             name='name'
           />
@@ -74,8 +74,8 @@ const Account = (props) => {
             className='input-contact'
             label='E-mail'
             variant='outlined'
-            value={contact.email}
-            onChange={(e) => setContact({...user, email : e.target.value})}
+            value={user.email}
+            onChange={(e) => setUser({...user, email : e.target.value})}
             name='email'
           />
           <TextField
@@ -83,8 +83,8 @@ const Account = (props) => {
             label='Mot de passe'
             type="password"
             variant='outlined'
-            value={contact.phone}
-            onChange={(e) => setContact({...user, password : e.target.value})}
+            value={user.password}
+            onChange={(e) => setUser({...user, password : e.target.value})}
             name='password'
           />
           {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <input className='contact-valid-button' type='submit' value='valider' />}
@@ -99,4 +99,4 @@ const Account = (props) => {
   }
 }
 
-export default Contact;
+export default Account;

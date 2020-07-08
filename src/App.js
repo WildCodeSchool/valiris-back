@@ -17,9 +17,11 @@ import NewApartment from './components/NewApartment';
 import Calendar from './components/Calendar';
 import BookingsPage from './components/BookingsPage';
 import Booking from './components/Booking';
+import Account from './components/Account';
 
 function App () {
   const [token, setToken] = useState(localStorage.getItem('authToken'))
+  const [id, setId] = useState()
   const setTokenInLocalStorage = (token) => {
     localStorage.setItem('authToken', token)
     setToken(token)
@@ -30,7 +32,7 @@ function App () {
   }
 
   return (
-    <AuthContext.Provider value={{token, setToken: setTokenInLocalStorage}}>
+    <AuthContext.Provider value={{token, setToken: setTokenInLocalStorage, id, setId}}>
       <Router>
         <div className="App">
         {!!token  && <Navbar />}
@@ -65,6 +67,7 @@ function App () {
               <BookingsPage />
             </PrivateRoute>
             <PrivateRoute exact path="/reservation/:id" component={(props) => <Booking {...props}/>} />
+            <PrivateRoute exact path="/mon-compte/:id" component={(props) => <Account {...props}/>} />
           </Switch>
         </div>
       </Router>

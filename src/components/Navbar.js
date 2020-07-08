@@ -10,9 +10,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import Account from './Account';
 
 const Navbar = () => {
-  const { setToken: setTokenInLocalStorage } = useContext(AuthContext);
+  const { setToken: setTokenInLocalStorage,  id} = useContext(AuthContext);
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -65,7 +66,7 @@ const Navbar = () => {
             open={open}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>Mon compte</MenuItem>
+            <NavLink to={`mon-compte/${id}`}><MenuItem onClick={handleClose}>Mon compte</MenuItem></NavLink>
             <NavLink to='/register'><MenuItem onClick={handleClose}>Créer un nouvel utilisateur</MenuItem></NavLink>
             <MenuItem onClick={() => setTokenInLocalStorage('')}>Déconnexion</MenuItem>
           </Menu>
