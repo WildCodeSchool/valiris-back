@@ -1,40 +1,31 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import '../styles/navbar.css';
-import BurgerButton from './BurgerButton';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import AuthContext from '../authContext';
 
 const Navbar = () => {
-    const [openBurger, setOpenBurger] = useState(false);
 
-    const handleOpen = () => {
-      setOpenBurger(true);
-    };
-  
-    const handleClose = () => {
-      setOpenBurger(false);
-    };
-
-  let navClasses = 'nav-menu';
-  if (openBurger) {
-    navClasses = 'nav-menu open';
-  }
+  const { setToken: setTokenInLocalStorage } = useContext(AuthContext);
 
   return (
-    <>
-      <BurgerButton handleClick={handleOpen} />
-      <nav className={`mobile-menu ${navClasses}`}>
-        <div className='closing-menu'>
-          <i className='fas fa-times' onClick={handleClose} />
-        </div>
-        <ul className='menuItems'>
-          <li><NavLink onClick={handleClose} to='/'>Accueil</NavLink></li>
-          <li><NavLink onClick={handleClose} to='/appartements'>Appartement</NavLink></li>
-          <li><NavLink onClick={handleClose} to='/contacts'>Contacts</NavLink></li>
-          <li><NavLink onClick={handleClose} to='/calendrier'>Calendrier</NavLink></li>
-        </ul>
-      </nav>
-    </>
-  );
+    <AppBar position="static">
+      <Toolbar>
+        <Typography variant="h6" className='navbar-list'>
+          <Button color="inherit"><NavLink className='navbar-item' to='/'>Accueil</NavLink></Button>
+          <Button color="inherit"><NavLink className='navbar-item' to='/appartements'>Appartements</NavLink></Button>
+          <Button color="inherit"><NavLink className='navbar-item' to='/contacts'>Contacts</NavLink></Button>
+          <Button color="inherit"><NavLink className='navbar-item' to='/calendrier'>Calendrier</NavLink></Button>
+          <Button color="inherit"><NavLink className='navbar-item' to='/reservations'>Réservations</NavLink></Button>
+        </Typography>
+        <Button color="inherit" onClick={() => setTokenInLocalStorage('')}>Deconnexion</Button>
+      </Toolbar>
+    </AppBar>
+  )
 };
 
 export default Navbar;
+
