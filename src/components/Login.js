@@ -15,6 +15,8 @@ import Container from '@material-ui/core/Container';
 import AuthContext from '../authContext';
 import API from '../API';
 import { Redirect } from "react-router-dom";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -44,12 +46,37 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const {setToken} = useContext(AuthContext)
 
+  const [messageForm, setMessageForm] = useState(false);
+  const [msgAlert, setMsgAlert] = useState('');
+  const [errorForm, setErrorForm] = useState(false);
+
   const handleSubmit = event => {
     event.preventDefault()
-    API.post('/auth/login', {email, password}).then(res => res.data).then((data) => {
-      setToken(data.token)
-    })
+    API.post('/auth/login', {email, password})
+      .then(res => res.data)
+      .then((data) => {
+        setToken(data.token)
+      })
+      .catch(err => {
+        console.log(err);
+        setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau');
+        setErrorForm(true);
+        setMessageForm(true);
+      })
   }
+
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant='filled' {...props} />;
+  }
+
+  const handleCloseMui = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setMessageForm(false);
+  };
+
+
   if(!!token){
     return (
       <Redirect
@@ -96,10 +123,6 @@ export default function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <Button
               type="submit"
               fullWidth
@@ -110,6 +133,11 @@ export default function Login() {
               Connexion
             </Button>
           </form>
+          <Snackbar open={messageForm} autoHideDuration={6000} onClose={handleCloseMui}>
+            <Alert onClose={handleCloseMui} severity={!errorForm ? 'success' : 'error'}>
+              {msgAlert}
+            </Alert>
+          </Snackbar>
         </div>
         <Box mt={8}>
         </Box>
