@@ -64,10 +64,15 @@ export default function Register() {
       setMessageForm(true)
       setErrorForm(true)
       setMsgAlert('Les mots de passe ne correspondent pas');
-    } else if (!emailValidator.test(e.target.value)) {
+    } else if (!emailValidator.test(user.email)) {
       setMessageForm(true)
       setErrorForm(true)
       setMsgAlert('Merci de renseigner une adresse e-mail valide.');
+    }
+    else if (passwordVerif.length < 5) {
+      setMessageForm(true)
+      setErrorForm(true)
+      setMsgAlert('Le mot de passe doit contenir au moins 5 caractères');
     } else {
       handleSubmit()
     }
@@ -145,7 +150,7 @@ export default function Register() {
                 required
                 fullWidth
                 id="email"
-                label="Addresse email"
+                label="Adresse email"
                 name="email"
                 autoComplete="email"
                 value={user.email}
@@ -158,10 +163,11 @@ export default function Register() {
                 required
                 fullWidth
                 name="password"
-                label="Mot de passe"
+                label="Mot de passe (min: 5 caractères)"
                 type="password"
                 id="password"
                 autoComplete="new-password"
+                value={user.password}
                 onChange={(e) => handleChangeForm(e)}
               />
             </Grid>
@@ -175,12 +181,13 @@ export default function Register() {
                 type="password"
                 id="passwordVerif"
                 autoComplete="new-password"
+                value={passwordVerif}
                 onChange={(e) => setPasswordVerif(e.target.value)}
               />
             </Grid>
           </Grid>
           {loading ?
-            <CircularProgress style={{ width: '70px', height: '70px' }} />
+            <CircularProgress className='loader' style={{ width: '70px', height: '70px' }} />
             :
             <Button
               type="submit"
