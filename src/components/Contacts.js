@@ -13,6 +13,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { Link } from 'react-router-dom';
 import '../styles/Contact.css';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles({
   root: {
@@ -67,7 +68,7 @@ function Contacts() {
   };
 
   if(!rows){
-    return <p>loading...</p>
+    return <div className='loader'><CircularProgress style={{ width: '70px', height: '70px' }} /></div>
   } else {
     return (
       <div className='contacts-container'>

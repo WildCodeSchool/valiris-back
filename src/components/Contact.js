@@ -59,7 +59,7 @@ const Contact = (props) => {
 
 
   if(!contact){
-    return <p>loading...</p>
+    return <div className='loader'><CircularProgress style={{ width: '70px', height: '70px' }} /></div>
   } else {
     return (
       <div >

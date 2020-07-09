@@ -11,7 +11,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
@@ -25,14 +24,12 @@ const useStyles = makeStyles({
   },
 });
 
-export default function BookingCard({ bookingDetails : { 
+export default function InfosCard({ bookingDetails : { 
   id_booking, 
   firstname, 
-  lastname,
-  email,
-  phone,
-  starting_date, 
-  ending_date, 
+  lastname, 
+  email, 
+  phone, 
   message }, 
   handlePatch,
   handleClickOpen,
@@ -41,13 +38,6 @@ export default function BookingCard({ bookingDetails : {
   open}) {
   const classes = useStyles();
 
-  const getFullDate = (date) => {
-    let day = date.slice(0, 10).split('').splice(8, 9).join('')
-    let month = date.slice(0, 10).split('').slice(5, 7).join('');
-    let year = date.slice(0, 10).split('').slice(0, 4).join('');
-    const fullDate = `${day}-${month}-${year}`;
-    return fullDate;
-  };
 
   return (
     <Card className={`${classes.root} card-container`}>
@@ -66,10 +56,6 @@ export default function BookingCard({ bookingDetails : {
         </Typography>
         <br />
         <Typography variant="body2" component="p">
-          Du <strong>{starting_date && getFullDate(starting_date)}</strong> au <strong>{ending_date && getFullDate(ending_date)}</strong>.
-        </Typography>
-        <br />
-        <Typography variant="body2" component="p">
           <strong>Message:</strong> 
           <br />
           {message}
@@ -78,7 +64,7 @@ export default function BookingCard({ bookingDetails : {
       </CardContent>
       <CardActions className='actions-booking'>
         <Button size="small" className='validation-booking' onClick={() => handlePatch(id_booking)}>Valider la réservation</Button>
-        <Link to={`/reservation/${id_booking}`}><Button size="small" className='update-booking'>Modifier la réservation</Button></Link>
+        <Button size="small" className='update-booking'>Modifier la réservation</Button>
         <Button size="small" className='delete-booking' onClick={handleClickOpen}>Supprimer la réservation</Button>
       </CardActions>
       <Dialog
