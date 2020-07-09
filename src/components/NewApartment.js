@@ -69,10 +69,9 @@ const NewApartment = (props) => {
       })
   }
 
-  const uploadCurrentImage = (e) => {
+  const uploadCurrentImage = (e, picture) => {
     e.preventDefault();
     const image = e.target.files[0]
-    const id = e.target.id
     setLoading(true);
     setErrorForm(false);
     const formData = new FormData();
@@ -89,6 +88,7 @@ const NewApartment = (props) => {
           setLoading(false);
         })
     } else if (e.target.name === 'secondary-picture') {
+      // e.target.value = null;
       API.post('/apartments/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -99,7 +99,7 @@ const NewApartment = (props) => {
           setSecondaryPictures([...secondaryPictures, data]);
           setLoading(false);
         })
-    } else if (e.target.name === 'update-secondary-picture'){
+    } else if (e.target.name === 'update-secondary-picture') {
       API.post('/apartments/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -107,14 +107,20 @@ const NewApartment = (props) => {
       })
         .then(res => res.data)
         .then(data => {
-          setSecondaryPictures(secondaryPictures.map((url,i) => {
-            if (i === id){
-              return data
-            }
-          }));
+          console.log(secondaryPictures)
+          const oldPictureIndex = secondaryPictures.findIndex((e) => e === picture);
+          console.log('old',oldPictureIndex)
+          debugger
+          const secondaryPicturesCopy = secondaryPictures.slice();
+          secondaryPicturesCopy[oldPictureIndex] = data;
+          setSecondaryPictures(secondaryPicturesCopy)
           setLoading(false);
         })
     }
+  }
+
+  const handleDelete = (picture) => {
+    setSecondaryPictures(secondaryPictures.filter(image => image !== picture))
   }
 
   function Alert(props) {
@@ -204,18 +210,14 @@ const NewApartment = (props) => {
         {mainPicture &&
           <Card className={classes.root}>
             <CardActionArea>
-              {mainPicture ?
-                <CardMedia
-                  className={classes.media}
-                  image={'http://localhost:3000/' + mainPicture}
-                />
-                :
-                <p>Pas de photo principal</p>
-              }
+              <CardMedia
+                className={classes.media}
+                image={'http://localhost:3000/' + mainPicture}
+              />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h5">
                   Photo principal
-                      </Typography>
+                </Typography>
               </CardContent>
             </CardActionArea>
             <CardActions>
@@ -254,10 +256,9 @@ const NewApartment = (props) => {
             Ajouter
           </Button>
         </label>
-        {secondaryPictures.map((picture, index) => {
-          console.log(index)
+        {secondaryPictures.map((picture) => {
           return (
-            <Card className={classes.root}>
+            <Card key={picture} className={classes.root}>
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
@@ -274,18 +275,18 @@ const NewApartment = (props) => {
                   name='update-secondary-picture'
                   accept="image/*"
                   className={classes.input}
-                  id={index}
+                  id='update-secondary-picture-button'
                   type="file"
-                  onChange={(e) => uploadCurrentImage(e)}
+                  onChange={(e) => uploadCurrentImage(e, picture)}
                 />
-                <label htmlFor={index}>
+                <label htmlFor='update-secondary-picture-button'>
                   <Button variant="contained" color="primary" component="span">
                     Modifier
-                      </Button>
+                  </Button>
                 </label>
-                <Button size="small" color="primary">
+                <Button size="small" color="primary" onClick={() => handleDelete(picture)}>
                   Supprimer
-              </Button>
+                </Button>
               </CardActions>
             </Card>
           )
