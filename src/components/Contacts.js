@@ -11,6 +11,13 @@ import TableRow from '@material-ui/core/TableRow';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
+import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import '../styles/Contact.css';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -34,23 +41,26 @@ function Contacts() {
     { id: 'id', label: 'Modifier', minWidth: 15 },
     { id: 'id', label: 'Supprimer', minWidth: 15 },
   ];
-  
+
   const [rows, setRows] = useState()
+  const [currentId, setCurrentId] = useState(null)
   
+
   useEffect(() => {
     API.get('/contacts')
       .then(res => res.data)
       .then(data => setRows(data));
   }, [])
 
-  const handleClickDelete = (id) => {
-    console.log(id)
-    API.delete(`/contacts/${id}`)
-    .then(res => {
-      setRows(
-        rows.filter(row => row.id !== id)
-      )
-    })
+  const handleClickDelete = () => {
+    API.delete(`/contacts/${currentId}`)
+      .then(() => {
+        setRows(
+          rows.filter(row => row.id !== currentId)
+        )
+        setCurrentId(null)
+      })
+      handleClose()
   }
 
 
@@ -67,7 +77,23 @@ function Contacts() {
     setPage(0);
   };
 
-  if(!rows){
+  // Alert Dialog Box Before Delete
+  const [open, setOpen] = useState(false);
+
+  // const Transition = React.forwardRef(function Transition(props, ref) {
+  //   return <Slide direction="up" ref={ref} {...props} />;
+  // });
+
+  const handleClickOpen = (id) => {
+    setCurrentId(id)
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setCurrentId(null)
+    setOpen(false);
+  };
+
+  if (!rows) {
     return <div className='loader'><CircularProgress style={{ width: '70px', height: '70px' }} /></div>
   } else {
     return (
@@ -96,7 +122,7 @@ function Contacts() {
                         const value = row[column.id];
                         return (
                           <TableCell key={column.id} align={column.align}>
-                            {column.label === 'Modifier' ? <Link to={`/contacts/${value}`}><EditIcon color='primary'/></Link> : column.label === 'Supprimer' ? <DeleteForeverIcon className='contacts-icons' style={{ color:"red" }} onClick={() => handleClickDelete(value)}/> : value}
+                            {column.label === 'Modifier' ? <Link to={`/contacts/${value}`}><EditIcon color='primary' /></Link> : column.label === 'Supprimer' ? <DeleteForeverIcon className='contacts-icons' style={{ color: "red" }} onClick={() => handleClickOpen(value)} /> : value}
                           </TableCell>
                         );
                       })}
@@ -107,7 +133,7 @@ function Contacts() {
             </Table>
           </div>
           <TablePagination
-            rowsPerPageOptions={[5, 10, 15, 20, 30, 50 ]}
+            rowsPerPageOptions={[5, 10, 15, 20, 30, 50]}
             component="div"
             count={rows.length}
             rowsPerPage={rowsPerPage}
@@ -122,7 +148,30 @@ function Contacts() {
             onChangeRowsPerPage={handleChangeRowsPerPage}
           />
         </Paper>
-        <Link to={`/nouveau-contact`}><AddCircleOutlineIcon className='contacts-icons contacts-icons-add' style={{ color:"green", fontSize: 50 }}/></Link>
+        <Dialog
+          open={open}
+          // TransitionComponent={Transition}
+          keepMounted
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title">{"Êtes-vous sur de vouloir supprimer ce contact ?"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+              Toute ces réservations et messages seront supprimé également.
+          </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Annuler
+          </Button>
+            <Button onClick={handleClickDelete} color="primary">
+              Supprimer
+          </Button>
+          </DialogActions>
+        </Dialog>
+        <Link to={`/nouveau-contact`}><AddCircleOutlineIcon className='contacts-icons contacts-icons-add' style={{ color: "green", fontSize: 50 }} /></Link>
       </div>
     );
   }
