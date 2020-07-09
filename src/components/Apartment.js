@@ -40,15 +40,13 @@ const Apartment = (props) => {
   const [loading, setLoading] = useState(false);
   const [mainPicture, setMainPicture] = useState(null);
   const [secondaryPictures, setSecondaryPictures] = useState([]);
-  const [state, setstate] = useState([])
-
 
   useEffect(() => {
     API.get(`/apartments/${id}/back`)
       .then(res => res.data)
       .then(data => {
         setApartment({
-          id: data.id,
+          id: props.match.params.id,
           name: data.name,
           details_fr: data.details_fr,
           details_en: data.details_en,
@@ -77,7 +75,7 @@ const Apartment = (props) => {
     e.preventDefault();
     setLoading(true);
     setErrorForm(false);
-    API.patch(`/apartments/${id}`, { ...apartment, mainPicture, secondaryPictures })
+    API.patch(`/apartments/${id}`, { ...apartment, mainPicture })
       .then(res => res.data)
       .then(data => {
         setMessageForm(true);
@@ -91,11 +89,45 @@ const Apartment = (props) => {
         setLoading(false);
         setMessageForm(true);
       })
+    secondaryPictures.map(picture => {
+      if (picture.id) {
+        API.patch(`/apartments/${id}/updateSecondary`, { picture })
+          .then(res => res.data)
+          .then(() => {
+            setMessageForm(true);
+            setLoading(false);
+            setMsgAlert(`La photo secondaire a bien été mis à jour.`);
+          })
+          .catch(err => {
+            console.log(err);
+            setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau !');
+            setErrorForm(true);
+            setLoading(false);
+            setMessageForm(true);
+          })
+      } else {
+        API.post(`/apartments/${id}/updateNewSecondary`, { picture })
+          .then(res => res.data)
+          .then(() => {
+            setMessageForm(true);
+            setLoading(false);
+            setMsgAlert(`La photo secondaire a bien été mis à jour.`);
+          })
+          .catch(err => {
+            console.log(err);
+            setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau !');
+            setErrorForm(true);
+            setLoading(false);
+            setMessageForm(true);
+          })
+      }
+    })
   }
 
   const uploadCurrentImage = (e) => {
     e.preventDefault();
-    const image = e.target.files[0]
+    const image = e.target.files[0];
+    const currentPicture = e.target.id;
     setLoading(true);
     setErrorForm(false);
     const formData = new FormData();
@@ -111,7 +143,7 @@ const Apartment = (props) => {
           setMainPicture(data);
           setLoading(false);
         })
-    } else {
+    } else if (e.target.name === 'secondary-picture') {
       API.post('/apartments/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -122,7 +154,25 @@ const Apartment = (props) => {
           setSecondaryPictures([...secondaryPictures, data]);
           setLoading(false);
         })
+    } else if (e.target.name === 'update-secondary-picture') {
+      API.post('/apartments/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+        .then(res => res.data)
+        .then(data => {
+          const oldPictureIndex = secondaryPictures.findIndex((e) => (e.id ? e.url: e) === currentPicture);
+          const secondaryPicturesCopy = secondaryPictures.slice();
+          secondaryPicturesCopy[oldPictureIndex].id ? secondaryPicturesCopy[oldPictureIndex] = {url: data, id: secondaryPicturesCopy[oldPictureIndex].id} : secondaryPicturesCopy[oldPictureIndex] = data;
+          setSecondaryPictures(secondaryPicturesCopy) 
+          setLoading(false);
+        })
     }
+  }
+
+  const handleDelete = (picture) => {
+    setSecondaryPictures(secondaryPictures.filter(image => image !== picture))
   }
 
   if (!apartment) {
@@ -130,7 +180,6 @@ const Apartment = (props) => {
   } else {
     return (
       <div >
-        {console.log(secondaryPictures)}
         <form className='contact-container' noValidate autoComplete='off' onSubmit={(e) => handleSubmit(e)}>
           <TextField
             className='input-contact'
@@ -191,15 +240,10 @@ const Apartment = (props) => {
           <div className='photo-container'>
             <Card className={classes.root}>
               <CardActionArea>
-                {mainPicture ?
-                  <CardMedia
-                    className={classes.media}
-                    image={'http://localhost:3000/' + mainPicture}
-                    title="Contemplative Reptile"
-                  />
-                  :
-                  <p>Pas de photo principal</p>
-                }
+                <CardMedia
+                  className={classes.media}
+                  image={'http://localhost:3000/' + mainPicture}
+                />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="h5">
                     Photo principal
@@ -208,13 +252,14 @@ const Apartment = (props) => {
               </CardActionArea>
               <CardActions>
                 <input
+                  name='main-picture'
                   accept="image/*"
                   className={classes.input}
-                  id="contained-button-file"
+                  id="main-picture-button"
                   type="file"
                   onChange={e => uploadCurrentImage(e)}
                 />
-                <label htmlFor="contained-button-file">
+                <label htmlFor="main-picture-button">
                   <Button variant="contained" color="primary" component="span">
                     Modifier
                 </Button>
@@ -237,14 +282,13 @@ const Apartment = (props) => {
                 Ajouter
               </Button>
             </label>
-            {secondaryPictures.map(sp => {
+            {secondaryPictures.map(picture => {
               return (
                 <Card className={classes.root}>
                   <CardActionArea>
                     <CardMedia
                       className={classes.media}
-                      image={sp.url}
-                      title="Contemplative Reptile"
+                      image={'http://localhost:3000/' + (picture.id ? picture.url : picture)}
                     />
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="h5">
@@ -254,21 +298,22 @@ const Apartment = (props) => {
                   </CardActionArea>
                   <CardActions>
                     <input
+                      name="update-secondary-picture"
                       accept="image/*"
                       className={classes.input}
-                      id="contained-button-file"
+                      id={(picture.id ? picture.url : picture)}
                       multiple
                       type="file"
                       onChange={e => uploadCurrentImage(e)}
                     />
-                    <label htmlFor="contained-button-file">
+                    <label htmlFor={(picture.id ? picture.url : picture)}>
                       <Button variant="contained" color="primary" component="span">
                         Modifier
                 </Button>
                     </label>
-                    <Button size="small" color="primary">
+                    <Button size="small" color="primary" onClick={() => handleDelete(picture)}>
                       Supprimer
-                        </Button>
+                    </Button>
                   </CardActions>
                 </Card>
               )
