@@ -89,7 +89,6 @@ const NewApartment = (props) => {
           setLoading(false);
         })
     } else if (e.target.name === 'secondary-picture') {
-      // e.target.value = null;
       API.post('/apartments/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
