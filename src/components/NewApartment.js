@@ -69,9 +69,10 @@ const NewApartment = (props) => {
       })
   }
 
-  const uploadCurrentImage = (e, picture) => {
+  const uploadCurrentImage = (e) => {
     e.preventDefault();
-    const image = e.target.files[0]
+    const image = e.target.files[0];
+    const currentPicture = e.target.id
     setLoading(true);
     setErrorForm(false);
     const formData = new FormData();
@@ -107,10 +108,8 @@ const NewApartment = (props) => {
       })
         .then(res => res.data)
         .then(data => {
-          console.log(secondaryPictures)
-          const oldPictureIndex = secondaryPictures.findIndex((e) => e === picture);
-          console.log('old',oldPictureIndex)
-          debugger
+          console.log(currentPicture)
+          const oldPictureIndex = secondaryPictures.findIndex((e) => e === currentPicture);
           const secondaryPicturesCopy = secondaryPictures.slice();
           secondaryPicturesCopy[oldPictureIndex] = data;
           setSecondaryPictures(secondaryPicturesCopy)
@@ -234,9 +233,6 @@ const NewApartment = (props) => {
                   Modifier
                 </Button>
               </label>
-              <Button size="small" color="primary">
-                Supprimer
-              </Button>
             </CardActions>
           </Card>
         }
@@ -275,11 +271,11 @@ const NewApartment = (props) => {
                   name='update-secondary-picture'
                   accept="image/*"
                   className={classes.input}
-                  id='update-secondary-picture-button'
+                  id={picture}
                   type="file"
-                  onChange={(e) => uploadCurrentImage(e, picture)}
+                  onChange={(e) => uploadCurrentImage(e)}
                 />
-                <label htmlFor='update-secondary-picture-button'>
+                <label htmlFor={picture}>
                   <Button variant="contained" color="primary" component="span">
                     Modifier
                   </Button>
