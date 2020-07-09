@@ -80,10 +80,6 @@ function Contacts() {
   // Alert Dialog Box Before Delete
   const [open, setOpen] = useState(false);
 
-  // const Transition = React.forwardRef(function Transition(props, ref) {
-  //   return <Slide direction="up" ref={ref} {...props} />;
-  // });
-
   const handleClickOpen = (id) => {
     setCurrentId(id)
     setOpen(true);
@@ -158,9 +154,6 @@ function Contacts() {
         >
           <DialogTitle id="alert-dialog-slide-title">{"Êtes-vous sur de vouloir supprimer ce contact ?"}</DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-              Toute ces réservations et messages seront supprimé également.
-          </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} color="primary">
