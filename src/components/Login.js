@@ -40,11 +40,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
   const classes = useStyles();
-  const {token} = useContext(AuthContext)
+  const {token, setToken, setId: setIdInLocalStorage} = useContext(AuthContext)
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const {setToken, setId} = useContext(AuthContext)
 
   const [messageForm, setMessageForm] = useState(false);
   const [msgAlert, setMsgAlert] = useState('');
@@ -56,7 +55,7 @@ export default function Login() {
       .then(res => res.data)
       .then((data) => {
         setToken(data.token)
-        setId(data.data.id)
+        setIdInLocalStorage(data.data.id)
       })
       .catch(err => {
         console.log(err);

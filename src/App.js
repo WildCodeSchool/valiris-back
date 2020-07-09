@@ -21,10 +21,14 @@ import Account from './components/Account';
 
 function App () {
   const [token, setToken] = useState(localStorage.getItem('authToken'))
-  const [id, setId] = useState()
+  const [id, setId] = useState(localStorage.getItem('id'))
   const setTokenInLocalStorage = (token) => {
     localStorage.setItem('authToken', token)
     setToken(token)
+  }
+  const setIdInLocalStorage = (id) => {
+    localStorage.setItem('id', id)
+    setId(id)
   }
   let userNameFromToken = null
   if (token) {
@@ -32,7 +36,7 @@ function App () {
   }
 
   return (
-    <AuthContext.Provider value={{token, setToken: setTokenInLocalStorage, id, setId}}>
+    <AuthContext.Provider value={{token, setToken: setTokenInLocalStorage, id, setId: setIdInLocalStorage}}>
       <Router>
         <div className="App">
         {!!token  && <Navbar />}
@@ -67,7 +71,9 @@ function App () {
               <BookingsPage />
             </PrivateRoute>
             <PrivateRoute exact path="/reservation/:id" component={(props) => <Booking {...props}/>} />
-            <PrivateRoute exact path="/mon-compte/:id" component={(props) => <Account {...props}/>} />
+            <PrivateRoute exact path="/mon-compte">
+              <Account /> 
+            </PrivateRoute>
           </Switch>
         </div>
       </Router>

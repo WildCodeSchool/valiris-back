@@ -13,7 +13,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import Account from './Account';
 
 const Navbar = () => {
-  const { setToken: setTokenInLocalStorage,  id} = useContext(AuthContext);
+  const { setToken: setTokenInLocalStorage, setId: setIdInLocalStorage} = useContext(AuthContext);
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -66,9 +66,13 @@ const Navbar = () => {
             open={open}
             onClose={handleClose}
           >
-            <NavLink to={`mon-compte/${id}`}><MenuItem onClick={handleClose}>Mon compte</MenuItem></NavLink>
+            <NavLink to={`/mon-compte`}><MenuItem onClick={handleClose}>Mon compte</MenuItem></NavLink>
             <NavLink to='/register'><MenuItem onClick={handleClose}>Créer un nouvel utilisateur</MenuItem></NavLink>
-            <MenuItem onClick={() => setTokenInLocalStorage('')}>Déconnexion</MenuItem>
+            <MenuItem onClick={() => {
+              setTokenInLocalStorage('');
+              setIdInLocalStorage('');
+            }}>
+              Déconnexion</MenuItem>
           </Menu>
         </div>
       </Toolbar>
