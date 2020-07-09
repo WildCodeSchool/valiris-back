@@ -46,7 +46,7 @@ const Apartment = (props) => {
       .then(res => res.data)
       .then(data => {
         setApartment({
-          id: props.match.params.id,
+          id: id,
           name: data.name,
           details_fr: data.details_fr,
           details_en: data.details_en,
@@ -91,35 +91,39 @@ const Apartment = (props) => {
       })
     secondaryPictures.map(picture => {
       if (picture.id) {
-        API.patch(`/apartments/${id}/updateSecondary`, { picture })
-          .then(res => res.data)
-          .then(() => {
-            setMessageForm(true);
-            setLoading(false);
-            setMsgAlert(`La photo secondaire a bien été mis à jour.`);
-          })
-          .catch(err => {
-            console.log(err);
-            setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau !');
-            setErrorForm(true);
-            setLoading(false);
-            setMessageForm(true);
-          })
+        return (
+          API.patch(`/apartments/${id}/updateSecondary`, { picture })
+            .then(res => res.data)
+            .then(() => {
+              setMessageForm(true);
+              setLoading(false);
+              setMsgAlert(`La photo secondaire a bien été mis à jour.`);
+            })
+            .catch(err => {
+              console.log(err);
+              setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau !');
+              setErrorForm(true);
+              setLoading(false);
+              setMessageForm(true);
+            })
+        )
       } else {
-        API.post(`/apartments/${id}/updateNewSecondary`, { picture })
-          .then(res => res.data)
-          .then(() => {
-            setMessageForm(true);
-            setLoading(false);
-            setMsgAlert(`La photo secondaire a bien été mis à jour.`);
-          })
-          .catch(err => {
-            console.log(err);
-            setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau !');
-            setErrorForm(true);
-            setLoading(false);
-            setMessageForm(true);
-          })
+        return (
+          API.post(`/apartments/${id}/updateNewSecondary`, { picture })
+            .then(res => res.data)
+            .then(() => {
+              setMessageForm(true);
+              setLoading(false);
+              setMsgAlert(`La photo secondaire a bien été mis à jour.`);
+            })
+            .catch(err => {
+              console.log(err);
+              setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau !');
+              setErrorForm(true);
+              setLoading(false);
+              setMessageForm(true);
+            })
+        )
       }
     })
   }
@@ -162,10 +166,10 @@ const Apartment = (props) => {
       })
         .then(res => res.data)
         .then(data => {
-          const oldPictureIndex = secondaryPictures.findIndex((e) => (e.id ? e.url: e) === currentPicture);
+          const oldPictureIndex = secondaryPictures.findIndex((e) => (e.id ? e.url : e) === currentPicture);
           const secondaryPicturesCopy = secondaryPictures.slice();
-          secondaryPicturesCopy[oldPictureIndex].id ? secondaryPicturesCopy[oldPictureIndex] = {url: data, id: secondaryPicturesCopy[oldPictureIndex].id} : secondaryPicturesCopy[oldPictureIndex] = data;
-          setSecondaryPictures(secondaryPicturesCopy) 
+          secondaryPicturesCopy[oldPictureIndex].id ? secondaryPicturesCopy[oldPictureIndex] = { url: data, id: secondaryPicturesCopy[oldPictureIndex].id } : secondaryPicturesCopy[oldPictureIndex] = data;
+          setSecondaryPictures(secondaryPicturesCopy)
           setLoading(false);
         })
     }
