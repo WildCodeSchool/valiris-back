@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import API from '../API';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -11,22 +12,22 @@ import TableRow from '@material-ui/core/TableRow';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import { Link } from 'react-router-dom';
-// import '../styles/Apartments.css';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Slide from '@material-ui/core/Slide';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles({
   root: {
     width: '100%',
   },
   tableWrapper: {
-    maxHeight: 440,
+    maxHeight: '80%',
     overflow: 'auto',
   },
 });
@@ -39,24 +40,44 @@ function Apartments() {
     { id: 'id', label: 'Supprimer', minWidth: 15 }
   ];
   const [rows, setRows] = useState()
+  const [messageForm, setMessageForm] = useState(false);
+  const [msgAlert, setMsgAlert] = useState('');
+  const [errorForm, setErrorForm] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [currentId, setCurrentId] = useState(null);
 
-
-
+  //Loading data
   useEffect(() => {
     API.get('/apartments')
       .then(res => res.data)
       .then(data => setRows(data));
   }, [])
 
-  const handleClickDelete = (id) => {
-    handleClose();
-    console.log('Ready to delete')
-    // API.delete(`/apartments/${id}`)
-    // .then(res => {
-    //   setRows(
-    //     rows.filter(row => row.id !== id)
-    //   )
-    // })
+  // Delete apartment
+  const handleClickDelete = () => {
+    setLoading(true);
+    setErrorForm(false);
+    API.delete(`/apartments/${currentId}`)
+      .then(res => res.data)
+      .then(() => {
+        setRows(
+          rows.filter(row => row.id !== currentId)
+        )
+      })
+      .then(data => {
+        setMessageForm(true);
+        setLoading(false);
+        setMsgAlert(`L'appartement a bien été supprimé.`);
+        handleClose();
+      })
+      .catch(err => {
+        console.log(err);
+        setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau !');
+        setErrorForm(true);
+        setLoading(false);
+        setMessageForm(true);
+        handleClose();
+      })
   }
 
   // Style table and pagination
@@ -76,19 +97,28 @@ function Apartments() {
   // Alert Dialog Box Before Delete
   const [open, setOpen] = useState(false);
 
-  const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-  });
-
-  const handleClickOpen = () => {
+  const handleClickOpen = (id) => {
+    setCurrentId(id)
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
+    setCurrentId(null)
+  };
+
+  // Alert confirmation or error popup
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant='filled' {...props} />;
+  }
+  const handleCloseMui = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setMessageForm(false);
   };
 
   if (!rows) {
-    return <p>loading...</p>
+    return <CircularProgress className='loader' style={{ width: '70px', height: '70px' }} />
   } else {
     return (
       <div className='contacts-container'>
@@ -116,7 +146,7 @@ function Apartments() {
                         const value = row[column.id];
                         return (
                           <TableCell key={column.label} align={column.align}>
-                            {column.label === 'Modifier' ? <Link to={`/appartement/${value}`}><EditIcon color='primary' /></Link> : column.label === 'Supprimer' ? <DeleteForeverIcon className='contacts-icons' style={{ color: "red" }} /*onClick={() => handleClickDelete(value)}*/ onClick={handleClickOpen} /> : value}
+                            {column.label === 'Modifier' ? <Link to={`/appartement/${value}`}><EditIcon color='primary' /></Link> : column.label === 'Supprimer' ? <DeleteForeverIcon className='contacts-icons' style={{ color: "red" }} onClick={() => handleClickOpen(value)} /> : value}
                           </TableCell>
                         );
                       })}
@@ -144,7 +174,6 @@ function Apartments() {
         </Paper>
         <Dialog
           open={open}
-          TransitionComponent={Transition}
           keepMounted
           onClose={handleClose}
           aria-labelledby="alert-dialog-slide-title"
@@ -159,12 +188,18 @@ function Apartments() {
           <DialogActions>
             <Button onClick={handleClose} color="primary">
               Annuler
-          </Button>
+            </Button>
             <Button onClick={handleClickDelete} color="primary">
               Supprimer
-          </Button>
+            </Button>
           </DialogActions>
         </Dialog>
+        {loading && <CircularProgress style={{ width: '50px', height: '50px' }} />}
+        <Snackbar open={messageForm} autoHideDuration={6000} onClose={handleCloseMui}>
+          <Alert onClose={handleCloseMui} severity={!errorForm ? 'success' : 'error'}>
+            {msgAlert}
+          </Alert>
+        </Snackbar>
         <Link to={`/nouvel-appartement`}><AddCircleOutlineIcon className='contacts-icons contacts-icons-add' style={{ color: "green", fontSize: 50 }} /></Link>
       </div>
     );
