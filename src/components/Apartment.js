@@ -98,6 +98,8 @@ const Apartment = (props) => {
             className='input-contact'
             label='Intitulé (français)'
             variant='outlined'
+            multiline
+            rows={4}
             value={apartment.title_fr}
             onChange={(e) => setApartment({...apartment, title_fr : e.target.value})}
             name='title_fr'
@@ -106,6 +108,8 @@ const Apartment = (props) => {
             className='input-contact'
             label='Intitulé (anglais)'
             variant='outlined'
+            multiline
+            rows={4}
             value={apartment.title_en}
             onChange={(e) => setApartment({...apartment, title_en : e.target.value})}
             name='title_en'
@@ -114,6 +118,8 @@ const Apartment = (props) => {
             className='input-contact'
             label='Détails (français)'
             variant='outlined'
+            multiline
+            rows={12}
             value={apartment.details_fr}
             onChange={(e) => setApartment({...apartment, details_fr : e.target.value})}
             name='details_fr'
@@ -122,6 +128,8 @@ const Apartment = (props) => {
             className='input-contact'
             label='Détails (anglais)'
             variant='outlined'
+            multiline
+            rows={12}
             value={apartment.details_en}
             onChange={(e) => setApartment({...apartment, details_en : e.target.value})}
             name='details_en'

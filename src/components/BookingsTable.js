@@ -174,7 +174,6 @@ function BookingsTable() {
         </Paper>
         <Dialog
           open={open}
-          // TransitionComponent={Transition}
           keepMounted
           onClose={handleClose}
           aria-labelledby="alert-dialog-slide-title"
