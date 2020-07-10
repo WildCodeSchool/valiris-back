@@ -13,6 +13,7 @@ const Account = () => {
 
   const { id } = useContext(AuthContext);
   const [user, setUser] = useState();
+  const [oldUser, setOldUser] = useState()
   const [password, setPassword] = useState('')
   const [passwordVerif, setPasswordVerif] = useState('')
   const [messageForm, setMessageForm] = useState(false);
@@ -23,10 +24,16 @@ const Account = () => {
   useEffect(() => {
     API.get(`/users/${id}`)
       .then(res => res.data)
-      .then(data => setUser({
-        name: data.name,
-        email: data.email
-      }));
+      .then(data => {
+        setUser({
+          name: data.name,
+          email: data.email
+        })
+        setOldUser({
+          name: data.name,
+          email: data.email
+        })
+      });
   }, [id]);
 
   function Alert(props) {
