@@ -13,9 +13,8 @@ const Account = () => {
 
   const { id } = useContext(AuthContext);
   const [user, setUser] = useState();
-  const [oldUser, setOldUser] = useState()
-  const [password, setPassword] = useState('')
-  const [passwordVerif, setPasswordVerif] = useState('')
+  const [password, setPassword] = useState('');
+  const [passwordVerif, setPasswordVerif] = useState('');
   const [messageForm, setMessageForm] = useState(false);
   const [msgAlert, setMsgAlert] = useState('');
   const [errorForm, setErrorForm] = useState(false);
@@ -26,10 +25,6 @@ const Account = () => {
       .then(res => res.data)
       .then(data => {
         setUser({
-          name: data.name,
-          email: data.email
-        })
-        setOldUser({
           name: data.name,
           email: data.email
         })

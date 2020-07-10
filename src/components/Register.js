@@ -41,7 +41,6 @@ export default function Register() {
     password: ''
   })
   const [passwordVerif, setPasswordVerif] = useState('')
-  // const [errorInput, setErrorInput] = useState('')
 
   const [messageForm, setMessageForm] = useState(false);
   const [msgAlert, setMsgAlert] = useState('');
@@ -52,7 +51,6 @@ export default function Register() {
     e.preventDefault()
     const { name, email, password } = user;
     const emailValidator = /[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}/;
-    let msgAlertCopy = msgAlert;
     if (!name || !email || !password) {
       setMessageForm(true)
       setErrorForm(true)
