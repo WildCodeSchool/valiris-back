@@ -5,6 +5,7 @@ import '../styles/Contact.css';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Button from '@material-ui/core/Button';
 
 const Contact = () => {
 
@@ -36,30 +37,51 @@ const Contact = () => {
     e.preventDefault();
     setLoading(true);
     setErrorForm(false);
-    API.post(`/contacts/new`, contact)
-    .then(res => res.data)
-    .then(data => {
-      setMessageForm(true);
-      setLoading(false);
-      setMsgAlert(`Le contact ${data.firstname} ${data.lastname} a bien été créé`);
-    })
-    .catch(err => {
-      console.log(err);
-      setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau');
+    const emailValidator = /[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}/;
+    const phoneValidator = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/; /* eslint-disable-line */
+    if(!contact.firstname || !contact.lastname || !contact.phone || !contact.email) {
+      setMsgAlert('Merci de renseigner tous les champs');
       setErrorForm(true);
       setLoading(false);
       setMessageForm(true);
-    })
+    } else if (!phoneValidator.test(contact.phone) ||  !emailValidator.test(contact.email) ) {
+      setMsgAlert('Un des champs est incorrect');
+      setErrorForm(true);
+      setLoading(false);
+      setMessageForm(true);
+    } else {
+      API.post(`/contacts/new`, contact)
+      .then(res => res.data)
+      .then(data => {
+        setContact({
+          firstname : '',
+          lastname : '',
+          phone : '',
+          email : ''
+        })
+        setMessageForm(true);
+        setLoading(false);
+        setMsgAlert(`Le contact ${data.firstname} ${data.lastname} a bien été créé`);
+      })
+      .catch(err => {
+        console.log(err);
+        setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau');
+        setErrorForm(true);
+        setLoading(false);
+        setMessageForm(true);
+      })
+    }
   }
-
 
     return (
       <div >
-        <form className='contact-container' noValidate autoComplete='off' onSubmit={(e) => handleSubmit(e)}>
+        <form className='contact-container' autoComplete='off' onSubmit={(e) => handleSubmit(e)}>
+        <h2>Nouveau contact</h2>
           <TextField
             className='input-contact'
             label='prénom'
             variant='outlined'
+            required
             value={contact.firstname}
             onChange={(e) => setContact({...contact, firstname : e.target.value})}
             name='firstname'
@@ -68,6 +90,7 @@ const Contact = () => {
             className='input-contact'
             label='nom'
             variant='outlined'
+            required
             value={contact.lastname}
             onChange={(e) => setContact({...contact, lastname : e.target.value})}
             name='lastname'
@@ -76,6 +99,7 @@ const Contact = () => {
             className='input-contact'
             label='téléphone'
             variant='outlined'
+            required
             value={contact.phone}
             onChange={(e) => setContact({...contact, phone : e.target.value})}
             name='phone'
@@ -85,10 +109,11 @@ const Contact = () => {
             label='email'
             variant='outlined'
             value={contact.email}
+            required
             onChange={(e) => setContact({...contact, email : e.target.value})}
             name='email'
           />
-          {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <input className='contact-valid-button' type='submit' value='valider' />}
+          {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <Button variant="contained" color="primary" type='submit'>valider</Button>}
           <Snackbar open={messageForm} autoHideDuration={6000} onClose={handleCloseMui}>
             <Alert onClose={handleCloseMui} severity={!errorForm ? 'success' : 'error'}>
               {msgAlert}

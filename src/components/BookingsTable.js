@@ -174,18 +174,12 @@ function BookingsTable() {
         </Paper>
         <Dialog
           open={open}
-          // TransitionComponent={Transition}
           keepMounted
           onClose={handleClose}
           aria-labelledby="alert-dialog-slide-title"
           aria-describedby="alert-dialog-slide-description"
         >
-          <DialogTitle id="alert-dialog-slide-title">{"Êtes-vous sur de vouloir supprimer ce contact ?"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-              Toute ces réservations et messages seront supprimé également.
-          </DialogContentText>
-          </DialogContent>
+          <DialogTitle id="alert-dialog-slide-title">{"Êtes-vous sur de vouloir supprimer cette réservation ?"}</DialogTitle>
           <DialogActions>
             <Button onClick={handleClose} color="primary">
               Annuler
