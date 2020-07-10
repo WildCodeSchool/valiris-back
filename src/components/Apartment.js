@@ -192,6 +192,7 @@ const Apartment = (props) => {
             value={apartment.name}
             onChange={(e) => setApartment({ ...apartment, name: e.target.value })}
             name='name'
+            required
           />
           <TextField
             className='input-contact'
@@ -200,6 +201,7 @@ const Apartment = (props) => {
             value={apartment.weekPrice}
             onChange={(e) => setApartment({ ...apartment, weekPrice: e.target.value })}
             name='weekPrice'
+            required
           />
           <TextField
             className='input-contact'
@@ -208,6 +210,7 @@ const Apartment = (props) => {
             value={apartment.monthPrice}
             onChange={(e) => setApartment({ ...apartment, monthPrice: e.target.value })}
             name='monthPrice'
+            required
           />
           <TextField
             className='input-contact'
@@ -218,6 +221,7 @@ const Apartment = (props) => {
             value={apartment.title_fr}
             onChange={(e) => setApartment({ ...apartment, title_fr: e.target.value })}
             name='title_fr'
+            required
           />
           <TextField
             className='input-contact'
@@ -228,6 +232,7 @@ const Apartment = (props) => {
             value={apartment.title_en}
             onChange={(e) => setApartment({ ...apartment, title_en: e.target.value })}
             name='title_en'
+            required
           />
           <TextField
             className='input-contact'
@@ -238,6 +243,7 @@ const Apartment = (props) => {
             value={apartment.details_fr}
             onChange={(e) => setApartment({ ...apartment, details_fr: e.target.value })}
             name='details_fr'
+            required
           />
           <TextField
             className='input-contact'
@@ -248,6 +254,7 @@ const Apartment = (props) => {
             value={apartment.details_en}
             onChange={(e) => setApartment({ ...apartment, details_en: e.target.value })}
             name='details_en'
+            required
           />
           <div className='photo-container'>
             <Card className={classes.root}>

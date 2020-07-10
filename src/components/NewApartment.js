@@ -134,7 +134,7 @@ const NewApartment = (props) => {
 
   return (
     <div >
-      <form className='contact-container' noValidate autoComplete='off' onSubmit={(e) => handleSubmit(e)}>
+      <form className='contact-container' autoComplete='off' onSubmit={(e) => handleSubmit(e)}>
         <TextField
           className='input-contact'
           label='Nom'
@@ -142,6 +142,7 @@ const NewApartment = (props) => {
           value={apartment.name}
           onChange={(e) => setApartment({ ...apartment, name: e.target.value })}
           name='name'
+          required
         />
         <TextField
           className='input-contact'
@@ -150,6 +151,7 @@ const NewApartment = (props) => {
           value={apartment.weekPrice}
           onChange={(e) => setApartment({ ...apartment, weekPrice: e.target.value })}
           name='weekPrice'
+          required
         />
         <TextField
           className='input-contact'
@@ -158,6 +160,7 @@ const NewApartment = (props) => {
           value={apartment.monthPrice}
           onChange={(e) => setApartment({ ...apartment, monthPrice: e.target.value })}
           name='monthPrice'
+          required
         />
         <TextField
           className='input-contact'
@@ -168,6 +171,7 @@ const NewApartment = (props) => {
           value={apartment.title_fr}
           onChange={(e) => setApartment({ ...apartment, title_fr: e.target.value })}
           name='title_fr'
+          required
         />
         <TextField
           className='input-contact'
@@ -178,6 +182,7 @@ const NewApartment = (props) => {
           value={apartment.title_en}
           onChange={(e) => setApartment({ ...apartment, title_en: e.target.value })}
           name='title_en'
+          required
         />
         <TextField
           className='input-contact'
@@ -188,6 +193,7 @@ const NewApartment = (props) => {
           value={apartment.details_fr}
           onChange={(e) => setApartment({ ...apartment, details_fr: e.target.value })}
           name='details_fr'
+          required
         />
         <TextField
           className='input-contact'
@@ -198,6 +204,7 @@ const NewApartment = (props) => {
           value={apartment.details_en}
           onChange={(e) => setApartment({ ...apartment, details_en: e.target.value })}
           name='details_en'
+          required
         />
         <input
           name='main-picture'
@@ -206,6 +213,7 @@ const NewApartment = (props) => {
           id="main-picture-button"
           type="file"
           onChange={e => uploadCurrentImage(e)}
+          required
         />
         <p>Photo principal :</p>
         <label htmlFor="main-picture-button">
