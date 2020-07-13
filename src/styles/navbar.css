@@ -1,0 +1,8 @@
+.navbar-item {
+  text-decoration: none;
+  color: white;
+}
+
+.navbar-list {
+  flex-grow: 1;
+}

@@ -1,0 +1,26 @@
+.card-container {
+    width: 70%;
+    margin: 50px auto;
+}
+
+.actions-booking {
+    justify-content: space-around;
+    align-items: center;
+}
+
+.validation-booking {
+    border: 1px solid green !important;
+    color: green !important;
+    padding: 10px !important;
+}
+
+.update-booking {
+    border: 1px solid !important;
+    padding: 10px !important;
+}
+
+.delete-booking {
+    border: 1px solid red !important;
+    color: red !important;
+    padding: 10px !important;
+}
