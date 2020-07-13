@@ -234,65 +234,19 @@ const NewApartment = (props) => {
           required
         />
         <div className='main-picture'>
-        <input
-          name='main-picture'
-          accept="image/*"
-          className={classes.input}
-          id="main-picture-button"
-          type="file"
-          onChange={e => uploadCurrentImage(e)}
-          required
-        />
-        <p>Photo principale :</p>
-        <label htmlFor="main-picture-button">
-          <Button variant="contained" color="primary" component="span">
-            Ajouter
-          </Button>
-        </label>
-        {mainPicture &&
-          <Card className={classes.root}>
-            <CardActionArea>
-              <CardMedia
-                className={classes.media}
-                image={baseUrl + '/' + mainPicture}
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="h5">
-                  Photo principale
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-            <CardActions>
-              <input
-                name='main-picture'
-                accept="image/*"
-                className={classes.input}
-                id="main-picture-button"
-                type="file"
-                onChange={e => uploadCurrentImage(e)}
-              />
-              <label htmlFor="main-picture-button">
-                <Button variant="contained" color="primary" component="span">
-                  Modifier
-                </Button>
-              </label>
-            </CardActions>
-          </Card>
-        }
-        <input
-          name='secondary-picture'
-          accept="image/*"
-          className={classes.input}
-          id="secondary-picture-button"
-          type="file"
-          onChange={e => {
-            uploadCurrentImage(e)
-          }}
-        />
-        <p>Photo secondaire :</p>
-        <label htmlFor="secondary-picture-button">
-          <Button variant="contained" color="primary" component="span">
-            Ajouter
+          <input
+            name='main-picture'
+            accept="image/*"
+            className={classes.input}
+            id="main-picture-button"
+            type="file"
+            onChange={e => uploadCurrentImage(e)}
+            required
+          />
+          <p>Photo principale :</p>
+          <label htmlFor="main-picture-button">
+            <Button variant="contained" color="primary" component="span">
+              Ajouter
           </Button>
           </label>
           {mainPicture &&
@@ -300,11 +254,11 @@ const NewApartment = (props) => {
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
-                  image={baseUrl + '/' + picture}
+                  image={baseUrl + '/' + mainPicture}
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="h5">
-                    Photo principal
+                    Photo principale
                 </Typography>
                 </CardContent>
               </CardActionArea>
