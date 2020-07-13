@@ -12,7 +12,6 @@ const Home = () => {
     const [validation, setValidation] = useState(false);
     const [isValidated, setIsValidated] = useState(false);
     const [msgValidation, setMsgValidation] = useState('');
-    // Alert Dialog Box Before Delete
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
@@ -102,6 +101,7 @@ const Home = () => {
                     open={open} />
                 )}
             )}
+            {bookings.length === 0 && 'Vous n\'avez aucune nouvelle demande de réservation'}
             <Snackbar open={validation} autoHideDuration={6000} onClose={handleCloseMui}>
               <Alert onClose={handleCloseMui} severity={isValidated ? 'success' : 'error'}>
                 {msgValidation}
@@ -119,7 +119,8 @@ const Home = () => {
                     handleClose={handleClose}
                     open={open} />
                 )}
-            ) : 'Aucune nouvelle demande d\'information'}
+            ) : <p>Aucune nouvelle demande d\'information</p>}
+            {infos ? infos.length === 0 && 'Vous n\'avez aucune nouvelle demande d\'information': ''}
         </div>
     );
   }      

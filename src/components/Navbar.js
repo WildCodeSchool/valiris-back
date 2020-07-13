@@ -6,10 +6,24 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AuthContext from '../authContext';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import IconButton from '@material-ui/core/IconButton';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 
 const Navbar = () => {
+  const { setToken: setTokenInLocalStorage, setId: setIdInLocalStorage} = useContext(AuthContext);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
 
-  const { setToken: setTokenInLocalStorage } = useContext(AuthContext);
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
 
   return (
     <AppBar position="static">
@@ -21,7 +35,40 @@ const Navbar = () => {
           <Button color="inherit"><NavLink className='navbar-item' to='/calendrier'>Calendrier</NavLink></Button>
           <Button color="inherit"><NavLink className='navbar-item' to='/reservations'>Réservations</NavLink></Button>
         </Typography>
-        <Button color="inherit" onClick={() => setTokenInLocalStorage('')}>Deconnexion</Button>
+        <div>
+          <IconButton
+            aria-label="account of current user"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            onClick={handleMenu}
+            color="inherit"
+          >
+            <AccountCircle />
+          </IconButton>
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            open={open}
+            onClose={handleClose}
+          >
+            <NavLink to={`/mon-compte`}><MenuItem onClick={handleClose}>Mon compte</MenuItem></NavLink>
+            <NavLink to='/register'><MenuItem onClick={handleClose}>Créer un nouvel utilisateur</MenuItem></NavLink>
+            <MenuItem onClick={() => {
+              setTokenInLocalStorage('');
+              setIdInLocalStorage('');
+            }}>
+              Déconnexion</MenuItem>
+          </Menu>
+        </div>
       </Toolbar>
     </AppBar>
   )

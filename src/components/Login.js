@@ -3,10 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -15,6 +11,8 @@ import Container from '@material-ui/core/Container';
 import AuthContext from '../authContext';
 import API from '../API';
 import { Redirect } from "react-router-dom";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -38,18 +36,43 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
   const classes = useStyles();
-  const {token} = useContext(AuthContext)
+  const {token, setToken, setId: setIdInLocalStorage} = useContext(AuthContext)
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const {setToken} = useContext(AuthContext)
+
+  const [messageForm, setMessageForm] = useState(false);
+  const [msgAlert, setMsgAlert] = useState('');
+  const [errorForm, setErrorForm] = useState(false);
 
   const handleSubmit = event => {
     event.preventDefault()
-    API.post('/auth/login', {email, password}).then(res => res.data).then((data) => {
-      setToken(data.token)
-    })
+    API.post('/auth/login', {email, password})
+      .then(res => res.data)
+      .then((data) => {
+        setToken(data.token)
+        setIdInLocalStorage(data.data.id)
+      })
+      .catch(err => {
+        console.log(err);
+        setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau');
+        setErrorForm(true);
+        setMessageForm(true);
+      })
   }
+
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant='filled' {...props} />;
+  }
+
+  const handleCloseMui = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setMessageForm(false);
+  };
+
+
   if(!!token){
     return (
       <Redirect
@@ -67,7 +90,7 @@ export default function Login() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Connexion
           </Typography>
           <form className={classes.form} noValidate onSubmit={handleSubmit}>
             <TextField
@@ -76,7 +99,7 @@ export default function Login() {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Adresse email"
               name="email"
               autoComplete="email"
               autoFocus
@@ -89,16 +112,12 @@ export default function Login() {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Mot de passe"
               type="password"
               id="password"
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
             />
             <Button
               type="submit"
@@ -107,21 +126,14 @@ export default function Login() {
               color="primary"
               className={classes.submit}
             >
-              Sign In
+              Connexion
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
           </form>
+          <Snackbar open={messageForm} autoHideDuration={6000} onClose={handleCloseMui}>
+            <Alert onClose={handleCloseMui} severity={!errorForm ? 'success' : 'error'}>
+              {msgAlert}
+            </Alert>
+          </Snackbar>
         </div>
         <Box mt={8}>
         </Box>

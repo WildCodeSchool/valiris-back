@@ -27,7 +27,7 @@ const NewBooking = () => {
       .then(data => setApartments(data.map(apartment => {
         return { name: apartment.name, id: apartment.id };
       })));
-      API.get('/contacts')
+    API.get('/contacts')
       .then(res => res.data)
       .then(data => setContacts(data.map(contact => {
         return { name: `${contact.firstname} ${contact.lastname}`, id: contact.id };
@@ -38,27 +38,34 @@ const NewBooking = () => {
     e.preventDefault();
     setLoading(true);
     setErrorForm(false);
-    API.post(`/bookings`, booking)
-      .then(res => res.data)
-      .then(() => {
-        setMessageForm(true);
-        setLoading(false);
-        setMsgAlert(`La réservation à bien été créée`);
-        setBooking({
-          starting_date: '',
-          ending_date: '',
-          id_apartment: '',
-          id_contact: ''
+    if (!booking.starting_date || !booking.ending_date) {
+      setMsgAlert('Une erreur est survenue au niveau des dates');
+      setErrorForm(true);
+      setLoading(false);
+      setMessageForm(true);
+    } else {
+      API.post(`/bookings`, booking)
+        .then(res => res.data)
+        .then(() => {
+          setMessageForm(true);
+          setLoading(false);
+          setMsgAlert(`La réservation à bien été créée`);
+          setBooking({
+            starting_date: '',
+            ending_date: '',
+            id_apartment: '',
+            id_contact: ''
+          })
         })
-      })
-      .catch(err => {
-        console.log(err);
-        setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau');
-        setErrorForm(true);
-        setLoading(false);
-        setMessageForm(true);
-      })
+        .catch(err => {
+          console.log(err);
+          setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau');
+          setErrorForm(true);
+          setLoading(false);
+          setMessageForm(true);
+        })
       setReload(true);
+    }
   }
 
   const getFullDate = () => {
@@ -72,7 +79,7 @@ const NewBooking = () => {
     return fullDate;
   };
 
-  if(!apartments || !contacts){
+  if (!apartments || !contacts) {
     return <div className='loader'><CircularProgress style={{ width: '70px', height: '70px' }} /></div>
   }
   return (
