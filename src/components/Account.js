@@ -25,7 +25,6 @@ const Account = () => {
       .then(res => res.data)
       .then(data => {
         setUser({
-          name: data.name,
           email: data.email
         })
       });
@@ -51,7 +50,7 @@ const Account = () => {
       .then(data => {
         setMessageForm(true);
         setLoading(false);
-        setMsgAlert(`L'utilisateur' ${data.name} a bien été mis à jour`);
+        setMsgAlert(`L'utilisateur a bien été mis à jour`);
       })
       .catch(err => {
         console.log(err);
@@ -72,7 +71,7 @@ const Account = () => {
       .then(data => {
         setMessageForm(true);
         setLoading(false);
-        setMsgAlert(`L'utilisateur' ${data.name} a bien été mis à jour`);
+        setMsgAlert(`L'utilisateur a bien été mis à jour`);
         setPassword('')
         setPasswordVerif('')
       })
@@ -98,14 +97,6 @@ const Account = () => {
       <div className='account-container'>
         <form className='user-container' noValidate onSubmit={(e) => handleSubmit(e)}>
         <h2>Modifier mes Informations</h2>
-          <TextField
-            className='input-contact'
-            label='Nom'
-            variant='outlined'
-            value={user.name}
-            onChange={(e) => setUser({ ...user, name: e.target.value })}
-            name='name'
-          />
           <TextField
             className='input-contact'
             label='E-mail'
