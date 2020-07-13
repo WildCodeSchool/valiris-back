@@ -1,0 +1,22 @@
+.form-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-form {
+  margin: 15px !important;
+  width: 80%;
+}
+
+@media screen and (min-width: 650px) {
+  .input-form {
+    width: 60%;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .input-form {
+    width: 40%;
+  }
+}

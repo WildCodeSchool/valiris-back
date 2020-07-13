@@ -52,7 +52,7 @@ export default function BookingCard({ bookingDetails : {
   return (
     <Card className={`${classes.root} card-container`}>
       <CardContent>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
+        <Typography className={`card-title ${classes.title}`} color="textSecondary" gutterBottom>
           Demande de réservation
         </Typography>
         <Typography variant="h5" component="h4">

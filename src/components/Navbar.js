@@ -29,11 +29,11 @@ const Navbar = () => {
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" className='navbar-list'>
-          <Button color="inherit"><NavLink className='navbar-item' to='/'>Accueil</NavLink></Button>
-          <Button color="inherit"><NavLink className='navbar-item' to='/appartements'>Appartements</NavLink></Button>
-          <Button color="inherit"><NavLink className='navbar-item' to='/contacts'>Contacts</NavLink></Button>
-          <Button color="inherit"><NavLink className='navbar-item' to='/calendrier'>Calendrier</NavLink></Button>
-          <Button color="inherit"><NavLink className='navbar-item' to='/reservations'>Réservations</NavLink></Button>
+          <NavLink activeClassName='active' className='navbar-item' exact to='/'>Accueil</NavLink>
+          <NavLink activeClassName='active' className='navbar-item' to='/appartements'>Appartements</NavLink>
+          <NavLink activeClassName='active' className='navbar-item' to='/contacts'>Contacts</NavLink>
+          <NavLink activeClassName='active' className='navbar-item' to='/calendrier'>Calendrier</NavLink>
+          <NavLink activeClassName='active' className='navbar-item' to='/reservations'>Réservations</NavLink>
         </Typography>
         <div>
           <IconButton

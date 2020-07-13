@@ -1,3 +1,13 @@
+header {
+  background-color: #329797 !important;
+}
+
+span.MuiButton-label > a {
+  font-family: 'Raleway';
+  text-transform: initial;
+  font-size: 1rem;
+}
+
 .navbar-item {
   text-decoration: none;
   color: white;
@@ -5,4 +15,14 @@
 
 .navbar-list {
   flex-grow: 1;
+}
+
+.navbar-item:hover {
+  border-bottom: 2px solid #f7f1e9ff;
+  padding: 4px 0; 
+}
+
+.navbar-item.active {
+  border-bottom: 2px solid;
+  padding: 4px 0; 
 }

@@ -21,6 +21,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import '../styles/apartments.css';
 
 const useStyles = makeStyles({
   root: {
@@ -144,8 +145,8 @@ function Apartments() {
                       {columns.map(column => {
                         const value = row[column.id];
                         return (
-                          <TableCell key={column.label} align={column.align}>
-                            {column.label === 'Modifier' ? <Link to={`/appartement/${value}`}><EditIcon color='primary' /></Link> : column.label === 'Supprimer' ? <DeleteForeverIcon className='contacts-icons' style={{ color: "red" }} onClick={() => handleClickOpen(value)} /> : value}
+                          <TableCell className='cells-icons' key={column.label} align={column.align}>
+                            {column.label === 'Modifier' ? <Link to={`/appartement/${value}`}><EditIcon className='update-apartment-icon' /></Link> : column.label === 'Supprimer' ? <DeleteForeverIcon className='contacts-icons' style={{ color: "red" }} onClick={() => handleClickOpen(value)} /> : value}
                           </TableCell>
                         );
                       })}
@@ -199,7 +200,7 @@ function Apartments() {
             {msgAlert}
           </Alert>
         </Snackbar>
-        <Link to={`/nouvel-appartement`}><AddCircleOutlineIcon className='contacts-icons contacts-icons-add' style={{ color: "green", fontSize: 50 }} /></Link>
+        <Link to={`/nouvel-appartement`}><AddCircleOutlineIcon className='contacts-icons contacts-icons-add' style={{ color: "#329797", fontSize: 50 }} /></Link>
       </div>
     );
   }

@@ -5,6 +5,7 @@ import API from '../API';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import '../styles/home.css';
 
 const Home = () => {
     const [bookings, setBookings] = useState();
@@ -87,8 +88,8 @@ const Home = () => {
     return <div style={{ display: 'flex', justifyContent: 'center' }}><CircularProgress style={{ width: '50px', height: '50px', margin: '0 auto' }}/></div>;
     } else {
     return (
-        <div>
-            <h2>Vos dernières demandes de réservation</h2>
+        <div className='home-container'>
+            <h2 className='home-title'>Vos dernières demandes de réservation</h2>
             {bookings.map(b => {
                 return (
                   <BookingCard 
