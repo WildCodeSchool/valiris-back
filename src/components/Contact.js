@@ -80,8 +80,8 @@ const Contact = (props) => {
   } else {
     return (
       <div >
+        <h2>Modifier un contact</h2>
         <form className='form-container' autoComplete='off' onSubmit={(e) => handleSubmit(e)}>
-          <h2>Modifier un contact</h2>
           <TextField
             className='input-form'
             label='Prénom'
@@ -118,10 +118,12 @@ const Contact = (props) => {
             onChange={(e) => setContact({ ...contact, email: e.target.value })}
             name='email'
           />
-          {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <Button variant="contained" color="primary" type='submit'>valider</Button>}
-          <Button className='back-button' variant="contained">
-            <Link to={`/contacts`}>Retour</Link>
-          </Button>
+          <div className='submit-back'>
+            {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <Button variant="contained" color="primary" type='submit'>valider</Button>}
+            <Button className='back-button' variant="contained">
+              <Link to={`/contacts`}>RETOUR</Link>
+            </Button>
+          </div>
           <Snackbar open={messageForm} autoHideDuration={6000} onClose={handleCloseMui}>
             <Alert onClose={handleCloseMui} severity={!errorForm ? 'success' : 'error'}>
               {msgAlert}

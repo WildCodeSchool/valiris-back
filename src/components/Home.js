@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import BookingCard from './BookingCard';
-import InfosCard from './InfosCard';
 import API from '../API';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -9,7 +8,6 @@ import '../styles/home.css';
 
 const Home = () => {
     const [bookings, setBookings] = useState();
-    const [infos, setInfos] = useState();
     const [validation, setValidation] = useState(false);
     const [isValidated, setIsValidated] = useState(false);
     const [msgValidation, setMsgValidation] = useState('');
@@ -30,19 +28,6 @@ const Home = () => {
                 message: b.content,
                 validation: b.validation
             }
-          })))
-        
-        API.get('/bookings/requests/infos')
-          .then(res => res.data)
-          .then(data => setInfos(data.map(b => {
-              return {
-                id_booking: b.id,
-                firstname: b.firstname,
-                lastname: b.lastname,
-                email: b.email,
-                phone: b.phone,
-                message: b.content
-              }
           })))
       }, []);
 
@@ -102,26 +87,12 @@ const Home = () => {
                     open={open} />
                 )}
             )}
-            {bookings.length === 0 && 'Vous n\'avez aucune nouvelle demande de réservation'}
+            {bookings.length === 0 && <p className='no-booking'>Vous n'avez aucune nouvelle demande de réservation</p>}
             <Snackbar open={validation} autoHideDuration={6000} onClose={handleCloseMui}>
               <Alert onClose={handleCloseMui} severity={isValidated ? 'success' : 'error'}>
                 {msgValidation}
               </Alert>
             </Snackbar>
-            <h2>Vos dernières demandes d'information</h2>
-            {infos ? infos.map(info => {
-                return (
-                  <InfosCard 
-                    key={info.id_booking} 
-                    bookingDetails={info} 
-                    handlePatch={handlePatch}
-                    handleClickDelete={handleClickDelete}
-                    handleClickOpen={handleClickOpen}
-                    handleClose={handleClose}
-                    open={open} />
-                )}
-            ) : <p>Aucune nouvelle demande d\'information</p>}
-            {infos ? infos.length === 0 && 'Vous n\'avez aucune nouvelle demande d\'information': ''}
         </div>
     );
   }      

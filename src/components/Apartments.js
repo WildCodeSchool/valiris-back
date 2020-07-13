@@ -118,7 +118,7 @@ function Apartments() {
   };
 
   if (!rows) {
-    return <CircularProgress className='loader' style={{ width: '70px', height: '70px' }} />
+    return <div className='loader'><CircularProgress style={{ width: '70px', height: '70px' }} /></div>
   } else {
     return (
       <div className='contacts-container'>

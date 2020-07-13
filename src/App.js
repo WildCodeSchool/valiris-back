@@ -22,6 +22,8 @@ import Account from './components/Account';
 function App () {
   const [token, setToken] = useState(localStorage.getItem('authToken'))
   const [id, setId] = useState(localStorage.getItem('id'))
+  const [name, setName] = useState('')
+
   const setTokenInLocalStorage = (token) => {
     localStorage.setItem('authToken', token)
     setToken(token)

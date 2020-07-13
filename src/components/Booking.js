@@ -82,7 +82,7 @@ const Booking = (props) => {
 
 
   if (!contacts || !apartments || !booking) {
-    return <p>loading...</p>
+    return <div className='loader'><CircularProgress style={{ width: '70px', height: '70px' }} /></div>
   } else {
     return (
       <div >

@@ -180,7 +180,7 @@ const Apartment = (props) => {
   }
 
   if (!apartment) {
-    return <CircularProgress className='loader' style={{ width: '70px', height: '70px' }} />
+    return <div className='loader'><CircularProgress style={{ width: '70px', height: '70px' }} /></div>
   } else {
     return (
       <div >
@@ -345,10 +345,12 @@ const Apartment = (props) => {
               })}
             </div>
           </div>
-          {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <Button variant="contained" className='contact-valid-button' type='submit'>Valider</Button>}
-          <Button className='back-button' variant="contained">
-            <Link to={`/appartements`}>Retour</Link>
-          </Button>
+          <div className='submit-back'>
+            {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <Button variant="contained" className='contact-valid-button' type='submit'>Valider</Button>}
+            <Button className='back-button' variant="contained">
+              <Link to={`/appartements`}>Retour</Link>
+            </Button>
+          </div>
           <Snackbar open={messageForm} autoHideDuration={6000} onClose={handleCloseMui}>
             <Alert onClose={handleCloseMui} severity={!errorForm ? 'success' : 'error'}>
               {msgAlert}

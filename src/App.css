@@ -15,4 +15,5 @@ a {
 .MuiButton-contained {
     background-color: #329797 !important;
     color: #fff !important;
+    text-transform: uppercase !important;
 }

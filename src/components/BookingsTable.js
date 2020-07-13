@@ -14,11 +14,10 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
-import UserInfoContext from '../userInfoContext'
+import UserInfoContext from '../userInfoContext';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles({
   root: {
@@ -116,10 +115,11 @@ function BookingsTable() {
     };
 
   if (!rows) {
-    return <></>
+    return <div className='loader'><CircularProgress style={{ width: '70px', height: '70px' }} /></div>
   } else {
     return (
       <div className='contacts-container'>
+        <h2>Réservations</h2>
         <Paper className={classes.root}>
           <div className={classes.tableWrapper}>
             <Table stickyHeader aria-label="sticky table">
@@ -144,7 +144,7 @@ function BookingsTable() {
                         const value = row[column.id];
                         const color = row.color
                         return (
-                          <TableCell key={column.id} align={column.align} style={{ color:`${color}` }}>
+                          <TableCell className='cells-icons' key={column.id} align={column.align} style={{ color:`${color}` }}>
                             {column.label === 'Modifier' ? <Link to={`/reservation/${value}`}><EditIcon className='update-icon' /></Link> : column.label === 'Supprimer' ? <DeleteForeverIcon className='contacts-icons' style={{ color: "red" }} onClick={() => handleClickOpen(value)} /> : value}
                           </TableCell>
                         );

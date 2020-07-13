@@ -245,7 +245,7 @@ const NewApartment = (props) => {
           }}
           required
         />
-        
+
         <div className='main-picture'>
           <div className='input-button'>
             <input
@@ -356,7 +356,7 @@ const NewApartment = (props) => {
           </div>
         </div>
 
-        <div classname='submit-back'>
+        <div className='submit-back'>
           {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <Button variant="contained" className='contact-valid-button' type='submit'>Valider</Button>}
           <Button className='back-button' variant="contained">
             <Link to={`/appartements`}>Retour</Link>

@@ -84,10 +84,10 @@ const NewBooking = () => {
   }
   return (
     <>
-      <h2>Nouvelle réservation</h2>
-      <form className='booking-container' noValidate autoComplete='off' onSubmit={(e) => handleSubmit(e)}>
+      <h2>Entrer une nouvelle réservation</h2>
+      <form className='form-container' noValidate autoComplete='off' onSubmit={(e) => handleSubmit(e)}>
         <TextField
-          className='date-input'
+          className='input-form'
           label='Date de début'
           type='date'
           variant='outlined'
@@ -102,7 +102,7 @@ const NewBooking = () => {
           }}
         />
         <TextField
-          className='date-input'
+          className='input-form'
           label='Date de fin'
           type='date'
           variant='outlined'
@@ -118,7 +118,7 @@ const NewBooking = () => {
               : { min: getFullDate() }
           }}
         />
-        <FormControl variant='outlined' className={`input-contact`}>
+        <FormControl variant='outlined' className='input-form'>
           <InputLabel htmlFor='outlined-age-native-simple'>Appartement</InputLabel>
           <Select
             native
@@ -136,7 +136,7 @@ const NewBooking = () => {
             })}
           </Select>
         </FormControl>
-        <FormControl variant='outlined' className={`input-contact`}>
+        <FormControl variant='outlined' className='input-form'>
           <InputLabel htmlFor='outlined-age-native-simple'>Contact</InputLabel>
           <Select
             native

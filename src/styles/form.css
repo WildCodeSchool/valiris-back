@@ -10,16 +10,21 @@
 }
 
 .submit-back {
-  border: solid 1px red;
-  width: 100%;
+  width: 80%;
   display: flex;
-  justify-content: space-between;
+  flex-direction: row-reverse;
+  justify-content: space-around;
   align-items: center;
 }
 
 .back-button {
   margin: 20px !important;
   background-color: #e0e0e0 !important;
+}
+
+.back-button a {
+  font-size: 14px !important;
+  text-transform: uppercase !important;
 }
 
 @media screen and (min-width: 650px) {
