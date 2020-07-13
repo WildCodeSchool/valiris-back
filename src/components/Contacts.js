@@ -99,7 +99,7 @@ function Contacts() {
                 <TableRow>
                   {columns.map(column => (
                     <TableCell
-                      key={column.id}
+                      key={column.label}
                       align={column.align}
                       style={{ minWidth: column.minWidth }}
                     >
@@ -111,11 +111,11 @@ function Contacts() {
               <TableBody>
                 {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
                   return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                       {columns.map(column => {
                         const value = row[column.id];
                         return (
-                          <TableCell className='cells-icons' key={column.id} align={column.align}>
+                          <TableCell className='cells-icons' key={column.label} align={column.align}>
                             {column.label === 'Modifier' ? <Link to={`/contacts/${value}`}><EditIcon className='update-icon' /></Link> : column.label === 'Supprimer' ? <DeleteForeverIcon className='contacts-icons' style={{ color: "red" }} onClick={() => handleClickOpen(value)} /> : value}
                           </TableCell>
                         );

@@ -29,3 +29,9 @@ span.MuiButton-label > a {
   border-bottom: 2px solid;
   padding-bottom: 4px;
 }
+
+.right-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

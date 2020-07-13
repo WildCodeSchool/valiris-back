@@ -74,7 +74,8 @@ const Home = () => {
     } else {
     return (
         <div className='home-container'>
-            <h2 className='home-title'>Vos dernières demandes de réservation</h2>
+            <h2>Bienvenue {localStorage.getItem('name')}</h2>
+            {!bookings.length === 0 && <h3 className='home-title'>Vos dernières demandes de réservation</h3>}
             {bookings.map(b => {
                 return (
                   <BookingCard 

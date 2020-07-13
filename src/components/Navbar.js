@@ -11,7 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
 const Navbar = () => {
-  const { setToken: setTokenInLocalStorage, setId: setIdInLocalStorage} = useContext(AuthContext);
+  const { setToken: setTokenInLocalStorage, setId: setIdInLocalStorage } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -34,7 +34,8 @@ const Navbar = () => {
           <NavLink activeClassName='active' className='navbar-item' to='/calendrier'>Calendrier</NavLink>
           <NavLink activeClassName='active' className='navbar-item' to='/reservations'>Réservations</NavLink>
         </Typography>
-        <div>
+        <div className='right-menu'>
+          <p>{localStorage.getItem('name')}</p>
           <IconButton
             aria-label="account of current user"
             aria-controls="menu-appbar"

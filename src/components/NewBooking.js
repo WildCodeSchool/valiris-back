@@ -119,7 +119,7 @@ const NewBooking = () => {
           }}
         />
         <FormControl variant='outlined' className='input-form'>
-          <InputLabel htmlFor='outlined-age-native-simple'>Appartement</InputLabel>
+          <InputLabel htmlFor='outlined-apartment'>Appartement</InputLabel>
           <Select
             native
             value={booking.id_apartment}
@@ -127,7 +127,7 @@ const NewBooking = () => {
             name='apartment'
             label='Appartement'
             inputProps={{
-              id: 'outlined-age-native-simple'
+              id: 'outlined-apartment'
             }}
           >
             <option value='' />
@@ -137,7 +137,7 @@ const NewBooking = () => {
           </Select>
         </FormControl>
         <FormControl variant='outlined' className='input-form'>
-          <InputLabel htmlFor='outlined-age-native-simple'>Contact</InputLabel>
+          <InputLabel htmlFor='outlined-contact'>Contact</InputLabel>
           <Select
             native
             value={booking.id_contact}
@@ -145,7 +145,7 @@ const NewBooking = () => {
             name='contact'
             label='Contact'
             inputProps={{
-              id: 'outlined-age-native-simple'
+              id: 'outlined-contact'
             }}
           >
             <option value='' />

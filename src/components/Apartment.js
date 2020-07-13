@@ -309,7 +309,7 @@ const Apartment = (props) => {
             <div className='picture-card'>
               {secondaryPictures.map(picture => {
                 return (
-                  <Card className={classes.root}>
+                  <Card className={classes.root} key={picture.id}>
                     <CardActionArea>
                       <CardMedia
                         className={classes.media}

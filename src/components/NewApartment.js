@@ -158,8 +158,8 @@ const NewApartment = (props) => {
           onChange={(e) => setApartment({ ...apartment, name: e.target.value })}
           name='name'
           inputProps={{
-            minlength: 1,
-            maxlength: 40
+            minLength: 1,
+            maxLength: 40
           }}
           required
         />
@@ -199,7 +199,7 @@ const NewApartment = (props) => {
           onChange={(e) => setApartment({ ...apartment, title_fr: e.target.value })}
           name='title_fr'
           inputProps={{
-            minlength: 1
+            minLength: 1
           }}
           required
         />
@@ -213,7 +213,7 @@ const NewApartment = (props) => {
           onChange={(e) => setApartment({ ...apartment, title_en: e.target.value })}
           name='title_en'
           inputProps={{
-            minlength: 1
+            minLength: 1
           }}
           required
         />
@@ -227,7 +227,7 @@ const NewApartment = (props) => {
           onChange={(e) => setApartment({ ...apartment, details_fr: e.target.value })}
           name='details_fr'
           inputProps={{
-            minlength: 1
+            minLength: 1
           }}
           required
         />
@@ -241,7 +241,7 @@ const NewApartment = (props) => {
           onChange={(e) => setApartment({ ...apartment, details_en: e.target.value })}
           name='details_en'
           inputProps={{
-            minlength: 1
+            minLength: 1
           }}
           required
         />

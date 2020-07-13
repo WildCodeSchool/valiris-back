@@ -127,7 +127,7 @@ function BookingsTable() {
                 <TableRow>
                   {columns.map(column => (
                     <TableCell
-                      key={column.id}
+                      key={column.label}
                       align={column.align}
                       style={{ minWidth: column.minWidth }}
                     >
@@ -139,12 +139,12 @@ function BookingsTable() {
               <TableBody>
                 {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
                   return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                       {columns.map(column => {
                         const value = row[column.id];
                         const color = row.color
                         return (
-                          <TableCell className='cells-icons' key={column.id} align={column.align} style={{ color:`${color}` }}>
+                          <TableCell className='cells-icons' key={column.label} align={column.align} style={{ color:`${color}` }}>
                             {column.label === 'Modifier' ? <Link to={`/reservation/${value}`}><EditIcon className='update-icon' /></Link> : column.label === 'Supprimer' ? <DeleteForeverIcon className='contacts-icons' style={{ color: "red" }} onClick={() => handleClickOpen(value)} /> : value}
                           </TableCell>
                         );
@@ -178,7 +178,7 @@ function BookingsTable() {
           aria-labelledby="alert-dialog-slide-title"
           aria-describedby="alert-dialog-slide-description"
         >
-          <DialogTitle id="alert-dialog-slide-title">{"Êtes-vous sur de vouloir supprimer cette réservation ?"}</DialogTitle>
+          <DialogTitle>{"Êtes-vous sur de vouloir supprimer cette réservation ?"}</DialogTitle>
           <DialogActions>
             <Button onClick={handleClose} color="primary">
               Annuler

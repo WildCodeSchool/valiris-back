@@ -56,7 +56,7 @@ const Calendar = () => {
           center: 'title',
           right: 'prev,next'
         }}
-        height='auto'
+        height='800px'
         locale='fr'
       />
     </div>
