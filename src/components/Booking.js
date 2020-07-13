@@ -90,7 +90,7 @@ const Booking = (props) => {
         <form className='Updatebooking-container' noValidate autoComplete='off' onSubmit={(e) => handleSubmit(e)}>
           <TextField
             className='date-input'
-            label='début'
+            label='Date de début'
             type='date'
             variant='outlined'
             name='starting_date'
@@ -105,7 +105,7 @@ const Booking = (props) => {
           />
           <TextField
             className='date-input'
-            label='fin'
+            label='Date de fin'
             type='date'
             variant='outlined'
             name='ending_date'
@@ -165,7 +165,7 @@ const Booking = (props) => {
                 color="primary"
               />
             }
-            label="Validée"
+            label="Valider la réservation"
           />
           {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <Button variant="contained" color="primary" type='submit'>valider</Button>}
           <Snackbar open={messageForm} autoHideDuration={6000} onClose={handleCloseMui}>

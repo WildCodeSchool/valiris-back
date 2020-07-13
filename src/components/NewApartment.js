@@ -49,7 +49,7 @@ const NewApartment = (props) => {
   const [msgAlert, setMsgAlert] = useState('');
   const [errorForm, setErrorForm] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [mainPicture, setMainPicture] = useState();
+  const [mainPicture, setMainPicture] = useState('');
   const [secondaryPictures, setSecondaryPictures] = useState([]);
 
   const handleSubmit = (e) => {
@@ -234,21 +234,25 @@ const NewApartment = (props) => {
           required
         />
         <div className='main-picture'>
-          <input
-            name='main-picture'
-            accept="image/*"
-            className={classes.input}
-            id="main-picture-button"
-            type="file"
-            onChange={e => uploadCurrentImage(e)}
-            required
-          />
-          <p>Photo principale :</p>
-          <label htmlFor="main-picture-button">
-            <Button variant="contained" color="primary" component="span">
-              Ajouter
-          </Button>
-          </label>
+          <div className='input-button'>
+            <input
+              name='main-picture'
+              accept="image/*"
+              className={classes.input}
+              id="main-picture-button"
+              type="file"
+              onChange={e => uploadCurrentImage(e)}
+              required
+            />
+            <p>Photo principale :</p>
+            <label htmlFor="main-picture-button">
+              {!mainPicture &&
+                <Button variant="contained" color="primary" component="span">
+                  Ajouter
+              </Button>
+              }
+            </label>
+          </div>
           {mainPicture &&
             <Card className={classes.root}>
               <CardActionArea>
@@ -282,57 +286,61 @@ const NewApartment = (props) => {
         </div>
 
         <div className='secondary-picture'>
-          <input
-            name='secondary-picture'
-            accept="image/*"
-            className={classes.input}
-            id="secondary-picture-button"
-            type="file"
-            onChange={e => {
-              uploadCurrentImage(e)
-            }}
-          />
-          <p>Photo secondaire :</p>
-          <label htmlFor="secondary-picture-button">
-            <Button variant="contained" color="primary" component="span">
-              Ajouter
+          <div className='input-button'>
+            <input
+              name='secondary-picture'
+              accept="image/*"
+              className={classes.input}
+              id="secondary-picture-button"
+              type="file"
+              onChange={e => {
+                uploadCurrentImage(e)
+              }}
+            />
+            <p>Photo secondaire :</p>
+            <label htmlFor="secondary-picture-button">
+              <Button variant="contained" color="primary" component="span">
+                Ajouter
           </Button>
-          </label>
-          {secondaryPictures.map((picture) => {
-            return (
-              <Card key={picture} className={classes.root}>
-                <CardActionArea>
-                  <CardMedia
-                    className={classes.media}
-                    image={baseUrl + '/' + picture}
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="h5">
-                      Photo secondaire
+            </label>
+          </div>
+          <div className='picture-card'>
+            {secondaryPictures.map((picture) => {
+              return (
+                <Card key={picture} className={classes.root}>
+                  <CardActionArea>
+                    <CardMedia
+                      className={classes.media}
+                      image={baseUrl + '/' + picture}
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="h5">
+                        Photo secondaire
                       </Typography>
-                  </CardContent>
-                </CardActionArea>
-                <CardActions>
-                  <input
-                    name='update-secondary-picture'
-                    accept="image/*"
-                    className={classes.input}
-                    id={picture}
-                    type="file"
-                    onChange={(e) => uploadCurrentImage(e)}
-                  />
-                  <label htmlFor={picture}>
-                    <Button variant="contained" color="primary" component="span">
-                      Modifier
+                    </CardContent>
+                  </CardActionArea>
+                  <CardActions>
+                    <input
+                      name='update-secondary-picture'
+                      accept="image/*"
+                      className={classes.input}
+                      id={picture}
+                      type="file"
+                      onChange={(e) => uploadCurrentImage(e)}
+                    />
+                    <label htmlFor={picture}>
+                      <Button variant="contained" color="primary" component="span">
+                        Modifier
                   </Button>
-                  </label>
-                  <Button size="small" color="primary" onClick={() => handleDelete(picture)}>
-                    Supprimer
+                    </label>
+                    <Button size="small" color="primary" onClick={() => handleDelete(picture)}>
+                      Supprimer
                 </Button>
-                </CardActions>
-              </Card>
-            )
-          })}
+                  </CardActions>
+                </Card>
+              )
+            })}
+          </div>
         </div>
 
         {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <Button variant="contained" className='contact-valid-button' type='submit'>Valider</Button>}

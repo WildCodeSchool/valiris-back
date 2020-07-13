@@ -88,7 +88,7 @@ const NewBooking = () => {
       <form className='booking-container' noValidate autoComplete='off' onSubmit={(e) => handleSubmit(e)}>
         <TextField
           className='date-input'
-          label='début'
+          label='Date de début'
           type='date'
           variant='outlined'
           name='starting_date'
@@ -103,7 +103,7 @@ const NewBooking = () => {
         />
         <TextField
           className='date-input'
-          label='fin'
+          label='Date de fin'
           type='date'
           variant='outlined'
           name='ending_date'
@@ -125,7 +125,7 @@ const NewBooking = () => {
             value={booking.id_apartment}
             onChange={(e) => setBooking({ ...booking, id_apartment: e.target.value })}
             name='apartment'
-            label='appartement'
+            label='Appartement'
             inputProps={{
               id: 'outlined-age-native-simple'
             }}

@@ -11,6 +11,9 @@ span.MuiButton-label > a {
 .navbar-item {
   text-decoration: none;
   color: white;
+  margin: 6px 10px;
+  transition: all 0.1s ease;
+  font-size: 16px;
 }
 
 .navbar-list {
@@ -19,10 +22,10 @@ span.MuiButton-label > a {
 
 .navbar-item:hover {
   border-bottom: 2px solid #f7f1e9ff;
-  padding: 4px 0; 
+  padding-bottom: 4px;
 }
 
 .navbar-item.active {
   border-bottom: 2px solid;
-  padding: 4px 0; 
+  padding-bottom: 4px;
 }

@@ -24,6 +24,16 @@ tr > th {
   display: flex;
   align-items: center;
   justify-content: space-around;
+  flex-direction: column;
+}
+
+.input-button {
+  display: flex;
+  align-items: center;
+}
+
+.input-button p {
+  margin: 20px !important;
 }
 
 .secondary-picture {
@@ -33,7 +43,15 @@ tr > th {
   margin: 15px 0;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-around;  
+  flex-direction: column;
+}
+
+.picture-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .main-picture:hover {
@@ -47,6 +65,10 @@ tr > th {
 @media screen and (min-width: 650px) {
   .main-picture, .secondary-picture {
     width: 60%;
+  }
+  .picture-card { 
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 }
 
