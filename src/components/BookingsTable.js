@@ -11,7 +11,6 @@ import TableRow from '@material-ui/core/TableRow';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { Link } from 'react-router-dom';
-import '../styles/Contact.css';
 import moment from 'moment';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -146,7 +145,7 @@ function BookingsTable() {
                         const color = row.color
                         return (
                           <TableCell key={column.id} align={column.align} style={{ color:`${color}` }}>
-                            {column.label === 'Modifier' ? <Link to={`/reservation/${value}`}><EditIcon color='primary' /></Link> : column.label === 'Supprimer' ? <DeleteForeverIcon className='contacts-icons' style={{ color: "red" }} onClick={() => handleClickOpen(value)} /> : value}
+                            {column.label === 'Modifier' ? <Link to={`/reservation/${value}`}><EditIcon className='update-icon' /></Link> : column.label === 'Supprimer' ? <DeleteForeverIcon className='contacts-icons' style={{ color: "red" }} onClick={() => handleClickOpen(value)} /> : value}
                           </TableCell>
                         );
                       })}

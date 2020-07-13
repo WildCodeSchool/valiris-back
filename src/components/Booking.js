@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TextField } from '@material-ui/core';
 import API from '../API';
-import '../styles/Contact.css';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';

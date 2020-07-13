@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import API from '../API';
-import '../styles/apartments.css'
-import '../styles/Contact.css';
+import '../styles/form.css';
+import '../styles/apartments.css';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
@@ -184,9 +184,10 @@ const Apartment = (props) => {
   } else {
     return (
       <div >
-        <form className='contact-container' noValidate autoComplete='off' onSubmit={(e) => handleSubmit(e)}>
+        <h2 className='apartment-title'>Modifier un appartement</h2>
+        <form className='form-container' noValidate autoComplete='off' onSubmit={(e) => handleSubmit(e)}>
           <TextField
-            className='input-contact'
+            className='input-form'
             label='Nom'
             variant='outlined'
             value={apartment.name}
@@ -195,7 +196,7 @@ const Apartment = (props) => {
             required
           />
           <TextField
-            className='input-contact'
+            className='input-form'
             label='Prix à la semaine'
             variant='outlined'
             value={apartment.weekPrice}
@@ -204,7 +205,7 @@ const Apartment = (props) => {
             required
           />
           <TextField
-            className='input-contact'
+            className='input-form'
             label='Prix au mois'
             variant='outlined'
             value={apartment.monthPrice}
@@ -213,7 +214,7 @@ const Apartment = (props) => {
             required
           />
           <TextField
-            className='input-contact'
+            className='input-form'
             label='Intitulé (français)'
             variant='outlined'
             multiline
@@ -224,7 +225,7 @@ const Apartment = (props) => {
             required
           />
           <TextField
-            className='input-contact'
+            className='input-form'
             label='Intitulé (anglais)'
             variant='outlined'
             multiline
@@ -235,7 +236,7 @@ const Apartment = (props) => {
             required
           />
           <TextField
-            className='input-contact'
+            className='input-form'
             label='Détails (français)'
             variant='outlined'
             multiline
@@ -246,7 +247,7 @@ const Apartment = (props) => {
             required
           />
           <TextField
-            className='input-contact'
+            className='input-form'
             label='Détails (anglais)'
             variant='outlined'
             multiline
@@ -256,7 +257,7 @@ const Apartment = (props) => {
             name='details_en'
             required
           />
-          <div className='photo-container'>
+          <div className='main-picture'>
             <Card className={classes.root}>
               <CardActionArea>
                 <CardMedia
@@ -285,61 +286,67 @@ const Apartment = (props) => {
                 </label>
               </CardActions>
             </Card>
-            <input
-              name='secondary-picture'
-              accept="image/*"
-              className={classes.input}
-              id="secondary-picture-button"
-              type="file"
-              onChange={e => {
-                uploadCurrentImage(e)
-              }}
-            />
-            <p>Photo secondaire :</p>
-            <label htmlFor="secondary-picture-button">
-              <Button variant="contained" color="primary" component="span">
-                Ajouter
+          </div>
+          <div className='secondary-picture'>
+            <div className='input-button'>
+              <input
+                name='secondary-picture'
+                accept="image/*"
+                className={classes.input}
+                id="secondary-picture-button"
+                type="file"
+                onChange={e => {
+                  uploadCurrentImage(e)
+                }}
+              />
+              <p>Photo secondaire :</p>
+              <label htmlFor="secondary-picture-button">
+                <Button variant="contained" color="primary" component="span">
+                  Ajouter
               </Button>
-            </label>
-            {secondaryPictures.map(picture => {
-              return (
-                <Card className={classes.root}>
-                  <CardActionArea>
-                    <CardMedia
-                      className={classes.media}
-                      image={'http://localhost:3000/' + (picture.id ? picture.url : picture)}
-                    />
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="h5">
-                        Photo secondaire
+              </label>
+            </div>
+            <div className='picture-card'>
+              {secondaryPictures.map(picture => {
+                return (
+                  <Card className={classes.root}>
+                    <CardActionArea>
+                      <CardMedia
+                        className={classes.media}
+                        image={'http://localhost:3000/' + (picture.id ? picture.url : picture)}
+                      />
+                      <CardContent>
+                        <Typography gutterBottom variant="h5" component="h5">
+                          Photo secondaire
                           </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                  <CardActions>
-                    <input
-                      name="update-secondary-picture"
-                      accept="image/*"
-                      className={classes.input}
-                      id={(picture.id ? picture.url : picture)}
-                      multiple
-                      type="file"
-                      onChange={e => uploadCurrentImage(e)}
-                    />
-                    <label htmlFor={(picture.id ? picture.url : picture)}>
-                      <Button variant="contained" color="primary" component="span">
-                        Modifier
+                      </CardContent>
+                    </CardActionArea>
+                    <CardActions>
+                      <input
+                        name="update-secondary-picture"
+                        accept="image/*"
+                        className={classes.input}
+                        id={(picture.id ? picture.url : picture)}
+                        multiple
+                        type="file"
+                        onChange={e => uploadCurrentImage(e)}
+                      />
+                      <label htmlFor={(picture.id ? picture.url : picture)}>
+                        <Button variant="contained" color="primary" component="span">
+                          Modifier
                 </Button>
-                    </label>
-                    <Button size="small" color="primary" onClick={() => handleDelete(picture)}>
-                      Supprimer
+                      </label>
+                      <Button size="small" color="primary" onClick={() => handleDelete(picture)}>
+                        Supprimer
                     </Button>
-                  </CardActions>
-                </Card>
-              )
-            })}
+                    </CardActions>
+                  </Card>
+                )
+              })}
+            </div>
           </div>
           {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <Button variant="contained" className='contact-valid-button' type='submit'>Valider</Button>}
-          <Button variant="contained">
+          <Button className='back-button' variant="contained">
             <Link to={`/appartements`}>Retour</Link>
           </Button>
           <Snackbar open={messageForm} autoHideDuration={6000} onClose={handleCloseMui}>

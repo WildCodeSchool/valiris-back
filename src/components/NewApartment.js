@@ -62,6 +62,17 @@ const NewApartment = (props) => {
         setMessageForm(true);
         setLoading(false);
         setMsgAlert(`L'appartement ${data.name} a bien été créé`);
+        setApartment({
+          name: '',
+          details_fr: '',
+          details_en: '',
+          title_fr: '',
+          title_en: '',
+          weekPrice: '',
+          monthPrice: ''
+        });
+        setMainPicture('');
+        setSecondaryPictures([])
       })
       .catch(err => {
         console.log(err);
@@ -137,6 +148,7 @@ const NewApartment = (props) => {
 
   return (
     <div >
+      <h2 className='apartment-title'>Ajouter un nouvel appartement</h2>
       <form className='form-container' autoComplete='off' onSubmit={(e) => handleSubmit(e)}>
         <TextField
           className='input-form'
@@ -233,6 +245,7 @@ const NewApartment = (props) => {
           }}
           required
         />
+        
         <div className='main-picture'>
           <div className='input-button'>
             <input
@@ -343,17 +356,19 @@ const NewApartment = (props) => {
           </div>
         </div>
 
-        {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <Button variant="contained" className='contact-valid-button' type='submit'>Valider</Button>}
+        <div classname='submit-back'>
+          {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <Button variant="contained" className='contact-valid-button' type='submit'>Valider</Button>}
+          <Button className='back-button' variant="contained">
+            <Link to={`/appartements`}>Retour</Link>
+          </Button>
+        </div>
+
+        <Snackbar open={messageForm} autoHideDuration={6000} onClose={handleCloseMui}>
+          <Alert onClose={handleCloseMui} severity={!errorForm ? 'success' : 'error'}>
+            {msgAlert}
+          </Alert>
+        </Snackbar>
       </form>
-      <Button
-        variant="contained">
-        <Link to={`/appartements`}>Retour</Link>
-      </Button>
-      <Snackbar open={messageForm} autoHideDuration={6000} onClose={handleCloseMui}>
-        <Alert onClose={handleCloseMui} severity={!errorForm ? 'success' : 'error'}>
-          {msgAlert}
-        </Alert>
-      </Snackbar>
     </div>
   )
 }

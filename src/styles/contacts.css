@@ -1,8 +1,8 @@
-.contact-container{
+/* .contact-container{
   display: flex;
   flex-direction: column;
   align-items: center;
-}
+} */
 
 .contacts-container{
   display: flex;
@@ -11,12 +11,21 @@
   margin: 40px;
 }
 
+.cells-icons {
+  text-align: center !important;
+}                                  
+                        
+.update-icon {
+  color: #329797;
+  text-align: center;
+}
+
 .input-contact{
   margin : 20px !important;
   width: 30%;
 }
 
-.contacts-icons{
+.delete-icons{
   cursor: pointer;
 }
 

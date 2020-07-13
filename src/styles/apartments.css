@@ -1,7 +1,3 @@
-.photo-container {
-  display: flex;
-}
-
 tr > th {
   text-align: center !important;
   color: #329797 !important;
@@ -10,9 +6,9 @@ tr > th {
 
 .cells-icons {
   text-align: center !important;
-}
-
-.update-apartment-icon {
+}                                  
+                        
+.update-icon, .apartment-title {
   color: #329797;
   text-align: center;
 }
@@ -64,7 +60,7 @@ tr > th {
 
 @media screen and (min-width: 650px) {
   .main-picture, .secondary-picture {
-    width: 60%;
+    width: 80%;
   }
   .picture-card { 
     flex-direction: row;
@@ -72,8 +68,8 @@ tr > th {
   }
 }
 
-@media screen and (min-width: 960px) {
+@media screen and (min-width: 1200px) {
   .main-picture, .secondary-picture {
-    width: 40%;
+    width: 50%;
   }
 }

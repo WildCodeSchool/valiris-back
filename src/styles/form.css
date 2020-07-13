@@ -1,4 +1,4 @@
-.form-container{
+.form-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,14 +9,33 @@
   width: 80%;
 }
 
+.submit-back {
+  border: solid 1px red;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.back-button {
+  margin: 20px !important;
+  background-color: #e0e0e0 !important;
+}
+
 @media screen and (min-width: 650px) {
   .input-form {
-    width: 60%;
+    width: 80%;
+  }
+  .submit-back {
+    width: 80%;
   }
 }
 
-@media screen and (min-width: 960px) {
+@media screen and (min-width: 1200px) {
   .input-form {
-    width: 40%;
+    width: 50%;
+  }
+  .submit-back {
+    width: 50%;
   }
 }
