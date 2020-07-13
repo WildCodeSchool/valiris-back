@@ -304,7 +304,7 @@ const NewApartment = (props) => {
                 <CardActionArea>
                   <CardMedia
                     className={classes.media}
-                    image={'http://localhost:3000/' + picture}
+                    image={baseUrl + '/' + picture}
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="h5">
