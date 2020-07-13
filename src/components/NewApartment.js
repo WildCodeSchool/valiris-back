@@ -29,6 +29,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const baseUrl = process.env.REACT_APP_API_BASE_URL;
+
 const NewApartment = (props) => {
   const classes = useStyles();
 
@@ -142,6 +144,10 @@ const NewApartment = (props) => {
           value={apartment.name}
           onChange={(e) => setApartment({ ...apartment, name: e.target.value })}
           name='name'
+          inputProps={{
+            minlength: 1,
+            maxlength: 40
+          }}
           required
         />
         <TextField
@@ -151,6 +157,10 @@ const NewApartment = (props) => {
           value={apartment.weekPrice}
           onChange={(e) => setApartment({ ...apartment, weekPrice: e.target.value })}
           name='weekPrice'
+          type='number'
+          inputProps={{
+            min: 0
+          }}
           required
         />
         <TextField
@@ -160,6 +170,10 @@ const NewApartment = (props) => {
           value={apartment.monthPrice}
           onChange={(e) => setApartment({ ...apartment, monthPrice: e.target.value })}
           name='monthPrice'
+          type='number'
+          inputProps={{
+            min: 0
+          }}
           required
         />
         <TextField
@@ -171,6 +185,9 @@ const NewApartment = (props) => {
           value={apartment.title_fr}
           onChange={(e) => setApartment({ ...apartment, title_fr: e.target.value })}
           name='title_fr'
+          inputProps={{
+            minlength: 1
+          }}
           required
         />
         <TextField
@@ -182,6 +199,9 @@ const NewApartment = (props) => {
           value={apartment.title_en}
           onChange={(e) => setApartment({ ...apartment, title_en: e.target.value })}
           name='title_en'
+          inputProps={{
+            minlength: 1
+          }}
           required
         />
         <TextField
@@ -193,6 +213,9 @@ const NewApartment = (props) => {
           value={apartment.details_fr}
           onChange={(e) => setApartment({ ...apartment, details_fr: e.target.value })}
           name='details_fr'
+          inputProps={{
+            minlength: 1
+          }}
           required
         />
         <TextField
@@ -204,6 +227,9 @@ const NewApartment = (props) => {
           value={apartment.details_en}
           onChange={(e) => setApartment({ ...apartment, details_en: e.target.value })}
           name='details_en'
+          inputProps={{
+            minlength: 1
+          }}
           required
         />
         <input
@@ -215,7 +241,7 @@ const NewApartment = (props) => {
           onChange={e => uploadCurrentImage(e)}
           required
         />
-        <p>Photo principal :</p>
+        <p>Photo principale :</p>
         <label htmlFor="main-picture-button">
           <Button variant="contained" color="primary" component="span">
             Ajouter
@@ -226,11 +252,11 @@ const NewApartment = (props) => {
             <CardActionArea>
               <CardMedia
                 className={classes.media}
-                image={'http://localhost:3000/' + mainPicture}
+                image={baseUrl + '/' + mainPicture}
               />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h5">
-                  Photo principal
+                  Photo principale
                 </Typography>
               </CardContent>
             </CardActionArea>
@@ -273,7 +299,7 @@ const NewApartment = (props) => {
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
-                  image={'http://localhost:3000/' + picture}
+                  image={baseUrl + '/' + picture}
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="h5">
