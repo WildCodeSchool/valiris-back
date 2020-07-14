@@ -16,6 +16,8 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+const baseUrl = process.env.REACT_APP_API_BASE_URL
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
@@ -261,7 +263,7 @@ const Apartment = (props) => {
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
-                  image={'http://localhost:3000/' + mainPicture}
+                  image={baseUrl + '/' +  mainPicture}
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="h5">
@@ -307,7 +309,7 @@ const Apartment = (props) => {
                   <CardActionArea>
                     <CardMedia
                       className={classes.media}
-                      image={'http://localhost:3000/' + (picture.id ? picture.url : picture)}
+                      image={baseUrl + '/' +  mainPicture}
                     />
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="h5">
