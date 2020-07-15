@@ -10,6 +10,11 @@
     margin-bottom: 1em !important;
 }
 
+.card-subtitles {
+  line-height: 2em;
+  color: #329797;
+}
+
 .actions-booking {
   display: flex;
   flex-wrap: wrap;

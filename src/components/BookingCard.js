@@ -26,7 +26,8 @@ const useStyles = makeStyles({
 });
 
 export default function BookingCard({ bookingDetails : { 
-  id_booking, 
+  id_booking,
+  apartment_name, 
   firstname, 
   lastname,
   email,
@@ -60,17 +61,19 @@ export default function BookingCard({ bookingDetails : {
         </Typography>
         <br />
         <Typography variant="body2" component="p">
-          <strong>Adresse e-mail:</strong> {email}.
+          <strong className='card-subtitles'>Appartement:</strong> {apartment_name}.
           <br />
-          <strong>Numéro de téléphone:</strong> {phone}.
+          <strong className='card-subtitles'>Adresse e-mail:</strong> {email}.
+          <br />
+          <strong className='card-subtitles'>Numéro de téléphone:</strong> {phone}.
         </Typography>
         <br />
         <Typography variant="body2" component="p">
-          Du <strong>{starting_date && getFullDate(starting_date)}</strong> au <strong>{ending_date && getFullDate(ending_date)}</strong>.
+          Du <strong className='card-subtitles'>{starting_date && getFullDate(starting_date)}</strong> au <strong className='card-subtitles'>{ending_date && getFullDate(ending_date)}</strong>.
         </Typography>
         <br />
         <Typography variant="body2" component="p">
-          <strong>Message:</strong> 
+          <strong className='card-subtitles'>Message:</strong> 
           <br />
           {message}
         </Typography>

@@ -19,6 +19,7 @@ const Home = () => {
           .then(data => setBookings(data.map(b => {
               return { 
                 id_booking: b.id,
+                apartment_name: b.name,
                 firstname: b.firstname,
                 lastname: b.lastname,
                 email: b.email,
@@ -32,7 +33,6 @@ const Home = () => {
       }, []);
 
     const handlePatch = (id) => {
-      console.log(id);
       API.patch('/bookings', { id })
         .then(response => response.data)
       setBookings(bookings.filter(b => b.id_booking !== id));

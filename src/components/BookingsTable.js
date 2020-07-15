@@ -145,7 +145,7 @@ function BookingsTable() {
                         const color = row.color
                         return (
                           <TableCell className='cells-icons' key={column.label} align={column.align} style={{ color:`${color}` }}>
-                            {column.label === 'Modifier' ? <Link to={`/reservation/${value}`}><EditIcon className='update-icon' /></Link> : column.label === 'Supprimer' ? <DeleteForeverIcon className='contacts-icons' style={{ color: "red" }} onClick={() => handleClickOpen(value)} /> : value}
+                            {column.label === 'Modifier' ? <Link to={`/reservation/${value}`}><EditIcon className='update-icon' /></Link> : column.label === 'Supprimer' ? <DeleteForeverIcon className='delete-icons' style={{ color: "red" }} onClick={() => handleClickOpen(value)} /> : value}
                           </TableCell>
                         );
                       })}

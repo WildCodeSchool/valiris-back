@@ -8,6 +8,12 @@ span.MuiButton-label > a {
   font-size: 1rem;
 }
 
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .navbar-item {
   text-decoration: none;
   color: white;
@@ -21,7 +27,7 @@ span.MuiButton-label > a {
 }
 
 .navbar-item:hover {
-  border-bottom: 2px solid #f7f1e9ff;
+  border-bottom: 2px solid white;
   padding-bottom: 4px;
 }
 
@@ -34,4 +40,76 @@ span.MuiButton-label > a {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.btn-dropdown-menu {
+  display: flex;
+  cursor: pointer;
+}
+
+/* Burger menu */
+.navbar-burger {
+  display:flex;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 250px;
+  height: 100%;
+  background-color: #329797;
+  z-index: 100;
+  transform: translateX(-105%);
+  transition: transform 0.4s ease-out;
+  text-align: left;
+}
+
+.burger-list {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 30px;
+  top: 110px;
+}
+
+.navbar-burger.open {
+  transform: translateX(0);
+}
+
+.closing-menu {
+  cursor: pointer;
+  position: absolute;
+  left: 30px;
+  top: 20px;
+  color: white;
+  font-size: 25px;
+}
+
+.closing-menu:hover {
+  font-size: 30px;
+}
+
+.burger-item {
+  text-decoration: none;
+  color: white;
+  margin: 15px 10px;
+  transition: all 0.1s ease;
+  font-size: 16px;
+}
+
+.burger-item:hover {
+  padding-bottom: 4px;
+  font-size: 20px;
+}
+
+.burger-item.active {
+  font-size: 20px;
+  padding-bottom: 4px;
+}
+
+@media screen and (max-width: 850px) {
+  #icon-button {
+    display: block;
+  }
+  .navbar-list {
+    display: none;
+  }
 }

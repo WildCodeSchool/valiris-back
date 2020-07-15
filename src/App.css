@@ -17,3 +17,7 @@ a {
     color: #fff !important;
     text-transform: uppercase !important;
 }
+
+.delete-icons{
+    cursor: pointer;
+}
