@@ -11,7 +11,7 @@ const Home = () => {
     const [validation, setValidation] = useState(false);
     const [isValidated, setIsValidated] = useState(false);
     const [msgValidation, setMsgValidation] = useState('');
-    const [open, setOpen] = useState(false);
+    
 
     useEffect(() => {
         API.get('/bookings')
@@ -41,23 +41,6 @@ const Home = () => {
       setMsgValidation('Votre demande de réservation a bien été accepté et apparaîtra sur votre calendrier de réservation.');
     }
 
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
-
-    const handleClose = () => {
-      setOpen(false);
-    };
-    
-
-    const handleClickDelete = (id) => {
-      handleClose();
-      console.log('Ready to delete')
-      API.delete(`/bookings/${id}`)
-        .then(res => res.data)
-      setBookings(bookings.filter(b => b.id_booking !== id));
-    }
-
     const handleCloseMui = (event, reason) => {
       if (reason === 'clickaway') {
         return;
@@ -82,10 +65,8 @@ const Home = () => {
                     key={b.id_booking} 
                     bookingDetails={b} 
                     handlePatch={handlePatch}
-                    handleClickDelete={handleClickDelete}
-                    handleClickOpen={handleClickOpen}
-                    handleClose={handleClose}
-                    open={open} />
+                    setBookings={setBookings}
+                    />
                 )}
             )}
             {bookings.length === 0 && <p className='no-booking'>Vous n'avez aucune nouvelle demande de réservation</p>}
