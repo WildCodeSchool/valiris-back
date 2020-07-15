@@ -121,7 +121,7 @@ export default function Register() {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography style={{color: '#329797'}} component="h2" variant="h5">
           Créer un nouvel utilisateur
         </Typography>
         <form onSubmit={(e) => submitValidation(e)} className={classes.form} noValidate>

@@ -183,7 +183,7 @@ const Apartment = (props) => {
     return <div className='loader'><CircularProgress style={{ width: '70px', height: '70px' }} /></div>
   } else {
     return (
-      <div >
+      <div>
         <h2 className='apartment-title'>Modifier un appartement</h2>
         <form className='form-container' noValidate autoComplete='off' onSubmit={(e) => handleSubmit(e)}>
           <TextField
