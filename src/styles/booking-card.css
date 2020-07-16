@@ -1,26 +1,50 @@
 .card-container {
-    width: 70%;
-    margin: 50px auto;
+  width: 70%;
+  margin: 50px auto;
+}
+
+.card-title {
+    font-size: 18px !important; 
+    text-align: center; 
+    color: #329797 !important; 
+    margin-bottom: 1em !important;
+}
+
+.card-subtitles {
+  line-height: 2em;
+  color: #329797;
 }
 
 .actions-booking {
-    justify-content: space-around;
-    align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.actions-booking a {
+margin-left: 0 !important;
 }
 
 .validation-booking {
-    border: 1px solid green !important;
-    color: green !important;
-    padding: 10px !important;
+  border: 1px solid green !important;
+  color: green !important;
+  padding: 10px !important;
+  margin: 8px auto !important;
+  width: 225px !important;
 }
 
 .update-booking {
-    border: 1px solid !important;
-    padding: 10px !important;
+  border: 1px solid !important;
+  padding: 10px !important;
+  margin: 8px auto !important;
+  width: 225px !important;
 }
 
 .delete-booking {
-    border: 1px solid red !important;
-    color: red !important;
-    padding: 10px !important;
+  border: 1px solid red !important;
+  color: red !important;
+  padding: 10px !important;
+  margin: 8px auto !important;
+  width: 225px !important;
 }

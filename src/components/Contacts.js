@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import API from '../API';
+import '../styles/form.css'
+import '../styles/contacts.css';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -17,7 +19,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import '../styles/Contact.css';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles({
@@ -98,7 +99,7 @@ function Contacts() {
                 <TableRow>
                   {columns.map(column => (
                     <TableCell
-                      key={column.id}
+                      key={column.label}
                       align={column.align}
                       style={{ minWidth: column.minWidth }}
                     >
@@ -110,12 +111,12 @@ function Contacts() {
               <TableBody>
                 {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
                   return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                       {columns.map(column => {
                         const value = row[column.id];
                         return (
-                          <TableCell key={column.id} align={column.align}>
-                            {column.label === 'Modifier' ? <Link to={`/contacts/${value}`}><EditIcon color='primary' /></Link> : column.label === 'Supprimer' ? <DeleteForeverIcon className='contacts-icons' style={{ color: "red" }} onClick={() => handleClickOpen(value)} /> : value}
+                          <TableCell className='cells-icons' key={column.label} align={column.align}>
+                            {column.label === 'Modifier' ? <Link to={`/contacts/${value}`}><EditIcon className='update-icon' /></Link> : column.label === 'Supprimer' ? <DeleteForeverIcon className='delete-icons' style={{ color: "red" }} onClick={() => handleClickOpen(value)} /> : value}
                           </TableCell>
                         );
                       })}
@@ -160,7 +161,7 @@ function Contacts() {
           </Button>
           </DialogActions>
         </Dialog>
-        <Link to={`/nouveau-contact`}><AddCircleOutlineIcon className='contacts-icons contacts-icons-add' style={{ color: "green", fontSize: 50 }} /></Link>
+        <Link to={`/nouveau-contact`}><AddCircleOutlineIcon className='contacts-icons contacts-icons-add' style={{ color: "#329797", fontSize: 50 }} /></Link>
       </div>
     );
   }

@@ -84,11 +84,11 @@ const NewBooking = () => {
   }
   return (
     <>
-      <h2>Nouvelle réservation</h2>
-      <form className='booking-container' noValidate autoComplete='off' onSubmit={(e) => handleSubmit(e)}>
+      <h2>Entrer une nouvelle réservation</h2>
+      <form className='form-container' noValidate autoComplete='off' onSubmit={(e) => handleSubmit(e)}>
         <TextField
-          className='date-input'
-          label='début'
+          className='input-form'
+          label='Date de début'
           type='date'
           variant='outlined'
           name='starting_date'
@@ -102,8 +102,8 @@ const NewBooking = () => {
           }}
         />
         <TextField
-          className='date-input'
-          label='fin'
+          className='input-form'
+          label='Date de fin'
           type='date'
           variant='outlined'
           name='ending_date'
@@ -118,16 +118,16 @@ const NewBooking = () => {
               : { min: getFullDate() }
           }}
         />
-        <FormControl variant='outlined' className={`input-contact`}>
-          <InputLabel htmlFor='outlined-age-native-simple'>Appartement</InputLabel>
+        <FormControl variant='outlined' className='input-form'>
+          <InputLabel htmlFor='outlined-apartment'>Appartement</InputLabel>
           <Select
             native
             value={booking.id_apartment}
             onChange={(e) => setBooking({ ...booking, id_apartment: e.target.value })}
             name='apartment'
-            label='appartement'
+            label='Appartement'
             inputProps={{
-              id: 'outlined-age-native-simple'
+              id: 'outlined-apartment'
             }}
           >
             <option value='' />
@@ -136,8 +136,8 @@ const NewBooking = () => {
             })}
           </Select>
         </FormControl>
-        <FormControl variant='outlined' className={`input-contact`}>
-          <InputLabel htmlFor='outlined-age-native-simple'>Contact</InputLabel>
+        <FormControl variant='outlined' className='input-form'>
+          <InputLabel htmlFor='outlined-contact'>Contact</InputLabel>
           <Select
             native
             value={booking.id_contact}
@@ -145,7 +145,7 @@ const NewBooking = () => {
             name='contact'
             label='Contact'
             inputProps={{
-              id: 'outlined-age-native-simple'
+              id: 'outlined-contact'
             }}
           >
             <option value='' />

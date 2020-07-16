@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import API from '../API';
-import '../styles/Contact.css';
+import '../styles/form.css';
+import '../styles/apartments.css';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -29,9 +29,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const NewApartment = (props) => {
+  const baseUrl = process.env.REACT_APP_API_URL;
   const classes = useStyles();
 
   const [apartment, setApartment] = useState({
@@ -48,7 +48,7 @@ const NewApartment = (props) => {
   const [msgAlert, setMsgAlert] = useState('');
   const [errorForm, setErrorForm] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [mainPicture, setMainPicture] = useState();
+  const [mainPicture, setMainPicture] = useState('');
   const [secondaryPictures, setSecondaryPictures] = useState([]);
 
   const handleSubmit = (e) => {
@@ -61,6 +61,17 @@ const NewApartment = (props) => {
         setMessageForm(true);
         setLoading(false);
         setMsgAlert(`L'appartement ${data.name} a bien été créé`);
+        setApartment({
+          name: '',
+          details_fr: '',
+          details_en: '',
+          title_fr: '',
+          title_en: '',
+          weekPrice: '',
+          monthPrice: ''
+        });
+        setMainPicture('');
+        setSecondaryPictures([])
       })
       .catch(err => {
         console.log(err);
@@ -72,6 +83,7 @@ const NewApartment = (props) => {
   }
 
   const uploadCurrentImage = (e) => {
+    console.log(baseUrl)
     e.preventDefault();
     const image = e.target.files[0];
     const currentPicture = e.target.id
@@ -136,22 +148,23 @@ const NewApartment = (props) => {
 
   return (
     <div >
-      <form className='contact-container' autoComplete='off' onSubmit={(e) => handleSubmit(e)}>
+      <h2 className='apartment-title'>Ajouter un nouvel appartement</h2>
+      <form className='form-container' autoComplete='off' onSubmit={(e) => handleSubmit(e)}>
         <TextField
-          className='input-contact'
+          className='input-form'
           label='Nom'
           variant='outlined'
           value={apartment.name}
           onChange={(e) => setApartment({ ...apartment, name: e.target.value })}
           name='name'
           inputProps={{
-            minlength: 1,
-            maxlength: 40
+            minLength: 1,
+            maxLength: 40
           }}
           required
         />
         <TextField
-          className='input-contact'
+          className='input-form'
           label='Prix à la semaine'
           variant='outlined'
           value={apartment.weekPrice}
@@ -164,7 +177,7 @@ const NewApartment = (props) => {
           required
         />
         <TextField
-          className='input-contact'
+          className='input-form'
           label='Prix au mois'
           variant='outlined'
           value={apartment.monthPrice}
@@ -177,7 +190,7 @@ const NewApartment = (props) => {
           required
         />
         <TextField
-          className='input-contact'
+          className='input-form'
           label='Intitulé (français)'
           variant='outlined'
           multiline
@@ -186,12 +199,12 @@ const NewApartment = (props) => {
           onChange={(e) => setApartment({ ...apartment, title_fr: e.target.value })}
           name='title_fr'
           inputProps={{
-            minlength: 1
+            minLength: 1
           }}
           required
         />
         <TextField
-          className='input-contact'
+          className='input-form'
           label='Intitulé (anglais)'
           variant='outlined'
           multiline
@@ -200,12 +213,12 @@ const NewApartment = (props) => {
           onChange={(e) => setApartment({ ...apartment, title_en: e.target.value })}
           name='title_en'
           inputProps={{
-            minlength: 1
+            minLength: 1
           }}
           required
         />
         <TextField
-          className='input-contact'
+          className='input-form'
           label='Détails (français)'
           variant='outlined'
           multiline
@@ -214,12 +227,12 @@ const NewApartment = (props) => {
           onChange={(e) => setApartment({ ...apartment, details_fr: e.target.value })}
           name='details_fr'
           inputProps={{
-            minlength: 1
+            minLength: 1
           }}
           required
         />
         <TextField
-          className='input-contact'
+          className='input-form'
           label='Détails (anglais)'
           variant='outlined'
           multiline
@@ -228,117 +241,134 @@ const NewApartment = (props) => {
           onChange={(e) => setApartment({ ...apartment, details_en: e.target.value })}
           name='details_en'
           inputProps={{
-            minlength: 1
+            minLength: 1
           }}
           required
         />
-        <input
-          name='main-picture'
-          accept="image/*"
-          className={classes.input}
-          id="main-picture-button"
-          type="file"
-          onChange={e => uploadCurrentImage(e)}
-          required
-        />
-        <p>Photo principale :</p>
-        <label htmlFor="main-picture-button">
-          <Button variant="contained" color="primary" component="span">
-            Ajouter
-          </Button>
-        </label>
-        {mainPicture &&
-          <Card className={classes.root}>
-            <CardActionArea>
-              <CardMedia
-                className={classes.media}
-                image={baseUrl + '/' + mainPicture}
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="h5">
-                  Photo principale
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-            <CardActions>
-              <input
-                name='main-picture'
-                accept="image/*"
-                className={classes.input}
-                id="main-picture-button"
-                type="file"
-                onChange={e => uploadCurrentImage(e)}
-              />
-              <label htmlFor="main-picture-button">
+
+        <div className='main-picture'>
+          <div className='input-button'>
+            <input
+              name='main-picture'
+              accept="image/*"
+              className={classes.input}
+              id="main-picture-button"
+              type="file"
+              onChange={e => uploadCurrentImage(e)}
+              required
+            />
+            <p>Photo principale :</p>
+            <label htmlFor="main-picture-button">
+              {!mainPicture &&
                 <Button variant="contained" color="primary" component="span">
-                  Modifier
-                </Button>
-              </label>
-            </CardActions>
-          </Card>
-        }
-        <input
-          name='secondary-picture'
-          accept="image/*"
-          className={classes.input}
-          id="secondary-picture-button"
-          type="file"
-          onChange={e => {
-            uploadCurrentImage(e)
-          }}
-        />
-        <p>Photo secondaire :</p>
-        <label htmlFor="secondary-picture-button">
-          <Button variant="contained" color="primary" component="span">
-            Ajouter
-          </Button>
-        </label>
-        {secondaryPictures.map((picture) => {
-          return (
-            <Card key={picture} className={classes.root}>
+                  Ajouter
+              </Button>
+              }
+            </label>
+          </div>
+          {mainPicture &&
+            <Card className={classes.root}>
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
-                  image={baseUrl + '/' + picture}
+                  image={baseUrl + mainPicture}
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="h5">
-                    Photo secondaire
-                      </Typography>
+                    Photo principale
+                </Typography>
                 </CardContent>
               </CardActionArea>
               <CardActions>
                 <input
-                  name='update-secondary-picture'
+                  name='main-picture'
                   accept="image/*"
                   className={classes.input}
-                  id={picture}
+                  id="main-picture-button"
                   type="file"
-                  onChange={(e) => uploadCurrentImage(e)}
+                  onChange={e => uploadCurrentImage(e)}
                 />
-                <label htmlFor={picture}>
+                <label htmlFor="main-picture-button">
                   <Button variant="contained" color="primary" component="span">
                     Modifier
-                  </Button>
-                </label>
-                <Button size="small" color="primary" onClick={() => handleDelete(picture)}>
-                  Supprimer
                 </Button>
+                </label>
               </CardActions>
             </Card>
-          )
-        })}
-        {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <Button variant="contained" className='contact-valid-button' type='submit'>Valider</Button>}
+          }
+        </div>
+
+        <div className='secondary-picture'>
+          <div className='input-button'>
+            <input
+              name='secondary-picture'
+              accept="image/*"
+              className={classes.input}
+              id="secondary-picture-button"
+              type="file"
+              onChange={e => {
+                uploadCurrentImage(e)
+              }}
+            />
+            <p>Photo secondaire :</p>
+            <label htmlFor="secondary-picture-button">
+              <Button variant="contained" color="primary" component="span">
+                Ajouter
+          </Button>
+            </label>
+          </div>
+          <div className='picture-card'>
+            {secondaryPictures.map((picture) => {
+              return (
+                <Card key={picture} className={classes.root}>
+                  <CardActionArea>
+                    <CardMedia
+                      className={classes.media}
+                      image={baseUrl + picture}
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="h5">
+                        Photo secondaire
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                  <CardActions>
+                    <input
+                      name='update-secondary-picture'
+                      accept="image/*"
+                      className={classes.input}
+                      id={picture}
+                      type="file"
+                      onChange={(e) => uploadCurrentImage(e)}
+                    />
+                    <label htmlFor={picture}>
+                      <Button variant="contained" color="primary" component="span">
+                        Modifier
+                  </Button>
+                    </label>
+                    <Button size="small" color="primary" onClick={() => handleDelete(picture)}>
+                      Supprimer
+                </Button>
+                  </CardActions>
+                </Card>
+              )
+            })}
+          </div>
+        </div>
+
+        <div className='submit-back'>
+          {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <Button variant="contained" className='contact-valid-button' type='submit'>Valider</Button>}
+          <Button className='back-button' variant="contained">
+            <Link to={`/appartements`}>Retour</Link>
+          </Button>
+        </div>
+
+        <Snackbar open={messageForm} autoHideDuration={6000} onClose={handleCloseMui}>
+          <Alert onClose={handleCloseMui} severity={!errorForm ? 'success' : 'error'}>
+            {msgAlert}
+          </Alert>
+        </Snackbar>
       </form>
-      <Button
-        variant="contained">
-        <Link to={`/appartements`}>Retour</Link>
-      </Button>
-      <Snackbar open={messageForm} autoHideDuration={6000} onClose={handleCloseMui}>
-        <Alert onClose={handleCloseMui} severity={!errorForm ? 'success' : 'error'}>
-          {msgAlert}
-        </Alert>
-      </Snackbar>
     </div>
   )
 }
