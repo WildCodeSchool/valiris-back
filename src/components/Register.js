@@ -12,6 +12,7 @@ import Container from '@material-ui/core/Container';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import logo from '../images/logo_valiris.png';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -118,9 +119,12 @@ export default function Register() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+        <img 
+          src={logo} 
+          alt='logo-valiris' 
+          className='logo-header' 
+          style={{marginBottom:'40px'}}
+        />
         <Typography style={{color: '#329797'}} component="h2" variant="h5">
           Créer un nouvel utilisateur
         </Typography>
