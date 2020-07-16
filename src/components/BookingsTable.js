@@ -11,15 +11,13 @@ import TableRow from '@material-ui/core/TableRow';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { Link } from 'react-router-dom';
-import '../styles/Contact.css';
 import moment from 'moment';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
-import UserInfoContext from '../userInfoContext'
+import UserInfoContext from '../userInfoContext';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles({
   root: {
@@ -117,10 +115,11 @@ function BookingsTable() {
     };
 
   if (!rows) {
-    return <></>
+    return <div className='loader'><CircularProgress style={{ width: '70px', height: '70px' }} /></div>
   } else {
     return (
       <div className='contacts-container'>
+        <h2>Réservations</h2>
         <Paper className={classes.root}>
           <div className={classes.tableWrapper}>
             <Table stickyHeader aria-label="sticky table">
@@ -128,7 +127,7 @@ function BookingsTable() {
                 <TableRow>
                   {columns.map(column => (
                     <TableCell
-                      key={column.id}
+                      key={column.label}
                       align={column.align}
                       style={{ minWidth: column.minWidth }}
                     >
@@ -140,13 +139,13 @@ function BookingsTable() {
               <TableBody>
                 {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
                   return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                       {columns.map(column => {
                         const value = row[column.id];
                         const color = row.color
                         return (
-                          <TableCell key={column.id} align={column.align} style={{ color:`${color}` }}>
-                            {column.label === 'Modifier' ? <Link to={`/reservation/${value}`}><EditIcon color='primary' /></Link> : column.label === 'Supprimer' ? <DeleteForeverIcon className='contacts-icons' style={{ color: "red" }} onClick={() => handleClickOpen(value)} /> : value}
+                          <TableCell className='cells-icons' key={column.label} align={column.align} style={{ color:`${color}` }}>
+                            {column.label === 'Modifier' ? <Link to={`/reservation/${value}`}><EditIcon className='update-icon' /></Link> : column.label === 'Supprimer' ? <DeleteForeverIcon className='delete-icons' style={{ color: "red" }} onClick={() => handleClickOpen(value)} /> : value}
                           </TableCell>
                         );
                       })}
@@ -179,7 +178,7 @@ function BookingsTable() {
           aria-labelledby="alert-dialog-slide-title"
           aria-describedby="alert-dialog-slide-description"
         >
-          <DialogTitle id="alert-dialog-slide-title">{"Êtes-vous sur de vouloir supprimer cette réservation ?"}</DialogTitle>
+          <DialogTitle>{"Êtes-vous sur de vouloir supprimer cette réservation ?"}</DialogTitle>
           <DialogActions>
             <Button onClick={handleClose} color="primary">
               Annuler

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { TextField } from '@material-ui/core';
 import API from '../API';
-import '../styles/Contact.css';
 import '../styles/account.css'
+import '../styles/form.css'
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -95,10 +95,10 @@ const Account = () => {
   } else {
     return (
       <div className='account-container'>
-        <form className='user-container' noValidate onSubmit={(e) => handleSubmit(e)}>
+        <form className='form-container' noValidate onSubmit={(e) => handleSubmit(e)}>
         <h2>Modifier mes Informations</h2>
           <TextField
-            className='input-contact'
+            className='input-form'
             label='E-mail'
             variant='outlined'
             value={user.email}
@@ -107,12 +107,12 @@ const Account = () => {
           />
           {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <Button variant="contained" color="primary" type='submit'>valider</Button>}
         </form>
-        <form className='user-password-container' onSubmit={(e) => handleSubmitPassword(e)}>
+        <form className='form-container' id='form-password' onSubmit={(e) => handleSubmitPassword(e)}>
         <h2>Changer mon mot de passe</h2>
           <TextField
             variant="outlined"
             required
-            className='input-contact'
+            className='input-form'
             name="password"
             label="Nouveau mot de passe"
             type="password"
@@ -124,7 +124,7 @@ const Account = () => {
           <TextField
             variant="outlined"
             required
-            className='input-contact'
+            className='input-form'
             name="passwordVerif"
             label="Confirmer mot de passe"
             type="password"

@@ -1,0 +1,46 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-form {
+  margin: 15px !important;
+  width: 80%;
+}
+
+.submit-back {
+  width: 80%;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.back-button {
+  margin: 20px !important;
+  background-color: #e0e0e0 !important;
+}
+
+.back-button a {
+  font-size: 14px !important;
+  text-transform: uppercase !important;
+}
+
+@media screen and (min-width: 650px) {
+  .input-form {
+    width: 80%;
+  }
+  .submit-back {
+    width: 80%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .input-form {
+    width: 50%;
+  }
+  .submit-back {
+    width: 50%;
+  }
+}

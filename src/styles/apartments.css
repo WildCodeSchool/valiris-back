@@ -1,4 +1,75 @@
-.photo-container {
-  display: flex;
+tr > th {
+  text-align: center !important;
+  color: #329797 !important;
+  font-weight: 600 !important;
 }
-  
+
+.cells-icons {
+  text-align: center !important;
+}                                  
+                        
+.update-icon, .apartment-title {
+  color: #329797;
+  text-align: center;
+}
+
+.main-picture {
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.input-button {
+  display: flex;
+  align-items: center;
+}
+
+.input-button p {
+  margin: 20px !important;
+}
+
+.secondary-picture {
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  width: 80%;
+  margin: 15px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;  
+  flex-direction: column;
+}
+
+.picture-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-picture:hover {
+  border: solid 1px rgba(0, 0, 0, 0.8);
+}
+
+.secondary-picture:hover {
+  border: solid 1px rgba(0, 0, 0, 0.8);
+}
+
+@media screen and (min-width: 650px) {
+  .main-picture, .secondary-picture {
+    width: 80%;
+  }
+  .picture-card { 
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .main-picture, .secondary-picture {
+    width: 50%;
+  }
+}

@@ -1,17 +1,14 @@
 .account-container{
   display: flex;
+  flex-direction: column;
 }
 
-.user-container{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 50%;
+.account-container h2 {
+  color: #329797;
 }
 
-.user-password-container{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 50%;
+#form-password {
+  margin-top: 2em;
 }
+
+

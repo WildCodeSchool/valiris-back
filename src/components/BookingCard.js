@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -12,6 +12,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Link } from 'react-router-dom';
+import API from '../API';
 
 const useStyles = makeStyles({
   root: {
@@ -25,8 +26,10 @@ const useStyles = makeStyles({
   },
 });
 
-export default function BookingCard({ bookingDetails : { 
-  id_booking, 
+export default function BookingCard(
+  { bookingDetails : { 
+  id_booking,
+  apartment_name, 
   firstname, 
   lastname,
   email,
@@ -35,11 +38,10 @@ export default function BookingCard({ bookingDetails : {
   ending_date, 
   message }, 
   handlePatch,
-  handleClickOpen,
-  handleClickDelete,
-  handleClose,
-  open}) {
+  setBookings}) {
+
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
 
   const getFullDate = (date) => {
     let day = date.slice(0, 10).split('').splice(8, 9).join('')
@@ -49,10 +51,25 @@ export default function BookingCard({ bookingDetails : {
     return fullDate;
   };
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleClickDelete = (id) => {
+    handleClose()
+    API.delete(`/bookings/${id}`)
+      .then(res => res.data)
+    setBookings(bookings => bookings.filter(b => b.id_booking !== id));
+  }
+
   return (
     <Card className={`${classes.root} card-container`}>
       <CardContent>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
+        <Typography className={`card-title ${classes.title}`} color="textSecondary" gutterBottom>
           Demande de réservation
         </Typography>
         <Typography variant="h5" component="h4">
@@ -60,17 +77,19 @@ export default function BookingCard({ bookingDetails : {
         </Typography>
         <br />
         <Typography variant="body2" component="p">
-          <strong>Adresse e-mail:</strong> {email}.
+          <strong className='card-subtitles'>Appartement :</strong> {apartment_name}
           <br />
-          <strong>Numéro de téléphone:</strong> {phone}.
+          <strong className='card-subtitles'>Adresse e-mail :</strong> {email}
+          <br />
+          <strong className='card-subtitles'>Numéro de téléphone :</strong> {phone}
         </Typography>
         <br />
         <Typography variant="body2" component="p">
-          Du <strong>{starting_date && getFullDate(starting_date)}</strong> au <strong>{ending_date && getFullDate(ending_date)}</strong>.
+          Du <strong className='card-subtitles'>{starting_date && getFullDate(starting_date)}</strong> au <strong className='card-subtitles'>{ending_date && getFullDate(ending_date)}</strong>
         </Typography>
         <br />
         <Typography variant="body2" component="p">
-          <strong>Message:</strong> 
+          <strong className='card-subtitles'>Message :</strong> 
           <br />
           {message}
         </Typography>
@@ -88,7 +107,7 @@ export default function BookingCard({ bookingDetails : {
           aria-labelledby="alert-dialog-slide-title"
           aria-describedby="alert-dialog-slide-description"
         >
-          <DialogTitle id="alert-dialog-slide-title">{"Êtes-vous sur de vouloir supprimer la réservation?"}</DialogTitle>
+          <DialogTitle id="alert-dialog-slide-title">Êtes-vous sur de vouloir supprimer la réservation ?</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-slide-description">
               Toute suppression sera irréversible.
@@ -97,10 +116,10 @@ export default function BookingCard({ bookingDetails : {
           <DialogActions>
             <Button onClick={handleClose} color="primary">
               Annuler
-          </Button>
+            </Button>
             <Button onClick={() => handleClickDelete(id_booking)} color="primary">
               Supprimer
-          </Button>
+            </Button>
           </DialogActions>
         </Dialog>
     </Card>

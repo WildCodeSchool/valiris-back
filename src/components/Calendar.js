@@ -10,7 +10,7 @@ const Calendar = () => {
     API.get(`/apartments/availabilities/all`)
       .then(res => res.data)
       .then(data => {
-        setAvailabilities(data.map(d => {
+        setAvailabilities(data.filter(d => d.validation === 1).map(d => {
           let color = '';
           switch (d.id_apartment) {
             case 1:
@@ -56,7 +56,7 @@ const Calendar = () => {
           center: 'title',
           right: 'prev,next'
         }}
-        height='auto'
+        height='800px'
         locale='fr'
       />
     </div>

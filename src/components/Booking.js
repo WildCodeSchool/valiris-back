@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TextField } from '@material-ui/core';
 import API from '../API';
-import '../styles/Contact.css';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -9,9 +8,10 @@ import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
-import '../styles/booking.css';
+import '../styles/form.css';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { Link } from 'react-router-dom';
 
 const Booking = (props) => {
 
@@ -83,14 +83,15 @@ const Booking = (props) => {
 
 
   if (!contacts || !apartments || !booking) {
-    return <p>loading...</p>
+    return <div className='loader'><CircularProgress style={{ width: '70px', height: '70px' }} /></div>
   } else {
     return (
       <div >
-        <form className='Updatebooking-container' noValidate autoComplete='off' onSubmit={(e) => handleSubmit(e)}>
+        <h2 className='booking-title'>Modifier une réservation</h2>
+        <form className='form-container' noValidate autoComplete='off' onSubmit={(e) => handleSubmit(e)}>
           <TextField
-            className='date-input'
-            label='début'
+            className='input-form'
+            label='Date de début'
             type='date'
             variant='outlined'
             name='starting_date'
@@ -104,8 +105,8 @@ const Booking = (props) => {
             }}
           />
           <TextField
-            className='date-input'
-            label='fin'
+            className='input-form'
+            label='Date de fin'
             type='date'
             variant='outlined'
             name='ending_date'
@@ -120,7 +121,7 @@ const Booking = (props) => {
                 : { min: getFullDate() }
             }}
           />
-          <FormControl variant='outlined' className={`input-booking`}>
+          <FormControl variant='outlined' className={'input-form'}>
             <InputLabel htmlFor='outlined-age-native-simple'>Appartement</InputLabel>
             <Select
               native
@@ -138,7 +139,7 @@ const Booking = (props) => {
               })}
             </Select>
           </FormControl>
-          <FormControl variant='outlined' className={`input-booking`}>
+          <FormControl variant='outlined' className={'input-form'}>
             <InputLabel htmlFor='outlined-age-native-simple'>Contact</InputLabel>
             <Select
               native
@@ -165,9 +166,15 @@ const Booking = (props) => {
                 color="primary"
               />
             }
-            label="Validée"
+            label="Valider la réservation"
           />
-          {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <Button variant="contained" color="primary" type='submit'>valider</Button>}
+          <div className='submit-back'>
+            {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <Button variant="contained" color="primary" type='submit'>valider</Button>}
+            <Button className='back-button' variant="contained">
+              <Link to={`/reservations`}>Retour</Link>
+            </Button>
+          </div>
+          
           <Snackbar open={messageForm} autoHideDuration={6000} onClose={handleCloseMui}>
             <Alert onClose={handleCloseMui} severity={!errorForm ? 'success' : 'error'}>
               {msgAlert}

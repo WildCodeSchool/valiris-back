@@ -1,0 +1,29 @@
+div > h2 {
+  color: #329797;
+  text-align: center;
+}
+
+.contacts-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 40px;
+}
+
+.cells-icons {
+  text-align: center !important;
+}                                  
+                        
+.update-icon .contact-title {
+  color: #329797;
+  text-align: center;
+}
+
+.input-contact{
+  margin : 20px !important;
+  width: 30%;
+}
+
+.contacts-icons-add{
+  margin : 20px;
+}
