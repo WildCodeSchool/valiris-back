@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 const NewApartment = (props) => {
-  const baseUrl = process.env.REACT_APP_API_URL;
+  const baseUrl = process.env.REACT_APP_API_BASE_URL;
   const classes = useStyles();
 
   const [apartment, setApartment] = useState({
