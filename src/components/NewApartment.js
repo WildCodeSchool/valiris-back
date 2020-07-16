@@ -9,7 +9,6 @@ import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -30,9 +29,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const NewApartment = (props) => {
+  const baseUrl = process.env.REACT_APP_API_URL;
   const classes = useStyles();
 
   const [apartment, setApartment] = useState({
@@ -84,6 +83,7 @@ const NewApartment = (props) => {
   }
 
   const uploadCurrentImage = (e) => {
+    console.log(baseUrl)
     e.preventDefault();
     const image = e.target.files[0];
     const currentPicture = e.target.id
@@ -271,7 +271,7 @@ const NewApartment = (props) => {
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
-                  image={baseUrl + '/' + mainPicture}
+                  image={baseUrl + mainPicture}
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="h5">
@@ -324,7 +324,7 @@ const NewApartment = (props) => {
                   <CardActionArea>
                     <CardMedia
                       className={classes.media}
-                      image={baseUrl + '/' + picture}
+                      image={baseUrl + picture}
                     />
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="h5">
