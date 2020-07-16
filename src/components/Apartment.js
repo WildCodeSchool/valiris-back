@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Apartment = (props) => {
-  const baseUrl = process.env.REACT_APP_API_BASE_URL;
+  const baseUrl = process.env.REACT_APP_API_BASE_URL + '/';
   const classes = useStyles();
 
   const id = props.match.params.id;
