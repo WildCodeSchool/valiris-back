@@ -41,6 +41,7 @@ const Apartment = (props) => {
   const [loading, setLoading] = useState(false);
   const [mainPicture, setMainPicture] = useState(null);
   const [secondaryPictures, setSecondaryPictures] = useState([]);
+  const [removedSecondary, setRemovedSecondary] = useState([]);
 
   useEffect(() => {
     API.get(`/apartments/${id}/back`)
@@ -90,7 +91,13 @@ const Apartment = (props) => {
         setLoading(false);
         setMessageForm(true);
       })
-    secondaryPictures.map(picture => {
+    
+    removedSecondary.forEach(id => {
+      API.delete(`/apartments/secondary/${id}`)
+      .then(res => res.data)
+    }) 
+
+    secondaryPictures.forEach(picture => {
       if (picture.id) {
         return (
           API.patch(`/apartments/${id}/updateSecondary`, { picture })
@@ -98,7 +105,6 @@ const Apartment = (props) => {
             .then(() => {
               setMessageForm(true);
               setLoading(false);
-              setMsgAlert(`La photo secondaire a bien été mis à jour.`);
             })
             .catch(err => {
               console.log(err);
@@ -115,7 +121,6 @@ const Apartment = (props) => {
             .then(() => {
               setMessageForm(true);
               setLoading(false);
-              setMsgAlert(`La photo secondaire a bien été mis à jour.`);
             })
             .catch(err => {
               console.log(err);
@@ -177,6 +182,9 @@ const Apartment = (props) => {
   }
 
   const handleDelete = (picture) => {
+    if (picture.id) {
+      setRemovedSecondary([...removedSecondary, picture.id]);
+    }
     setSecondaryPictures(secondaryPictures.filter(image => image !== picture))
   }
 
@@ -335,7 +343,7 @@ const Apartment = (props) => {
                       <label htmlFor={(picture.id ? picture.url : picture)}>
                         <Button variant="contained" color="primary" component="span">
                           Modifier
-                </Button>
+                        </Button>
                       </label>
                       <Button size="small" color="primary" onClick={() => handleDelete(picture)}>
                         Supprimer
