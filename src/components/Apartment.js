@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Apartment = (props) => {
+  const baseUrl = process.env.REACT_APP_API_URL;
   const classes = useStyles();
 
   const id = props.match.params.id;
@@ -262,11 +263,11 @@ const Apartment = (props) => {
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
-                  image={'http://localhost:3000/' + mainPicture}
+                  image={baseUrl + mainPicture}
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="h5">
-                    Photo principal
+                    Photo principale
                 </Typography>
                 </CardContent>
               </CardActionArea>
@@ -313,7 +314,7 @@ const Apartment = (props) => {
                     <CardActionArea>
                       <CardMedia
                         className={classes.media}
-                        image={'http://localhost:3000/' + (picture.id ? picture.url : picture)}
+                        image={baseUrl + (picture.id ? picture.url : picture)}
                       />
                       <CardContent>
                         <Typography gutterBottom variant="h5" component="h5">
