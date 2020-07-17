@@ -58,6 +58,7 @@ const NewApartment = (props) => {
     API.post('/apartments', { ...apartment, mainPicture, secondaryPictures })
       .then(res => res.data)
       .then(data => {
+        console.log('test');
         setMessageForm(true);
         setLoading(false);
         setMsgAlert(`L'appartement ${data.name} a bien été créé`);
@@ -83,7 +84,6 @@ const NewApartment = (props) => {
   }
 
   const uploadCurrentImage = (e) => {
-    console.log(baseUrl)
     e.preventDefault();
     const image = e.target.files[0];
     const currentPicture = e.target.id
@@ -255,7 +255,6 @@ const NewApartment = (props) => {
               id="main-picture-button"
               type="file"
               onChange={e => uploadCurrentImage(e)}
-              required
             />
             <p>Photo principale :</p>
             <label htmlFor="main-picture-button">
