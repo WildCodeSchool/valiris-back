@@ -69,7 +69,6 @@ const Account = () => {
     setErrorForm(false);
     if (password === passwordVerif) {
       API.patch(`/users/${id}/password`, { password })
-<<<<<<< HEAD
       .then(res => res.data)
       .then(data => {
         setMessageForm(true);
@@ -85,23 +84,6 @@ const Account = () => {
         setLoading(false);
         setMessageForm(true);
       })
-=======
-        .then(res => res.data)
-        .then(data => {
-          setMessageForm(true);
-          setLoading(false);
-          setMsgAlert(`L'utilisateur a bien été mis à jour`);
-          setPassword('')
-          setPasswordVerif('')
-        })
-        .catch(err => {
-          console.log(err);
-          setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau');
-          setErrorForm(true);
-          setLoading(false);
-          setMessageForm(true);
-        })
->>>>>>> maintenance/validation
     } else {
       setMsgAlert('Les mots de passe ne correspondent pas.');
       setLoading(false);
