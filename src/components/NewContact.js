@@ -42,12 +42,12 @@ const Contact = () => {
     const emailValidator = /[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}/;
     const phoneValidator = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/; /* eslint-disable-line */
     if (!contact.firstname || !contact.lastname || !contact.phone || !contact.email) {
-      setMsgAlert('Merci de renseigner tous les champs');
+      setMsgAlert('Merci de renseigner tous les champs.');
       setErrorForm(true);
       setLoading(false);
       setMessageForm(true);
     } else if (!phoneValidator.test(contact.phone) || !emailValidator.test(contact.email)) {
-      setMsgAlert('Un des champs est incorrect');
+      setMsgAlert('L\'un des champs est incorrect.');
       setErrorForm(true);
       setLoading(false);
       setMessageForm(true);
@@ -63,11 +63,11 @@ const Contact = () => {
           })
           setMessageForm(true);
           setLoading(false);
-          setMsgAlert(`Le contact ${data.firstname} ${data.lastname} a bien été créé`);
+          setMsgAlert(`Le contact ${data.firstname} ${data.lastname} a bien été créé.`);
         })
         .catch(err => {
           console.log(err);
-          setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau');
+          setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau.');
           setErrorForm(true);
           setLoading(false);
           setMessageForm(true);

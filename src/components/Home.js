@@ -38,7 +38,7 @@ const Home = () => {
       setBookings(bookings.filter(b => b.id_booking !== id));
       setValidation(true);
       setIsValidated(true);
-      setMsgValidation('Votre demande de réservation a bien été accepté et apparaîtra sur votre calendrier de réservation.');
+      setMsgValidation('La réservation a bien été acceptée et apparaîtra sur votre calendrier de réservation.');
     }
 
     const handleCloseMui = (event, reason) => {

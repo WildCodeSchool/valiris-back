@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import API from '../API';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -59,7 +57,7 @@ export default function Register() {
     } else if (password !== passwordVerif) {
       setMessageForm(true)
       setErrorForm(true)
-      setMsgAlert('Les mots de passe ne correspondent pas');
+      setMsgAlert('Les mots de passe ne correspondent pas.');
     } else if (!emailValidator.test(user.email)) {
       setMessageForm(true)
       setErrorForm(true)
@@ -68,7 +66,7 @@ export default function Register() {
     else if (passwordVerif.length < 5) {
       setMessageForm(true)
       setErrorForm(true)
-      setMsgAlert('Le mot de passe doit contenir au moins 5 caractères');
+      setMsgAlert('Le mot de passe doit contenir au moins 5 caractères.');
     } else {
       handleSubmit()
     }
@@ -81,7 +79,7 @@ export default function Register() {
         .then(() => {
           setMessageForm(true)
           setErrorForm(false)
-          setMsgAlert('L\'ajout de l\'utilisateur a réussi')
+          setMsgAlert('L\'ajout de l\'utilisateur a réussi.')
           setLoading(false)
           setUser({
             name: '',
@@ -92,7 +90,7 @@ export default function Register() {
         })
         .catch(err => {
           console.log(err);
-          setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau');
+          setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau.');
           setErrorForm(true);
           setLoading(false);
           setMessageForm(true);

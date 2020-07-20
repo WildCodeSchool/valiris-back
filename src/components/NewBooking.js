@@ -14,8 +14,8 @@ const NewBooking = () => {
   const [booking, setBooking] = useState({
     starting_date: '',
     ending_date: '',
-    id_apartment: '',
-    id_contact: ''
+    id_apartment: null,
+    id_contact: null
   });
   const [apartments, setApartments] = useState()
   const [contacts, setContacts] = useState()
@@ -38,8 +38,14 @@ const NewBooking = () => {
     e.preventDefault();
     setLoading(true);
     setErrorForm(false);
-    if (!booking.starting_date || !booking.ending_date) {
-      setMsgAlert('Une erreur est survenue au niveau des dates');
+    if (!booking.starting_date || !booking.ending_date || !booking.id_apartment || !booking.id_contact) {
+      setMsgAlert('Tous les champs sont requis.');
+      setErrorForm(true);
+      setLoading(false);
+      setMessageForm(true);
+    }
+    else if (booking.ending_date <= booking.starting_date) {
+      setMsgAlert('La date de début doit être antérieure à la date de fin.');
       setErrorForm(true);
       setLoading(false);
       setMessageForm(true);
@@ -49,7 +55,7 @@ const NewBooking = () => {
         .then(() => {
           setMessageForm(true);
           setLoading(false);
-          setMsgAlert(`La réservation à bien été créée`);
+          setMsgAlert(`La réservation a bien été créée.`);
           setBooking({
             starting_date: '',
             ending_date: '',
@@ -59,7 +65,7 @@ const NewBooking = () => {
         })
         .catch(err => {
           console.log(err);
-          setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau');
+          setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau.');
           setErrorForm(true);
           setLoading(false);
           setMessageForm(true);
@@ -100,6 +106,7 @@ const NewBooking = () => {
           InputProps={{
             inputProps: { min: getFullDate() }
           }}
+          required
         />
         <TextField
           className='input-form'
@@ -117,6 +124,7 @@ const NewBooking = () => {
               ? { min: booking.starting_date }
               : { min: getFullDate() }
           }}
+          required
         />
         <FormControl variant='outlined' className='input-form'>
           <InputLabel htmlFor='outlined-apartment'>Appartement</InputLabel>

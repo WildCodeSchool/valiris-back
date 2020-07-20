@@ -59,11 +59,11 @@ const Booking = (props) => {
       .then(() => {
         setMessageForm(true);
         setLoading(false);
-        setMsgAlert(`La réservation a bien été mise à jour`);
+        setMsgAlert(`La réservation a bien été mise à jour.`);
       })
       .catch(err => {
         console.error(err);
-        setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau');
+        setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau.');
         setErrorForm(true);
         setLoading(false);
         setMessageForm(true);
