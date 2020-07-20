@@ -66,7 +66,6 @@ const Contact = (props) => {
         })
         .catch(err => {
           const errorMessage = err.response.data.errorMessage;
-          console.log(errorMessage)
           if (errorMessage === 'Email already exists') {
             setMsgAlert('Cet e-mail existe déjà dans votre liste de contacts.');
           } else {
