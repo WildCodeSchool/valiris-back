@@ -72,7 +72,7 @@ function Apartments() {
       })
       .catch(err => {
         console.log(err);
-        setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau !');
+        setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau.');
         setErrorForm(true);
         setLoading(false);
         setMessageForm(true);

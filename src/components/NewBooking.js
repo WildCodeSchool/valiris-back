@@ -39,13 +39,13 @@ const NewBooking = () => {
     setLoading(true);
     setErrorForm(false);
     if (!booking.starting_date || !booking.ending_date || !booking.id_apartment || !booking.id_contact) {
-      setMsgAlert('Tous les champs sont requis');
+      setMsgAlert('Tous les champs sont requis.');
       setErrorForm(true);
       setLoading(false);
       setMessageForm(true);
     }
     else if (booking.ending_date <= booking.starting_date) {
-      setMsgAlert('La date de début doit être antérieure à la date de fin');
+      setMsgAlert('La date de début doit être antérieure à la date de fin.');
       setErrorForm(true);
       setLoading(false);
       setMessageForm(true);
@@ -55,7 +55,7 @@ const NewBooking = () => {
         .then(() => {
           setMessageForm(true);
           setLoading(false);
-          setMsgAlert(`La réservation à bien été créée`);
+          setMsgAlert(`La réservation a bien été créée.`);
           setBooking({
             starting_date: '',
             ending_date: '',
@@ -65,7 +65,7 @@ const NewBooking = () => {
         })
         .catch(err => {
           console.log(err);
-          setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau');
+          setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau.');
           setErrorForm(true);
           setLoading(false);
           setMessageForm(true);

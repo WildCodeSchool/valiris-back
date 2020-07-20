@@ -61,7 +61,7 @@ const NewApartment = (props) => {
         console.log('test');
         setMessageForm(true);
         setLoading(false);
-        setMsgAlert(`L'appartement ${data.name} a bien été créé`);
+        setMsgAlert(`L'appartement ${data.name} a bien été créé.`);
         setApartment({
           name: '',
           details_fr: '',
@@ -76,7 +76,7 @@ const NewApartment = (props) => {
       })
       .catch(err => {
         console.log(err);
-        setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau');
+        setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau.');
         setErrorForm(true);
         setLoading(false);
         setMessageForm(true);

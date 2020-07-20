@@ -50,11 +50,11 @@ const Account = () => {
       .then(data => {
         setMessageForm(true);
         setLoading(false);
-        setMsgAlert(`L'utilisateur a bien été mis à jour`);
+        setMsgAlert(`L'utilisateur a bien été mis à jour.`);
       })
       .catch(err => {
         console.log(err);
-        setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau');
+        setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau.');
         setErrorForm(true);
         setLoading(false);
         setMessageForm(true);
@@ -71,19 +71,19 @@ const Account = () => {
       .then(data => {
         setMessageForm(true);
         setLoading(false);
-        setMsgAlert(`L'utilisateur a bien été mis à jour`);
+        setMsgAlert(`L'utilisateur a bien été mis à jour.`);
         setPassword('')
         setPasswordVerif('')
       })
       .catch(err => {
         console.log(err);
-        setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau');
+        setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau.');
         setErrorForm(true);
         setLoading(false);
         setMessageForm(true);
       })
     } else {
-      setMsgAlert('Les mots de passe ne correspondent pas');
+      setMsgAlert('Les mots de passe ne correspondent pas.');
       setLoading(false);
       setMessageForm(true);
       setErrorForm(true);

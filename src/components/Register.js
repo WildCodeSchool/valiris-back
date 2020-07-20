@@ -57,7 +57,7 @@ export default function Register() {
     } else if (password !== passwordVerif) {
       setMessageForm(true)
       setErrorForm(true)
-      setMsgAlert('Les mots de passe ne correspondent pas');
+      setMsgAlert('Les mots de passe ne correspondent pas.');
     } else if (!emailValidator.test(user.email)) {
       setMessageForm(true)
       setErrorForm(true)
@@ -66,7 +66,7 @@ export default function Register() {
     else if (passwordVerif.length < 5) {
       setMessageForm(true)
       setErrorForm(true)
-      setMsgAlert('Le mot de passe doit contenir au moins 5 caractères');
+      setMsgAlert('Le mot de passe doit contenir au moins 5 caractères.');
     } else {
       handleSubmit()
     }
@@ -79,7 +79,7 @@ export default function Register() {
         .then(() => {
           setMessageForm(true)
           setErrorForm(false)
-          setMsgAlert('L\'ajout de l\'utilisateur a réussi')
+          setMsgAlert('L\'ajout de l\'utilisateur a réussi.')
           setLoading(false)
           setUser({
             name: '',
@@ -90,7 +90,7 @@ export default function Register() {
         })
         .catch(err => {
           console.log(err);
-          setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau');
+          setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau.');
           setErrorForm(true);
           setLoading(false);
           setMessageForm(true);
