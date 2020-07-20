@@ -89,8 +89,12 @@ export default function Register() {
           setPasswordVerif('')
         })
         .catch(err => {
-          console.log(err);
-          setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau.');
+          const errorMessage = err.response.data.errorMessage;
+          if (errorMessage === 'Email already used') {
+            setMsgAlert('Cet e-mail est déjà utilisé par un autre utilisateur.');
+          } else {
+            setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau.');
+          }
           setErrorForm(true);
           setLoading(false);
           setMessageForm(true);
