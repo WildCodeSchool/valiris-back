@@ -11,7 +11,7 @@ import Button from '@material-ui/core/Button';
 
 const Account = () => {
 
-  const { id } = useContext(AuthContext);
+  const { id, setName } = useContext(AuthContext);
   const [user, setUser] = useState();
   const [password, setPassword] = useState('');
   const [passwordVerif, setPasswordVerif] = useState('');
@@ -25,7 +25,8 @@ const Account = () => {
       .then(res => res.data)
       .then(data => {
         setUser({
-          email: data.email
+          email: data.email,
+          name: data.name
         })
       });
   }, [id]);
@@ -45,12 +46,13 @@ const Account = () => {
     e.preventDefault();
     setLoading(true);
     setErrorForm(false);
-      API.patch(`/users/${id}`, user)
+    API.patch(`/users/${id}`, user)
       .then(res => res.data)
       .then(data => {
         setMessageForm(true);
         setLoading(false);
-        setMsgAlert(`L'utilisateur a bien été mis à jour.`);
+        setName(data.name)
+        setMsgAlert(`L'utilisateur a bien été mis à jour`);
       })
       .catch(err => {
         console.log(err);
@@ -65,8 +67,9 @@ const Account = () => {
     e.preventDefault();
     setLoading(true);
     setErrorForm(false);
-    if(password === passwordVerif){
+    if (password === passwordVerif) {
       API.patch(`/users/${id}/password`, { password })
+<<<<<<< HEAD
       .then(res => res.data)
       .then(data => {
         setMessageForm(true);
@@ -82,13 +85,30 @@ const Account = () => {
         setLoading(false);
         setMessageForm(true);
       })
+=======
+        .then(res => res.data)
+        .then(data => {
+          setMessageForm(true);
+          setLoading(false);
+          setMsgAlert(`L'utilisateur a bien été mis à jour`);
+          setPassword('')
+          setPasswordVerif('')
+        })
+        .catch(err => {
+          console.log(err);
+          setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau');
+          setErrorForm(true);
+          setLoading(false);
+          setMessageForm(true);
+        })
+>>>>>>> maintenance/validation
     } else {
       setMsgAlert('Les mots de passe ne correspondent pas.');
       setLoading(false);
       setMessageForm(true);
       setErrorForm(true);
     }
-  }  
+  }
 
   if (!user) {
     return <div className='loader'><CircularProgress style={{ width: '70px', height: '70px' }} /></div>
@@ -96,7 +116,15 @@ const Account = () => {
     return (
       <div className='account-container'>
         <form className='form-container' noValidate onSubmit={(e) => handleSubmit(e)}>
-        <h2>Modifier mes Informations</h2>
+          <h2>Modifier mes Informations</h2>
+          <TextField
+            className='input-form'
+            label='Nom'
+            variant='outlined'
+            value={user.name}
+            onChange={(e) => setUser({ ...user, name: e.target.value })}
+            name='name'
+          />
           <TextField
             className='input-form'
             label='E-mail'
@@ -108,7 +136,7 @@ const Account = () => {
           {loading ? <CircularProgress style={{ width: '50px', height: '50px' }} /> : <Button variant="contained" color="primary" type='submit'>valider</Button>}
         </form>
         <form className='form-container' id='form-password' onSubmit={(e) => handleSubmitPassword(e)}>
-        <h2>Changer mon mot de passe</h2>
+          <h2>Changer mon mot de passe</h2>
           <TextField
             variant="outlined"
             required
