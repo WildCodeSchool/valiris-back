@@ -34,10 +34,20 @@ const NewBooking = () => {
       })));
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setErrorForm(false);
+    let impossibleBooking = false;
+    const id = booking.id_apartment;
+    const existingBookings = await Promise.resolve(API.get(`/apartments/${id}/availabilities`).then(res => res.data).then(data => data ));
+
+    existingBookings.forEach(b => {
+      if ((b.starting_date < booking.ending_date && b.ending_date > booking.starting_date) || (b.ending_date < booking.ending_date && b.ending_date > booking.starting_date)) {
+        impossibleBooking = true;
+      }
+    })
+
     if (!booking.starting_date || !booking.ending_date || !booking.id_apartment || !booking.id_contact) {
       setMsgAlert('Tous les champs sont requis.');
       setErrorForm(true);
@@ -46,6 +56,11 @@ const NewBooking = () => {
     }
     else if (booking.ending_date <= booking.starting_date) {
       setMsgAlert('La date de début doit être antérieure à la date de fin.');
+      setErrorForm(true);
+      setLoading(false);
+      setMessageForm(true);
+    } else if (impossibleBooking) {
+      setMsgAlert('Une réservation pour cet appartement a déjà été validée à cette période.');
       setErrorForm(true);
       setLoading(false);
       setMessageForm(true);
@@ -64,8 +79,12 @@ const NewBooking = () => {
           })
         })
         .catch(err => {
-          console.log(err);
-          setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau.');
+          const errorMessage = err.response.data.errorMessage;
+          if (errorMessage === 'Starting date of the booking cannot be before today.') {
+            setMsgAlert('La date rentrée pour cette réservation est déjà passée.');
+          } else {
+            setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau.');
+          }
           setErrorForm(true);
           setLoading(false);
           setMessageForm(true);

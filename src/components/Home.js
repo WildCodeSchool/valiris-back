@@ -20,6 +20,7 @@ const Home = () => {
               return { 
                 id_booking: b.id,
                 apartment_name: b.name,
+                apartment_id: b.id_apartment,
                 firstname: b.firstname,
                 lastname: b.lastname,
                 email: b.email,
@@ -32,14 +33,7 @@ const Home = () => {
           })))
       }, []);
 
-    const handlePatch = (id) => {
-      API.patch('/bookings', { id })
-        .then(response => response.data)
-      setBookings(bookings.filter(b => b.id_booking !== id));
-      setValidation(true);
-      setIsValidated(true);
-      setMsgValidation('La réservation a bien été acceptée et apparaîtra sur votre calendrier de réservation.');
-    }
+
 
     const handleCloseMui = (event, reason) => {
       if (reason === 'clickaway') {
@@ -64,8 +58,13 @@ const Home = () => {
                   <BookingCard 
                     key={b.id_booking} 
                     bookingDetails={b} 
-                    handlePatch={handlePatch}
                     setBookings={setBookings}
+                    validation={validation}
+                    setValidation={setValidation}
+                    isValidated={isValidated}
+                    setIsValidated={setIsValidated}
+                    msgValidation={msgValidation}
+                    setMsgValidation={setMsgValidation}
                     />
                 )}
             )}
