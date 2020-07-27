@@ -40,13 +40,15 @@ const NewBooking = () => {
     setErrorForm(false);
     let impossibleBooking = false;
     const id = booking.id_apartment;
-    const existingBookings = await Promise.resolve(API.get(`/apartments/${id}/availabilities`).then(res => res.data).then(data => data ));
+    if (id) {
+      const existingBookings = await Promise.resolve(API.get(`/apartments/${id}/availabilities`).then(res => res.data).then(data => data ));
 
-    existingBookings.forEach(b => {
-      if ((b.starting_date < booking.ending_date && b.ending_date > booking.starting_date) || (b.ending_date < booking.ending_date && b.ending_date > booking.starting_date)) {
-        impossibleBooking = true;
-      }
-    })
+      existingBookings.forEach(b => {
+        if ((b.starting_date < booking.ending_date && b.ending_date > booking.starting_date) || (b.ending_date < booking.ending_date && b.ending_date > booking.starting_date)) {
+          impossibleBooking = true;
+        }
+      })
+    }
 
     if (!booking.starting_date || !booking.ending_date || !booking.id_apartment || !booking.id_contact) {
       setMsgAlert('Tous les champs sont requis.');
@@ -187,4 +189,4 @@ const NewBooking = () => {
   )
 }
 
-export default NewBooking
+export default NewBooking;
