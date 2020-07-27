@@ -55,8 +55,8 @@ export default function Login() {
         setNameInLocalStorage(data.data.name)
       })
       .catch(err => {
-        console.log(err);
-        setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau');
+        const errorMessage = err.response.data.message;
+        setMsgAlert(errorMessage);
         setErrorForm(true);
         setMessageForm(true);
       })
