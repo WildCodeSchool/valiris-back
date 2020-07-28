@@ -21,3 +21,11 @@ a {
 .delete-icons{
     cursor: pointer;
 }
+
+.MuiFormLabel-root.Mui-focused {
+  color : #329797 !important;
+  
+}
+.Mui-focused fieldset {
+  border-color: #329797 !important;
+}

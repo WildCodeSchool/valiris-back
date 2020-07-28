@@ -65,8 +65,12 @@ const Contact = (props) => {
           setMsgAlert(`Le contact ${data.firstname} ${data.lastname} a bien été mis à jour.`);
         })
         .catch(err => {
-          console.log(err);
-          setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau.');
+          const errorMessage = err.response.data.errorMessage;
+          if (errorMessage === 'Email already exists') {
+            setMsgAlert('Cet e-mail existe déjà dans votre liste de contacts.');
+          } else {
+            setMsgAlert('Une erreur est survenue, veuillez essayer à nouveau.');
+          }
           setErrorForm(true);
           setLoading(false);
           setMessageForm(true);

@@ -27,18 +27,25 @@ const useStyles = makeStyles({
 });
 
 export default function BookingCard(
-  { bookingDetails : { 
-  id_booking,
-  apartment_name, 
-  firstname, 
-  lastname,
-  email,
-  phone,
-  starting_date, 
-  ending_date, 
-  message }, 
-  handlePatch,
-  setBookings}) {
+  { bookingDetails: {
+    id_booking,
+    apartment_id,
+    apartment_name,
+    firstname,
+    lastname,
+    email,
+    phone,
+    starting_date,
+    ending_date,
+    message },
+    setBookings,
+    validation,
+    setValidation,
+    isValidated,
+    setIsValidated,
+    msgValidation,
+    setMsgValidation
+  }) {
 
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -66,6 +73,35 @@ export default function BookingCard(
     setBookings(bookings => bookings.filter(b => b.id_booking !== id));
   }
 
+  const handlePatch = async () => {
+    let impossibleBooking = false;
+    const existingBookings = await Promise.resolve(API.get(`/apartments/${apartment_id}/availabilities`).then(res => res.data).then(data => data));
+    existingBookings.forEach(b => {
+      if ((b.starting_date < ending_date && b.ending_date > starting_date) || (b.ending_date < ending_date && b.ending_date > starting_date)) {
+        impossibleBooking = true;
+      }
+    })
+
+    if (impossibleBooking) {
+      setMsgValidation('Une réservation pour cet appartement a déjà été validée à cette période.');
+      setValidation(true);
+      setIsValidated(false);
+    } else {
+      API.patch('/bookings', { id_booking })
+        .then(() => {
+          setBookings(bookings => bookings.filter(b => b.id_booking !== id_booking));
+          setValidation(true);
+          setIsValidated(true);
+          setMsgValidation('La réservation a bien été acceptée et apparaîtra sur votre calendrier de réservation.')
+        })
+        .catch(err => {
+          setValidation(true);
+          setIsValidated(false);
+          setMsgValidation('Une erreur est survenue, veuillez essayer à nouveau.');
+        })
+    }
+  }
+
   return (
     <Card className={`${classes.root} card-container`}>
       <CardContent>
@@ -89,39 +125,39 @@ export default function BookingCard(
         </Typography>
         <br />
         <Typography variant="body2" component="p">
-          <strong className='card-subtitles'>Message :</strong> 
+          <strong className='card-subtitles'>Message :</strong>
           <br />
           {message}
         </Typography>
         <br />
       </CardContent>
       <CardActions className='actions-booking'>
-        <Button size="small" className='validation-booking' onClick={() => handlePatch(id_booking)}>Valider la réservation</Button>
+        <Button size="small" className='validation-booking' onClick={() => handlePatch()}>Valider la réservation</Button>
         <Link to={`/reservation/${id_booking}`}><Button size="small" className='update-booking'>Modifier la réservation</Button></Link>
         <Button size="small" className='delete-booking' onClick={handleClickOpen}>Supprimer la réservation</Button>
       </CardActions>
       <Dialog
-          open={open}
-          keepMounted
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-slide-title"
-          aria-describedby="alert-dialog-slide-description"
-        >
-          <DialogTitle id="alert-dialog-slide-title">Êtes-vous sur de vouloir supprimer la réservation ?</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-              Toute suppression sera irréversible.
+        open={open}
+        keepMounted
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-slide-title"
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle id="alert-dialog-slide-title">Êtes-vous sur de vouloir supprimer la réservation ?</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            Toute suppression sera irréversible.
           </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Annuler
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Annuler
             </Button>
-            <Button onClick={() => handleClickDelete(id_booking)} color="primary">
-              Supprimer
+          <Button onClick={() => handleClickDelete(id_booking)} color="primary">
+            Supprimer
             </Button>
-          </DialogActions>
-        </Dialog>
+        </DialogActions>
+      </Dialog>
     </Card>
   );
 }
