@@ -4,7 +4,6 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -13,30 +12,31 @@ import API from '../API';
 import { Redirect } from "react-router-dom";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import logo from '../images/logo_valiris.png';
 
 const useStyles = makeStyles((theme) => ({
-    paper: {
-      marginTop: theme.spacing(8),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-    },
-    avatar: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
-      width: '100%',
-      marginTop: theme.spacing(1),
-    },
-    submit: {
-      margin: theme.spacing(3, 0, 2),
-    },
-  }));
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%',
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 
 export default function Login() {
   const classes = useStyles();
-  const {token, setToken, setId: setIdInLocalStorage, setName : setNameInLocalStorage} = useContext(AuthContext)
+  const { token, setToken, setId: setIdInLocalStorage, setName: setNameInLocalStorage } = useContext(AuthContext)
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -47,7 +47,7 @@ export default function Login() {
 
   const handleSubmit = event => {
     event.preventDefault()
-    API.post('/auth/login', {email, password})
+    API.post('/auth/login', { email, password })
       .then(res => res.data)
       .then((data) => {
         setToken(data.token)
@@ -74,22 +74,25 @@ export default function Login() {
   };
 
 
-  if(!!token){
+  if (!!token) {
     return (
       <Redirect
-      to={{
-        pathname: "/"
-      }}
-    />
+        to={{
+          pathname: "/"
+        }}
+      />
     )
   } else {
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
+          <img
+            src={logo}
+            alt='logo-valiris'
+            className='logo-header'
+            style={{ marginBottom: '40px' }}
+          />
           <Typography component="h1" variant="h5">
             Connexion
           </Typography>
